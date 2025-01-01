@@ -96,6 +96,10 @@
                 }
             ],
             "groupby": ["bins_0"],
+            "sort": {
+                "by": "total_pages",  
+                "order": "desc"         
+            },
             "special": "memory_pages"
     },
     "bin_activity_analysis": {

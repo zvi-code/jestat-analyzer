@@ -141,6 +141,43 @@ class JeAnalyzer:
         print(f"Total Fills: {total_fills:,}")
         print(f"Total Flushes: {total_flushes:,}")
         print(f"Fill/Flush Ratio: {total_fills / total_flushes:.2f}" if total_flushes > 0 else "No flushes")
+    def _print_activity_analysis3(self, result):
+        columns = result['columns']
+        data = result['data']
+        
+        # Print the basic table
+        self.table_formatter.print_table(columns, data)
+        
+        # Calculate activity statistics using only columns we know exist in this analysis
+        total_requests = sum(row[columns.index('total_requests')] for row in data)
+        total_allocs = sum(row[columns.index('alloc_ops')] for row in data)
+        total_deallocs = sum(row[columns.index('dealloc_ops')] for row in data)
+        total_fills = sum(row[columns.index('fills')] for row in data)
+        total_flushes = sum(row[columns.index('flushes')] for row in data)
+        
+        print("\nActivity Analysis Summary:")
+        print(f"Total Requests: {total_requests:,}")
+        print(f"Total Allocations: {total_allocs:,}")
+        print(f"Total Deallocations: {total_deallocs:,}")
+        if total_requests > 0:
+            print(f"Overall Cache Hit Ratio: {((total_requests - total_allocs) / total_requests * 100):.2f}%")
+        print(f"Total Fills: {total_fills:,}")
+        print(f"Total Flushes: {total_flushes:,}")
+
+    def _print_pages_analysis(self, result):
+        columns = result['columns']
+        data = result['data']
+        
+        # Print the basic table
+        self.table_formatter.print_table(columns, data)
+        
+        # Pages analysis specific calculations
+        total_pages = sum(row[columns.index('total_pages')] for row in data)
+        total_memory = sum(row[columns.index('total_allocated')] for row in data)
+        
+        print("\nPages Analysis Summary:")
+        print(f"Total Pages Used: {total_pages:,} ({total_pages * 4:,} KB)")
+        print(f"Total Memory Allocated: {total_memory:,} bytes ({total_memory/1024/1024:.2f} MB)")
     def _print_activity_analysis333w(self, result):
         columns = result['columns']
         data = result['data']
