@@ -4,6 +4,7 @@ from src.db.stats_handler import StatsHandler
 from src.db.display_handler import DisplayHandler
 from src.analyzer.generic_analyzer import GenericAnalyzer
 from src.utils.table_formatter import TableFormatter
+import re
 
 class JeAnalyzer:
     def __init__(self, db_path: str, config: dict):
@@ -14,25 +15,41 @@ class JeAnalyzer:
         self.generic_analyzer = GenericAnalyzer(db_path, config['schema_path'], config)
         self.table_formatter = TableFormatter()
 
-    def analyze(self, mode: str, table_pattern: str = None, timestamp: str = None, limit: int = 10):
-        try:
-            if mode == 'raw':
-                self.display_handler.display_raw_data(table_pattern, limit)
-            elif mode == 'stats':
-                self.analyze_table_stats(table_pattern)
-            elif mode == 'arena':
-                self.stats_handler.analyze_arenas_activity(table_pattern, timestamp)
-            elif mode == 'meta':
-                self.display_metadata()
-            elif mode == 'table':
-                self.print_table(table_pattern, limit)
-            elif mode in self.config['analyses']:
-                result = self.generic_analyzer.analyze(mode)
-                self._print_formatted_result(result)
-            else:
-                print(f"Unknown mode: {mode} {self.config['analyses']}")
-        except Exception as e:
-            print(f"An unexpected error occurred: {str(e)} {self.config['analyses']}")
+    def analyze(self, mode_pattern: str, table_pattern: str = None, timestamp: str = None, limit: int = 10):
+        """Analyze the database based on the specified mode"""
+        modes = ['raw', 'stats', 'arena', 'meta', 'bins', 'table']
+        modes.extend(self.config['analyses'])
+        # modes_match = re.search(r'\b(?:%s)\b' % '|'.join(modes), mode_pattern)
+
+        # if not modes_match:
+        #     raise ValueError(f"Unknown mode: {modes_match}")
+        # for mode in modes:
+        #     print(f"Analyzing in mode: {mode} match = {mode_pattern}")
+        # raise ValueError(f"KNOWN mode: {modes_match}")
+        for mode in modes:
+            match = re.search(mode_pattern, mode)
+            if not match:
+                continue
+            print(f"Analyzing in mode: {mode} match = {mode_pattern}")
+            try:
+                if mode == 'raw':
+                    self.display_handler.display_raw_data(table_pattern, limit)
+                elif mode == 'stats':
+                    self.analyze_table_stats(table_pattern)
+                elif mode == 'arena':
+                    self.stats_handler.analyze_arenas_activity(table_pattern, timestamp)
+                elif mode == 'meta':
+                    self.display_metadata()
+                elif mode == 'table':
+                    self.print_table(table_pattern, limit)
+                elif mode in self.config['analyses']:
+                    result = self.generic_analyzer.analyze(mode)
+                    self._print_formatted_result(result)
+                else:
+                    print(f"Unknown mode: {mode} {self.config['analyses']}")
+            except Exception as e:
+                print(f"An unexpected error occurred: {str(e)} {self.config['analyses']}")
+            print("Done analysing in mode {mode}\n-------------------\n")
 
     def print_table(self, table_name: str, limit: int = 10):
         if not table_name:
@@ -42,7 +59,10 @@ class JeAnalyzer:
             try:
                 matching_tables = self.generic_analyzer._get_matching_tables(table_name)
                 for table in matching_tables:
-                    self.display_handler.print_table_data(table, limit)
+                    try:
+                        self.display_handler.print_table_data(table, limit)
+                    except Exception as e:
+                        print(f"Error print_table_data table '{table}': {str(e)}")
             except Exception as e:
                 print(f"Error accessing table '{table_name}': {str(e)}")
 
@@ -134,28 +154,7 @@ class JeAnalyzer:
         print(f"Total Fills: {total_fills:,}")
         print(f"Total Flushes: {total_flushes:,}")
         print(f"Fill/Flush Ratio: {total_fills / total_flushes:.2f}" if total_flushes > 0 else "No flushes")
-    def _print_activity_analysis3(self, result):
-        columns = result['columns']
-        data = result['data']
-        
-        # Print the basic table
-        self.table_formatter.print_table(columns, data)
-        
-        # Calculate activity statistics using only columns we know exist in this analysis
-        total_requests = sum(row[columns.index('total_requests')] for row in data)
-        total_allocs = sum(row[columns.index('alloc_ops')] for row in data)
-        total_deallocs = sum(row[columns.index('dealloc_ops')] for row in data)
-        total_fills = sum(row[columns.index('fills')] for row in data)
-        total_flushes = sum(row[columns.index('flushes')] for row in data)
-        
-        print("\nActivity Analysis Summary:")
-        print(f"Total Requests: {total_requests:,}")
-        print(f"Total Allocations: {total_allocs:,}")
-        print(f"Total Deallocations: {total_deallocs:,}")
-        if total_requests > 0:
-            print(f"Overall Cache Hit Ratio: {((total_requests - total_allocs) / total_requests * 100):.2f}%")
-        print(f"Total Fills: {total_fills:,}")
-        print(f"Total Flushes: {total_flushes:,}")
+    
 
     def _print_pages_analysis(self, result):
         columns = result['columns']
@@ -175,19 +174,24 @@ class JeAnalyzer:
     def _print_formatted_result(self, result):
         columns = result['columns']
         data = result['data']
-        
+        had_error = False
         # Print the table
         self.table_formatter.print_table(columns, data)
-        
-        # Calculate total pages and memory
-        total_pages = sum(row[columns.index('total_pages')] for row in data)
+        try:
+            # Calculate total pages and memory
+            total_pages = sum(row[columns.index('total_pages')] for row in data)
+        except Exception as e:
+            print(f"Error calculating total pages: {str(e)}")
+            total_pages = 0
+            had_error = True
         total_memory = sum(row[columns.index('total_allocated')] for row in data)
         
         # Sort bins by page usage
         sorted_by_pages = sorted(data, key=lambda x: x[columns.index('total_pages')], reverse=True)
         
-        print("\nPage Usage Analysis:")
-        print(f"Total Pages Used: {total_pages:,} ({total_pages * 4:,} KB)")
+        print(f"\nPage Usage Analysis: (had_error = {had_error})")
+        if not had_error:
+            print(f"Total Pages Used: {total_pages:,} ({total_pages * 4:,} KB)")
         print(f"Total Memory Allocated: {total_memory:,} bytes ({total_memory/1024/1024:.2f} MB)")
         print(f"Overall Memory Efficiency: {(total_memory / (total_pages * 4096)) * 100:.2f}%")
         

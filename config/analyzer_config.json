@@ -144,7 +144,26 @@
                     "name": "owner_switches",
                     "operation": "sum",
                     "column": "n_owner_switch_30"
+                },
+                {
+                    "name": "total_pages",
+                    "operation": "expression",
+                    "formula": {
+                        "row_operation": "pgs_15 * curslabs_12",
+                        "aggregation": "sum"
+                    }
+                },
+                {
+                    "name": "total_allocated",
+                    "operation": "sum",
+                    "column": "allocated_3"
+                },
+                {
+                    "name": "utilization",
+                    "operation": "avg",
+                    "column": "util_16"
                 }
+
             ],
             "groupby": ["bins_0"],
             "sort": {
@@ -187,10 +206,26 @@
                         "column": "nflushes_19"
                     },
                     {
-                        "name": "slab_ops_ratio",
+                        "name": "tcache_batch_cost",
                         "operation": "expression",
                         "formula": {
                             "row_operation": "CAST((nfills_17 + nflushes_19) AS FLOAT) / NULLIF(nrequests_8, 0) * 100.0",
+                            "aggregation": "avg"
+                        }
+                    },
+                    {
+                        "name": "tcache_alloc_amort",
+                        "operation": "expression",
+                        "formula": {
+                            "row_operation": "CAST((nfills_17) AS FLOAT) / NULLIF(nmalloc_4, 0) * 100.0",
+                            "aggregation": "avg"
+                        }
+                    },                    
+                    {
+                        "name": "tcache_dealloc_amort",
+                        "operation": "expression",
+                        "formula": {
+                            "row_operation": "CAST((nflushes_19) AS FLOAT) / NULLIF(ndalloc_6, 0) * 100.0",
                             "aggregation": "avg"
                         }
                     },
@@ -223,13 +258,39 @@
                         "name": "flush_rate",
                         "operation": "max",
                         "column": "rps_20"
+                    },
+                    {
+                        "name": "total_pages",
+                        "operation": "expression",
+                        "formula": {
+                            "row_operation": "pgs_15 * curslabs_12",
+                            "aggregation": "sum"
+                        }
+                    },
+                    {
+                        "name": "total_allocated",
+                        "operation": "sum",
+                        "column": "allocated_3"
+                    },
+                    {
+                        "name": "utilization",
+                        "operation": "avg",
+                        "column": "util_16"
                     }
                 ],
                 "groupby": ["bins_0"],
-                "sort": {
-                    "by": "slab_ops_ratio",  
+                "sort": [{
+                    "by": "tcache_batch_cost",  
                     "order": "desc"
-                }
+                },
+                {
+                    "by": "tcache_alloc_amort",  
+                    "order": "desc"
+                },
+                {
+                    "by": "tcache_dealloc_amort",  
+                    "order": "desc"
+                }]
             },
         
     "high_contention_bins": {

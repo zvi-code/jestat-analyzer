@@ -10,10 +10,6 @@ class GenericAnalyzer(BaseTableHandler):
         self.analyzer_config = config['analyses']
         self.current_analysis = None  # Add this line
 
-    # def __init__(self, db_path: str, analyzer_config: Dict[str, Any]):
-    #     self.db_path = db_path
-    #     self.analyzer_config = analyzer_config
-
     def analyze(self, analysis_name: str) -> Dict[str, Any]:
         self.current_analysis = analysis_name  # Set current analysis name
         config = self.analyzer_config.get(analysis_name)
@@ -97,10 +93,7 @@ class GenericAnalyzer(BaseTableHandler):
                 query += f" ORDER BY {sort_config['by']} {sort_config['order'].upper()}"
 
         return query
-# class GenericAnalyzer(BaseTableHandler):
-#     def __init__(self, db_path: str, schema_path: str, config: dict):
-#         super().__init__(db_path, schema_path)
-#         self.analyzer_config = config['analyses']
+
     def list_available_tables(self, prefix=None):
         """
         List all tables in the database, optionally filtered by prefix
@@ -112,10 +105,6 @@ class GenericAnalyzer(BaseTableHandler):
             else:
                 cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
             return [row[0] for row in cursor.fetchall()]
-    # def list_available_tables(self):
-    #     with self._get_cursor() as cursor:
-    #         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    #         return [row[0] for row in cursor.fetchall()]
 
     def _get_matching_tables(self, table_pattern: str) -> List[str]:
         available_tables = self.list_available_tables()
@@ -132,152 +121,7 @@ class GenericAnalyzer(BaseTableHandler):
             if re.match('^' + schema_pattern.replace('*', '.*') + '$', table_name):
                 return schema
         raise ValueError(f"No schema found for table: {table_name}")
-    
-    # def analyze(self, analysis_name: str) -> Dict[str, Any]:
-    #     config = self.analyzer_config.get(analysis_name)
-    #     if not config:
-    #         raise ValueError(f"No configuration found for analysis: {analysis_name}")
-
-    #     # Check if this is a special arena comparison analysis
-    #     if config.get('special') == 'arena_pattern':
-    #         return self._analyze_arena_comparison(config)
-
-    #     # Regular analysis logic continues here...
-    #     table_pattern = config['table']
-    #     matching_tables = self._get_matching_tables(table_pattern)
         
-    #     if not matching_tables:
-    #         available_tables = self.list_available_tables()
-    #         error_msg = f"No tables found matching the pattern '{table_pattern}'\n"
-    #         error_msg += f"Available tables are: {', '.join(available_tables)}"
-    #         raise ValueError(error_msg)
-    #     elif len(matching_tables) > 1:
-    #         error_msg = f"Multiple tables match the pattern '{table_pattern}': {', '.join(matching_tables)}\n"
-    #         error_msg += "Please specify a more precise pattern."
-    #         raise ValueError(error_msg)
-
-    #     table = matching_tables[0]
-    #     schema = self._get_schema_for_table(table)
-    #     metrics = config['metrics']
-    #     groupby = config.get('groupby', [])
-
-    #     query = self._build_query(table, metrics, groupby, schema)
-        
-    #     with self._get_cursor() as cursor:
-    #         cursor.execute(query)
-    #         columns = [description[0] for description in cursor.description]
-    #         rows = cursor.fetchall()
-    #     sorted_rows = sorted(rows, key=lambda x: int(x[0]))
-
-    #     return {
-    #         'columns': columns,
-    #         'data': sorted_rows
-    #     }
-    def _build_query_new(self, table: str, metrics: List[Dict[str, str]], groupby: List[str], schema: Dict[str, Any]) -> str:
-        select_clauses = []
-        where_clauses = []
-        having_clauses = []
-        
-        for metric in metrics:
-            if metric['operation'] == 'expression':
-                formula = metric['formula']
-                row_op = formula['row_operation']
-                agg = formula['aggregation']
-                
-                if 'filter' in formula:
-                    where_clauses.append(formula['filter'])
-                    
-                if 'having' in formula:
-                    having_clauses.append(f"{metric['name']} {formula['having']}")
-                    
-                select_clauses.append(f"{agg}({row_op}) as {metric['name']}")
-            else:
-                column = metric['column']
-                if column not in [col['name'] for col in schema['columns']]:
-                    raise ValueError(f"Column '{column}' not found in schema for table '{table}'")
-                select_clauses.append(f"{metric['operation']}({column}) as {metric['name']}")
-
-        query = f'SELECT {", ".join(groupby)}, {", ".join(select_clauses)} FROM "{table}"'
-        
-        if where_clauses:
-            query += f" WHERE {' AND '.join(where_clauses)}"
-            
-        if groupby:
-            query += f" GROUP BY {', '.join(groupby)}"
-            
-        if having_clauses:
-            query += f" HAVING {' AND '.join(having_clauses)}"
-
-        # Add ORDER BY clause if sort is specified
-        if 'sort' in self.analyzer_config.get(table, {}):
-            sort_config = self.analyzer_config[table]['sort']
-            if isinstance(sort_config, list):
-                sort_clauses = [f"{sort['by']} {sort['order'].upper()}" for sort in sort_config]
-                query += f" ORDER BY {', '.join(sort_clauses)}"
-            else:
-                query += f" ORDER BY {sort_config['by']} {sort_config['order'].upper()}"
-
-        return query
-    def _build_query_prev(self, table: str, metrics: List[Dict[str, str]], groupby: List[str], schema: Dict[str, Any]) -> str:
-        if 'special' in self.analyzer_config.get(table, {}) and self.analyzer_config[table]['special'] == 'arena_pattern':
-            return self._build_arena_comparison_query(metrics, groupby)        
-        select_clauses = []
-        where_clauses = []
-        having_clauses = []
-        
-        for metric in metrics:
-            if metric['operation'] == 'expression':
-                formula = metric['formula']
-                row_op = formula['row_operation']
-                agg = formula['aggregation']
-                
-                # Add any filtering conditions
-                if 'filter' in formula:
-                    where_clauses.append(formula['filter'])
-                    
-                # Add any having conditions
-                if 'having' in formula:
-                    having_clauses.append(f"{metric['name']} {formula['having']}")
-                    
-                select_clauses.append(f"{agg}({row_op}) as {metric['name']}")
-                
-            elif metric['operation'] == 'custom':
-                # Handle custom SQL expressions
-                select_clauses.append(f"{metric['formula']} as {metric['name']}")
-                
-            else:
-                # Handle simple aggregation operations
-                column = metric['column']
-                if column not in [col['name'] for col in schema['columns']]:
-                    raise ValueError(f"Column '{column}' not found in schema for table '{table}'")
-                select_clauses.append(f"{metric['operation']}({column}) as {metric['name']}")
-
-        # Build the complete query
-        query = f'SELECT {", ".join(groupby)}, {", ".join(select_clauses)} FROM "{table}"'
-    
-        if where_clauses:
-            query += f" WHERE {' AND '.join(where_clauses)}"
-            
-        if groupby:
-            query += f" GROUP BY {', '.join(groupby)}"
-            
-        if having_clauses:
-            query += f" HAVING {' AND '.join(having_clauses)}"
-
-        # Add ORDER BY clause if sort is specified
-        if 'sort' in self.analyzer_config.get(table, {}):
-            sort_config = self.analyzer_config[table]['sort']
-            if isinstance(sort_config, list):
-                # Multiple sort criteria
-                sort_clauses = []
-                for sort_item in sort_config:
-                    sort_clauses.append(f"{sort_item['by']} {sort_item['order'].upper()}")
-                query += f" ORDER BY {', '.join(sort_clauses)}"
-            else:
-                # Single sort criterion
-                query += f" ORDER BY {sort_config['by']} {sort_config['order'].upper()}"
-
-        return query
     def _analyze_arena_comparison(self, config: Dict) -> Dict[str, Any]:
         """Special handler for arena comparison analysis"""
         # Get all arena overall tables
