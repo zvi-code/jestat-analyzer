@@ -1,0 +1,2 @@
+[console_scripts]
+je-analyze = src.cli:main
