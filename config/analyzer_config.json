@@ -58,7 +58,98 @@
         ],
         "groupby": ["bins_0", "size_1"]
       },
-      "high_contention_bins": {
+      "bin_pages_analysis": {
+            "table": "merged_arena_stats.bins_v1",
+            "metrics": [
+                {
+                    "name": "bin_size",
+                    "operation": "max",
+                    "column": "size_1"
+                },
+                {
+                    "name": "total_pages",
+                    "operation": "expression",
+                    "formula": {
+                        "row_operation": "pgs_15 * curslabs_12",
+                        "aggregation": "sum"
+                    }
+                },
+                {
+                    "name": "total_slabs",
+                    "operation": "sum",
+                    "column": "curslabs_12"
+                },
+                {
+                    "name": "pages_per_slab",
+                    "operation": "max",
+                    "column": "pgs_15"
+                },
+                {
+                    "name": "utilization",
+                    "operation": "avg",
+                    "column": "util_16"
+                },
+                {
+                    "name": "total_allocated",
+                    "operation": "sum",
+                    "column": "allocated_3"
+                }
+            ],
+            "groupby": ["bins_0"],
+            "special": "memory_pages"
+    },
+    "bin_activity_analysis": {
+            "table": "merged_arena_stats.bins_v1",
+            "metrics": [
+                {
+                    "name": "bin_size",
+                    "operation": "max",
+                    "column": "size_1"
+                },
+                {
+                    "name": "total_requests",
+                    "operation": "sum",
+                    "column": "nrequests_8"
+                },
+                {
+                    "name": "alloc_ops",
+                    "operation": "sum",
+                    "column": "nmalloc_4"
+                },
+                {
+                    "name": "dealloc_ops",
+                    "operation": "sum",
+                    "column": "ndalloc_6"
+                },
+                {
+                    "name": "fills",
+                    "operation": "sum",
+                    "column": "nfills_17"
+                },
+                {
+                    "name": "flushes",
+                    "operation": "sum",
+                    "column": "nflushes_19"
+                },
+                {
+                    "name": "lock_ops",
+                    "operation": "sum",
+                    "column": "n_lock_ops_24"
+                },
+                {
+                    "name": "owner_switches",
+                    "operation": "sum",
+                    "column": "n_owner_switch_30"
+                }
+            ],
+            "groupby": ["bins_0"],
+            "sort": {
+                "by": "total_requests",  
+                "order": "desc"         
+            },
+            "special": "activity"
+        },
+    "high_contention_bins": {
         "table": "merged_arena_stats.bins_v1",
         "metrics": [
           {
@@ -115,6 +206,36 @@
           }
         ],
         "groupby": ["bins_0", "size_1"]
-      }
+      },
+        "arena_comparison": {
+            "table": "arenas_*.overall", 
+            "metrics": [
+                {
+                    "name": "total_allocated",
+                    "operation": "sum",
+                    "column": "allocated_0"
+                },
+                {
+                    "name": "allocation_rate",
+                    "operation": "sum",
+                    "column": "nmalloc_1"
+                },
+                {
+                    "name": "deallocation_rate",
+                    "operation": "sum",
+                    "column": "ndalloc_3"
+                },
+                {
+                    "name": "memory_percent",
+                    "operation": "expression",
+                    "formula": {
+                        "row_operation": "CAST(allocated_0 AS FLOAT) * 100.0 / SUM(allocated_0) OVER ()",
+                        "aggregation": "avg"
+                    }
+                }
+            ],
+            "groupby": ["arena_id"],
+            "special": "arena_pattern"
+        }
     }
   }

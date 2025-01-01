@@ -1,4 +1,11 @@
 ```
+# Sort by total requests
+je-analyze ../stats3.db --mode bin_activity_analysis
+
+# Sort by lock operations
+je-analyze ../stats3.db --mode bin_activity_analysis_by_locks
+
+
 Now you can use it in several ways:
 
 # List all tables
