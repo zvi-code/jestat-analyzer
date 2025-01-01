@@ -1,4 +1,41 @@
 ```
+Now you can use it in several ways:
+
+# List all tables
+je-analyze stats3.db --list-tables
+
+# List only tables starting with "merged"
+je-analyze stats3.db --list-tables --prefix merged
+
+# List only tables starting with "arenas"
+je-analyze stats3.db --list-tables --prefix arenas
+
+Example output:
+
+$ je-analyze stats3.db --list-tables
+Available tables in database:
+- arenas_0.bins_v1
+- arenas_0.overall
+- arenas_1.bins_v1
+- arenas_1.overall
+- je_metadata
+- merged_arena_stats.bins_v1
+- merged_arena_stats.overall
+
+$ je-analyze stats3.db --list-tables --prefix merged
+Available tables in database:
+(filtered by prefix: 'merged')
+- merged_arena_stats.bins_v1
+- merged_arena_stats.overall
+
+$ je-analyze stats3.db --list-tables --prefix arenas
+Available tables in database:
+(filtered by prefix: 'arenas')
+- arenas_0.bins_v1
+- arenas_0.overall
+- arenas_1.bins_v1
+- arenas_1.overall
+
 je-analyze ../stats3.db --mode bins_analysis
 
 View specific tables using:

@@ -22,7 +22,9 @@ def main():
     parser.add_argument('--table', help='Table name or pattern to analyze')
     parser.add_argument('--timestamp', help='Filter by timestamp')
     parser.add_argument('--limit', type=int, default=10, help='Limit number of rows in display (default: 10)')
-    
+    parser.add_argument('--list-tables', action='store_true', help='List all tables in the database')
+    # Add this new argument
+    parser.add_argument('--prefix', help='Filter tables by prefix (e.g., "merged" or "arenas")')
     args = parser.parse_args()
 
     if not os.path.exists(args.db_path):
@@ -37,6 +39,15 @@ def main():
     
     try:
         analyzer = JeAnalyzer(args.db_path, config)
+        # Add this block to handle the --list-tables argument
+        if args.list_tables:
+            tables = analyzer.list_tables(prefix=args.prefix)
+            print("\nAvailable tables in database:")
+            if args.prefix:
+                print(f"(filtered by prefix: '{args.prefix}')")
+            for table in sorted(tables):  # Sort tables for better readability
+                print(f"- {table}")
+            return
         # available_modes = ['raw', 'stats', 'arena', 'meta', 'table', 'bins_analysis']
         
         # if args.mode not in available_modes:

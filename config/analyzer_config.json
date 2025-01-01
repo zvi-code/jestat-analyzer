@@ -15,7 +15,8 @@
         "metrics": [
           {"name": "total_allocated", "column": "allocated_3", "operation": "sum"},
           {"name": "avg_utilization", "column": "util_16", "operation": "avg"},
-          {"name": "total_slabs", "column": "curslabs_12", "operation": "sum"}
+          {"name": "total_slabs", "column": "curslabs_12", "operation": "sum"},
+          {"name": "total_non_full_slabs", "column": "nonfull_slabs_13", "operation": "sum"}
         ],
         "groupby": ["timestamp"]
       },
@@ -27,6 +28,93 @@
           {"name": "net_allocation", "operation": "custom", "formula": "SUM(nmalloc_1) - SUM(ndalloc_3)"}
         ],
         "groupby": ["timestamp"]
+      },
+      "fragmentation_analysis": {
+        "table": "merged_arena_stats.bins_v1",
+        "metrics": [
+          {
+            "name": "fragmentation_score",
+            "operation": "expression",
+            "formula": {
+              "row_operation": "CAST(nonfull_slabs_13 AS FLOAT) / NULLIF(curslabs_12, 0)",
+              "aggregation": "avg",
+              "filter": "curslabs_12 >= 5", 
+              "having": "> 0.3" 
+            }
+          },
+          {
+            "name": "wasted_slabs",
+            "operation": "sum",
+            "column": "nonfull_slabs_13"
+          },
+          {
+            "name": "total_memory_waste",
+            "operation": "expression",
+            "formula": {
+              "row_operation": "size_1 * regs_14 * nonfull_slabs_13 * (1 - util_16)",
+              "aggregation": "sum"
+            }
+          }
+        ],
+        "groupby": ["bins_0", "size_1"]
+      },
+      "high_contention_bins": {
+        "table": "merged_arena_stats.bins_v1",
+        "metrics": [
+          {
+            "name": "allocation_rate",
+            "operation": "expression",
+            "formula": {
+              "row_operation": "nmalloc_4",
+              "aggregation": "sum",
+              "filter": "n_lock_ops_24 > 1000"  
+            }
+          },
+          {
+            "name": "lock_contention",
+            "operation": "expression",
+            "formula": {
+              "row_operation": "CAST(n_waiting_26 AS FLOAT) / NULLIF(n_lock_ops_24, 0)",
+              "aggregation": "avg",
+              "having": "> 0.1"  
+            }
+          },
+          {
+            "name": "total_wait_time",
+            "operation": "sum",
+            "column": "total_wait_ns_32"
+          }
+        ],
+        "groupby": ["bins_0", "size_1"]
+      },
+      "inefficient_bins": {
+        "table": "merged_arena_stats.bins_v1",
+        "metrics": [
+          {
+            "name": "total_allocated",
+            "operation": "sum",
+            "column": "allocated_3"
+          },
+          {
+            "name": "avg_utilization",
+            "operation": "expression",
+            "formula": {
+              "row_operation": "util_16",
+              "aggregation": "avg",
+              "filter": "allocated_3 > 1000",  
+              "having": "< 0.5"  
+            }
+          },
+          {
+            "name": "wasted_memory",
+            "operation": "expression",
+            "formula": {
+              "row_operation": "allocated_3 * (1 - util_16)",
+              "aggregation": "sum"
+            }
+          }
+        ],
+        "groupby": ["bins_0", "size_1"]
       }
     }
   }

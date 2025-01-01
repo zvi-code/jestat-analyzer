@@ -56,7 +56,12 @@ class JeAnalyzer:
     def analyze_bins(self):
         result = self.generic_analyzer.analyze('bins_analysis')
         self._print_formatted_result(result)
-
+    def list_tables(self, prefix=None):
+        """
+        List all tables in the database, optionally filtered by prefix
+        """
+        tables = self.generic_analyzer.list_available_tables(prefix)
+        return tables
     def _print_formatted_result(self, result):
         columns = result['columns']
         data = result['data']

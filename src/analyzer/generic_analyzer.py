@@ -8,11 +8,21 @@ class GenericAnalyzer(BaseTableHandler):
     def __init__(self, db_path: str, schema_path: str, config: dict):
         super().__init__(db_path, schema_path)
         self.analyzer_config = config['analyses']
-
-    def list_available_tables(self):
+    def list_available_tables(self, prefix=None):
+        """
+        List all tables in the database, optionally filtered by prefix
+        """
         with self._get_cursor() as cursor:
-            cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+            if prefix:
+                # Use SQL LIKE for prefix matching
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE ? ORDER BY name", (f'{prefix}%',))
+            else:
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
             return [row[0] for row in cursor.fetchall()]
+    # def list_available_tables(self):
+    #     with self._get_cursor() as cursor:
+    #         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    #         return [row[0] for row in cursor.fetchall()]
 
     def _get_matching_tables(self, table_pattern: str) -> List[str]:
         available_tables = self.list_available_tables()
@@ -98,23 +108,48 @@ class GenericAnalyzer(BaseTableHandler):
             'columns': columns,
             'data': sorted_rows
         }
-
     def _build_query(self, table: str, metrics: List[Dict[str, str]], groupby: List[str], schema: Dict[str, Any]) -> str:
         select_clauses = []
+        where_clauses = []
+        having_clauses = []
+        
         for metric in metrics:
-            if metric['operation'] == 'custom':
+            if metric['operation'] == 'expression':
+                formula = metric['formula']
+                row_op = formula['row_operation']
+                agg = formula['aggregation']
+                
+                # Add any filtering conditions
+                if 'filter' in formula:
+                    where_clauses.append(formula['filter'])
+                    
+                # Add any having conditions
+                if 'having' in formula:
+                    having_clauses.append(f"{metric['name']} {formula['having']}")
+                    
+                select_clauses.append(f"{agg}({row_op}) as {metric['name']}")
+                
+            elif metric['operation'] == 'custom':
+                # Handle custom SQL expressions
                 select_clauses.append(f"{metric['formula']} as {metric['name']}")
+                
             else:
+                # Handle simple aggregation operations
                 column = metric['column']
                 if column not in [col['name'] for col in schema['columns']]:
                     raise ValueError(f"Column '{column}' not found in schema for table '{table}'")
                 select_clauses.append(f"{metric['operation']}({column}) as {metric['name']}")
-        
-        select_clause = ', '.join(select_clauses)
-        groupby_clause = ', '.join(groupby) if groupby else ''
 
-        query = f'SELECT {", ".join(groupby)}, {select_clause} FROM "{table}"'
-        if groupby_clause:
-            query += f" GROUP BY {groupby_clause}"
+        # Build the complete query
+        query = f'SELECT {", ".join(groupby)}, {", ".join(select_clauses)} FROM "{table}"'
+        
+        if where_clauses:
+            query += f" WHERE {' AND '.join(where_clauses)}"
+            
+        if groupby:
+            query += f" GROUP BY {', '.join(groupby)}"
+            
+        if having_clauses:
+            query += f" HAVING {' AND '.join(having_clauses)}"
 
         return query
