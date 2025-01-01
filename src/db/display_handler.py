@@ -40,9 +40,9 @@ class DisplayHandler(BaseDBHandler):
         with self._get_cursor() as cur:
             cur.execute(f'SELECT * FROM "{table_name}" LIMIT {limit}')
             rows = cur.fetchall()
+            # print table name with capital letters
             
-            print(f"\n=== {table_name} Data ===")
-            print(f"Showing first {limit} rows:")
+            print(f"\n=== {table_name.upper()} (Showing first {limit} rows):")
             self.formatter.print_table(headers, rows)
 
     def print_metadata_summary(self) -> None:

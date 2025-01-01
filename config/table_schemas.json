@@ -55,6 +55,7 @@
         {"name": "nrequests_5", "type": "INTEGER"},
         {"name": "nfill_7", "type": "INTEGER"},
         {"name": "rps_8", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
         {"name": "nflush_9", "type": "INTEGER"},
         {"name": "rps_10", "type": "INTEGER"}
       ],
@@ -116,6 +117,7 @@
         {"name": "nrequests_5", "type": "INTEGER"},
         {"name": "nfill_7", "type": "INTEGER"},
         {"name": "rps_8", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
         {"name": "nflush_9", "type": "INTEGER"},
         {"name": "rps_10", "type": "INTEGER"}
       ],

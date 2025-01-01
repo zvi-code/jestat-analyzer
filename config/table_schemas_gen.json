@@ -1,0 +1,4349 @@
+{
+  "je_metadata": {
+    "columns": [
+        {"name": "id", "type": "INTEGER"},
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "section", "type": "TEXT"},
+        {"name": "table_name", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp"]
+    },
+  "je_parsing_stats": {
+    "columns": [
+        {"name": "id", "type": "INTEGER"},
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "num_groups", "type": "INTEGER"},
+        {"name": "num_sections", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp"]
+    },
+  "je_section_stats": {
+    "columns": [
+        {"name": "parsing_stats_id", "type": "INTEGER"},
+        {"name": "section_name", "type": "TEXT"},
+        {"name": "count", "type": "INTEGER"},
+        {"name": "avg_size", "type": "INTEGER"}
+      ],
+      "primary_key": []
+    },
+  "je_table_stats": {
+    "columns": [
+        {"name": "parsing_stats_id", "type": "INTEGER"},
+        {"name": "table_name", "type": "TEXT"},
+        {"name": "instances", "type": "INTEGER"},
+        {"name": "columns", "type": "INTEGER"},
+        {"name": "total_rows", "type": "INTEGER"},
+        {"name": "avg_rows", "type": "INTEGER"},
+        {"name": "min_rows", "type": "INTEGER"},
+        {"name": "max_rows", "type": "INTEGER"}
+      ],
+      "primary_key": []
+    },
+  "je_column_stats": {
+    "columns": [
+        {"name": "parsing_stats_id", "type": "INTEGER"},
+        {"name": "table_name", "type": "TEXT"},
+        {"name": "column_name", "type": "TEXT"},
+        {"name": "unique_values", "type": "INTEGER"},
+        {"name": "numeric_count", "type": "INTEGER"},
+        {"name": "min_value", "type": "INTEGER"},
+        {"name": "max_value", "type": "INTEGER"},
+        {"name": "avg_value", "type": "INTEGER"}
+      ],
+      "primary_key": []
+    },
+  "overall_stats.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_overall_stats.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "overall_stats.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_overall_stats.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "merged_arena_stats.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_merged_arena_stats.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "merged_arena_stats.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "TEXT"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_merged_arena_stats.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "merged_arena_stats.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_merged_arena_stats.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "merged_arena_stats.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_merged_arena_stats.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "merged_arena_stats.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_merged_arena_stats.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "merged_arena_stats.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_merged_arena_stats.large": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_0.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_0.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_0.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_0.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_0.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_0.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_0.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_0.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_0.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_0.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_0.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_0.large": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_0.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_0.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_1.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_1.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_1.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_1.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_1.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_1.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_1.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_1.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_1.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_1.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_1.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_1.large": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_1.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_1.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_1.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_1.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_2.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_2.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_2.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_2.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_2.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_2.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_2.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_2.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_2.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_2.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_2.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_2.large": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_2.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_2.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_2.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_2.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_3.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_3.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_3.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_3.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_3.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_3.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_3.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_3.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_3.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_3.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_3.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_3.large": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_3.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_3.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_4.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_4.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_4.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_4.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_4.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_4.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_4.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_4.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_4.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_4.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_4.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_4.large": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_4.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_4.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_4.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_4.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_5.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_5.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_5.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_5.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_5.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_5.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_5.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_5.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_5.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_5.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_5.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_5.large": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_5.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_5.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_5.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_5.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_6.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_6.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_6.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_6.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_6.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_6.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_6.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_6.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_6.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_6.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_6.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_6.large": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_6.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_6.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_6.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_6.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_7.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_7.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_7.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_7.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_7.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_7.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_7.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_7.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_7.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_7.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_7.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_7.large": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_7.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_7.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_7.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_7.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_8.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_8.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_8.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_8.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_8.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_8.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_8.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_8.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_8.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_8.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_8.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_8.large": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_8.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_8.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_8.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_8.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_9.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_9.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_9.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_9.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_9.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_9.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_9.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_9.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_9.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_9.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_9.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_9.large": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_9.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_9.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_9.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_9.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_10.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_10.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_10.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_10.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_10.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_10.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_10.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_10.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_10.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_10.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_10.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_10.large": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_10.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_10.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_10.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_10.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_11.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_11.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_11.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_11.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_11.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_11.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_11.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_11.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_11.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_11.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_11.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_11.large": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_11.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_11.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_11.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_11.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_192.key-value": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "TEXT"},
+        {"name": "Value", "type": "TEXT"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "Key"]
+    },
+  "stats_arenas_192.key-value": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "Key", "type": "INTEGER"},
+        {"name": "Value", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "Key"]
+    },
+  "arenas_192.decaying": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "TEXT"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_192.decaying": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "decaying_0", "type": "INTEGER"},
+        {"name": "time_1", "type": "INTEGER"},
+        {"name": "npages_2", "type": "INTEGER"},
+        {"name": "sweeps_3", "type": "INTEGER"},
+        {"name": "madvises_4", "type": "INTEGER"},
+        {"name": "purged_5", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_192.overall": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_192.overall": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"},
+        {"name": "nrequests_5", "type": "INTEGER"},
+        {"name": "rps_6", "type": "INTEGER"},
+        {"name": "nfill_7", "type": "INTEGER"},
+        {"name": "rps_8", "type": "INTEGER"},
+        {"name": "nflush_9", "type": "INTEGER"},
+        {"name": "rps_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_192.bg_and_prof": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "primary_0"]
+    },
+  "stats_arenas_192.bg_and_prof": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "primary_0", "type": "INTEGER"},
+        {"name": "n_lock_ops_0", "type": "INTEGER"},
+        {"name": "rps_1", "type": "INTEGER"},
+        {"name": "n_waiting_2", "type": "INTEGER"},
+        {"name": "rps_3", "type": "INTEGER"},
+        {"name": "n_spin_acq_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "n_owner_switch_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "total_wait_ns_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "max_wait_ns_10", "type": "INTEGER"},
+        {"name": "max_n_thds_11", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "primary_0"]
+    },
+  "arenas_192.bins_v1": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+  "stats_arenas_192.bins_v1": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "INTEGER"},
+        {"name": "nfills_17", "type": "INTEGER"},
+        {"name": "rps_18", "type": "INTEGER"},
+        {"name": "nflushes_19", "type": "INTEGER"},
+        {"name": "rps_20", "type": "INTEGER"},
+        {"name": "nslabs_21", "type": "INTEGER"},
+        {"name": "nreslabs_22", "type": "INTEGER"},
+        {"name": "rps_23", "type": "INTEGER"},
+        {"name": "n_lock_ops_24", "type": "INTEGER"},
+        {"name": "rps_25", "type": "INTEGER"},
+        {"name": "n_waiting_26", "type": "INTEGER"},
+        {"name": "rps_27", "type": "INTEGER"},
+        {"name": "n_spin_acq_28", "type": "INTEGER"},
+        {"name": "rps_29", "type": "INTEGER"},
+        {"name": "n_owner_switch_30", "type": "INTEGER"},
+        {"name": "rps_31", "type": "INTEGER"},
+        {"name": "total_wait_ns_32", "type": "INTEGER"},
+        {"name": "rps_33", "type": "INTEGER"},
+        {"name": "max_wait_ns_34", "type": "INTEGER"},
+        {"name": "max_n_thds_35", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "bins_0"]
+    },
+  "arenas_192.large": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "large_0"]
+    },
+  "stats_arenas_192.large": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "large_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "curlextents_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id", "large_0"]
+    },
+  "arenas_192.extents": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_192.extents": {
+    "columns": [
+        {"name": "metric", "type": "TEXT"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "extents_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "ndirty_3", "type": "INTEGER"},
+        {"name": "dirty_4", "type": "INTEGER"},
+        {"name": "nmuzzy_5", "type": "INTEGER"},
+        {"name": "muzzy_6", "type": "INTEGER"},
+        {"name": "nretained_7", "type": "INTEGER"},
+        {"name": "retained_8", "type": "INTEGER"},
+        {"name": "ntotal_9", "type": "INTEGER"},
+        {"name": "total_10", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    },
+  "arenas_192.nonfull_slabs": {
+    "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["timestamp", "metadata_id"]
+    },
+  "stats_arenas_192.nonfull_slabs": {
+    "columns": [
+        {"name": "metric", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "size_0", "type": "INTEGER"},
+        {"name": "ind_1", "type": "INTEGER"},
+        {"name": "npageslabs_huge_2", "type": "INTEGER"},
+        {"name": "nactive_huge_3", "type": "INTEGER"},
+        {"name": "ndirty_huge_4", "type": "INTEGER"},
+        {"name": "npageslabs_nonhuge_5", "type": "INTEGER"},
+        {"name": "nactive_nonhuge_6", "type": "INTEGER"},
+        {"name": "ndirty_nonhuge_7", "type": "INTEGER"},
+        {"name": "nretained_nonhuge_8", "type": "INTEGER"}
+      ],
+      "primary_key": ["metric", "metadata_id"]
+    }
+}

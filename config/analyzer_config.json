@@ -1,5 +1,5 @@
 {
-    "schema_path": "config/table_schemas.json",
+    "schema_path": "config/table_schemas_gen.json",
     "analyses": {
       "bins_analysis": {
         "table": "merged*stats.bins_v1",
@@ -153,6 +153,85 @@
             },
             "special": "activity"
         },
+        "bin_activity_analysis_new": {
+                "table": "merged_arena_stats.bins_v1",
+                "metrics": [
+                    {
+                        "name": "bin_size",
+                        "operation": "max",
+                        "column": "size_1"
+                    },
+                    {
+                        "name": "total_requests",
+                        "operation": "sum",
+                        "column": "nrequests_8"
+                    },
+                    {
+                        "name": "alloc_ops",
+                        "operation": "sum",
+                        "column": "nmalloc_4"
+                    },
+                    {
+                        "name": "dealloc_ops",
+                        "operation": "sum",
+                        "column": "ndalloc_6"
+                    },
+                    {
+                        "name": "fills",
+                        "operation": "sum",
+                        "column": "nfills_17"
+                    },
+                    {
+                        "name": "flushes",
+                        "operation": "sum",
+                        "column": "nflushes_19"
+                    },
+                    {
+                        "name": "slab_ops_ratio",
+                        "operation": "expression",
+                        "formula": {
+                            "row_operation": "CAST((nfills_17 + nflushes_19) AS FLOAT) / NULLIF(nrequests_8, 0) * 100.0",
+                            "aggregation": "avg"
+                        }
+                    },
+                    {
+                        "name": "lock_ops",
+                        "operation": "sum",
+                        "column": "n_lock_ops_24"
+                    },
+                    {
+                        "name": "owner_switches",
+                        "operation": "sum",
+                        "column": "n_owner_switch_30"
+                    },
+                    {
+                        "name": "alloc_rate",
+                        "operation": "max",
+                        "column": "rps_5"
+                    },
+                    {
+                        "name": "dealloc_rate",
+                        "operation": "max",
+                        "column": "rps_7"
+                    },
+                    {
+                        "name": "fill_rate",
+                        "operation": "max",
+                        "column": "rps_18"
+                    },
+                    {
+                        "name": "flush_rate",
+                        "operation": "max",
+                        "column": "rps_20"
+                    }
+                ],
+                "groupby": ["bins_0"],
+                "sort": {
+                    "by": "slab_ops_ratio",  
+                    "order": "desc"
+                }
+            },
+        
     "high_contention_bins": {
         "table": "merged_arena_stats.bins_v1",
         "metrics": [
@@ -240,6 +319,60 @@
             ],
             "groupby": ["arena_id"],
             "special": "arena_pattern"
-        }
+        },
+        "slab_efficiency_analysis": {
+                "table": "merged_arena_stats.bins_v1",
+                "metrics": [
+                    {
+                        "name": "bin_size",
+                        "operation": "max",
+                        "column": "size_1"
+                    },
+                    {
+                        "name": "total_requests",
+                        "operation": "sum",
+                        "column": "nrequests_8"
+                    },
+                    {
+                        "name": "total_slab_ops",
+                        "operation": "expression",
+                        "formula": {
+                            "row_operation": "nfills_17 + nflushes_19",
+                            "aggregation": "sum"
+                        }
+                    },
+                    {
+                        "name": "slab_ops_ratio",
+                        "operation": "expression",
+                        "formula": {
+                            "row_operation": "CAST((nfills_17 + nflushes_19) AS FLOAT) / NULLIF(nrequests_8, 0) * 100.0",
+                            "aggregation": "avg"
+                        }
+                    },
+                    {
+                        "name": "fills",
+                        "operation": "sum",
+                        "column": "nfills_17"
+                    },
+                    {
+                        "name": "flushes",
+                        "operation": "sum",
+                        "column": "nflushes_19"
+                    },
+                    {
+                        "name": "utilization",
+                        "operation": "avg",
+                        "column": "util_16"
+                    }
+                ],
+                "groupby": ["bins_0"],
+                "sort": [
+                    {
+                        "by": "total_requests",
+                        "order": "desc"
+                    }
+                ]
+
+            }
     }
   }

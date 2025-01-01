@@ -48,12 +48,6 @@ def main():
             for table in sorted(tables):  # Sort tables for better readability
                 print(f"- {table}")
             return
-        # available_modes = ['raw', 'stats', 'arena', 'meta', 'table', 'bins_analysis']
-        
-        # if args.mode not in available_modes:
-        #     print(f"Error: Invalid mode. Available modes are: {', '.join(available_modes)}")
-        #     sys.exit(1)
-        
         analyzer.analyze(args.mode, args.table, args.timestamp, args.limit)
     except Exception as e:
         print(f"Error: {str(e)}")
