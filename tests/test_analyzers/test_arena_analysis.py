@@ -10,10 +10,11 @@ class TestArenaAnalysis:
         stats = stats_handler.analyze_arenas_activity(["arenas_0_overall"])
         
         assert stats is not None
-        assert len(stats) > 0
+        assert len(stats) == 2  # Two timestamps
         assert float(stats[0]['total_allocated']) == 3000.0
+        assert float(stats[1]['total_allocated']) == 4000.0
         assert float(stats[0]['total_allocs']) == 1500.0
-        assert float(stats[0]['total_deallocs']) == 900.0
+        assert float(stats[1]['total_allocs']) == 1800.0
 
     def test_arena_memory_percentages(self, sample_db):
         """Test memory percentage calculations"""

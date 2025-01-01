@@ -1,6 +1,8 @@
 # src/db/stats_handler.py
 from typing import List, Dict, Any, Optional
 from .base_handler import BaseDBHandler
+import pandas as pd
+import numpy as np
 
 class StatsHandler(BaseDBHandler):
     def generate_comprehensive_report(self, window_size: int = 5, 
@@ -97,6 +99,74 @@ class StatsHandler(BaseDBHandler):
                 SELECT 
                     metadata_id,
                     timestamp,
+                    primary_0 as arena_id,  -- Use primary_0 as arena_id
+                    SUM(CAST(allocated_0 AS FLOAT)) as allocated,
+                    SUM(CAST(nmalloc_1 AS FLOAT)) as allocations,
+                    SUM(CAST(ndalloc_3 AS FLOAT)) as deallocations,
+                    SUM(CAST(rps_2 AS FLOAT)) as alloc_rate,
+                    SUM(CAST(rps_4 AS FLOAT)) as dealloc_rate
+                FROM arenas_0_overall
+                GROUP BY metadata_id, timestamp, primary_0
+            )
+            SELECT 
+                timestamp,
+                arena_id,
+                allocated,
+                allocations,
+                deallocations,
+                alloc_rate,
+                dealloc_rate,
+                ROUND(deallocations * 100.0 / NULLIF(allocations, 0), 2) as dealloc_ratio,
+                ROUND(allocated / NULLIF(allocations, 0), 2) as avg_allocation_size
+            FROM arena_metrics
+            ORDER BY timestamp, arena_id
+            """
+            cur.execute(query)
+            return [dict(zip([col[0] for col in cur.description], row)) 
+                    for row in cur.fetchall()]
+        
+    def analyze_arena_efficiency33(self) -> Dict:
+        """Analyze efficiency metrics for each arena"""
+        with self._get_cursor() as cur:
+            query = """
+            WITH arena_metrics AS (
+                SELECT 
+                    metadata_id,
+                    timestamp,
+                    row_name,  -- Changed from arena_id (using SQL comment style)
+                    SUM(CAST(allocated_0 AS FLOAT)) as allocated,
+                    SUM(CAST(nmalloc_1 AS FLOAT)) as allocations,
+                    SUM(CAST(ndalloc_3 AS FLOAT)) as deallocations,
+                    SUM(CAST(rps_2 AS FLOAT)) as alloc_rate,
+                    SUM(CAST(rps_4 AS FLOAT)) as dealloc_rate
+                FROM arenas_0_overall
+                GROUP BY metadata_id, timestamp, row_name
+            )
+            SELECT 
+                timestamp,
+                row_name as arena_id,
+                allocated,
+                allocations,
+                deallocations,
+                alloc_rate,
+                dealloc_rate,
+                ROUND(deallocations * 100.0 / NULLIF(allocations, 0), 2) as dealloc_ratio,
+                ROUND(allocated / NULLIF(allocations, 0), 2) as avg_allocation_size
+            FROM arena_metrics
+            ORDER BY timestamp, arena_id
+            """
+            cur.execute(query)
+            return [dict(zip([col[0] for col in cur.description], row)) 
+                    for row in cur.fetchall()] 
+        
+    def analyze_arena_efficiency2(self) -> Dict:
+        """Analyze efficiency metrics for each arena"""
+        with self._get_cursor() as cur:
+            query = """
+            WITH arena_metrics AS (
+                SELECT 
+                    metadata_id,
+                    timestamp,
                     arena_id,
                     SUM(CAST(allocated_0 AS FLOAT)) as allocated,
                     SUM(CAST(nmalloc_1 AS FLOAT)) as allocations,
@@ -122,6 +192,7 @@ class StatsHandler(BaseDBHandler):
             cur.execute(query)
             return [dict(zip([col[0] for col in cur.description], row)) 
                     for row in cur.fetchall()]
+        
     def detect_potential_leaks(self, threshold_percent: float = 10.0) -> Dict:
         """Detect potential memory leaks based on allocation patterns"""
         with self._get_cursor() as cur:
@@ -154,8 +225,90 @@ class StatsHandler(BaseDBHandler):
             cur.execute(query, (threshold_percent,))
             return [dict(zip([col[0] for col in cur.description], row)) 
                     for row in cur.fetchall()]
-    
     def calculate_table_stats(self, table_name: str) -> dict:
+        """Calculate comprehensive statistics for a table"""
+        with self._get_cursor() as cur:
+            cur.execute(f"SELECT * FROM '{table_name}' LIMIT 1")
+            columns = [desc[0] for desc in cur.description]
+            if not columns:
+                return None
+
+            columns2ignore = {'id', 'timestamp', 'section', 'table_name', 'metadata_id'}
+            results = {}
+
+            for col in columns:
+                if col in columns2ignore:
+                    continue
+
+                # Calculate basic statistics
+                cur.execute(f"""
+                    SELECT 
+                        MIN(CAST(TRIM({col}) AS FLOAT)),
+                        MAX(CAST(TRIM({col}) AS FLOAT)),
+                        AVG(CAST(TRIM({col}) AS FLOAT)),
+                        SUM(CAST(TRIM({col}) AS FLOAT)),
+                        COUNT(*)
+                    FROM '{table_name}'
+                    WHERE TRIM({col}) != ''
+                """)
+                min_val, max_val, avg_val, sum_val, count = cur.fetchone()
+
+                # Print intermediate results for debugging
+                print(f"Column: {col}")
+                print(f"Min: {min_val}, Max: {max_val}, Avg: {avg_val}, Sum: {sum_val}, Count: {count}")
+
+                # Calculate percentiles
+                cur.execute(f"""
+                    WITH sorted AS (
+                        SELECT CAST(TRIM({col}) AS FLOAT) as val,
+                            ROW_NUMBER() OVER (ORDER BY CAST(TRIM({col}) AS FLOAT)) as row_num,
+                            COUNT(*) OVER () as cnt
+                        FROM '{table_name}'
+                        WHERE TRIM({col}) != ''
+                    )
+                    SELECT 
+                        val,
+                        row_num,
+                        cnt
+                    FROM sorted
+                    ORDER BY row_num
+                """)
+                sorted_values = cur.fetchall()
+                
+                # Print sorted values for debugging
+                print("Sorted values:")
+                for val, row_num, cnt in sorted_values:
+                    print(f"Value: {val}, Row: {row_num}, Count: {cnt}")
+
+                # # Calculate percentiles
+                # count = len(sorted_values)
+                # p50 = sorted_values[count // 2 - 1][0] if count % 2 == 0 else sorted_values[count // 2][0]
+                # p90 = sorted_values[min(int(count * 0.9), count - 1)][0]
+                # p99 = sorted_values[min(int(count * 0.99), count - 1)][0]
+                # Calculate percentiles
+                count = len(sorted_values)
+                if count % 2 == 0:
+                    p50 = (sorted_values[count // 2 - 1][0] + sorted_values[count // 2][0]) / 2
+                else:
+                    p50 = sorted_values[count // 2][0]
+                p90 = sorted_values[min(int(count * 0.9), count - 1)][0]
+                p99 = sorted_values[min(int(count * 0.99), count - 1)][0]
+                # Print calculated percentiles
+                print(f"Calculated p50: {p50}, p90: {p90}, p99: {p99}")
+
+                results[col] = {
+                    'min': min_val,
+                    'max': max_val,
+                    'avg': avg_val,
+                    'sum': sum_val,
+                    'count': count,
+                    'p50': p50,
+                    'p90': p90,
+                    'p99': p99
+                }
+
+            return results
+    def calculate_table_stats3333(self, table_name: str) -> dict:
         """Calculate comprehensive statistics for a table"""
         with self._get_cursor() as cur:
             cur.execute(f"SELECT * FROM '{table_name}' LIMIT 1")
@@ -190,11 +343,24 @@ class StatsHandler(BaseDBHandler):
                         FROM '{table_name}'
                         WHERE TRIM({col}) != ''
                         ORDER BY val
+                    ),
+                    count_cte AS (
+                        SELECT COUNT(*) as cnt FROM sorted
                     )
                     SELECT 
-                        (SELECT val FROM sorted LIMIT 1 OFFSET (SELECT COUNT(*) * 50 / 100 - 1 FROM sorted)) as p50,
-                        (SELECT val FROM sorted LIMIT 1 OFFSET (SELECT COUNT(*) * 90 / 100 - 1 FROM sorted)) as p90,
-                        (SELECT val FROM sorted LIMIT 1 OFFSET (SELECT COUNT(*) * 99 / 100 - 1 FROM sorted)) as p99
+                        CASE 
+                            WHEN cnt % 2 = 0 THEN
+                                (SELECT (val + LEAD(val) OVER (ORDER BY val)) / 2
+                                FROM sorted
+                                LIMIT 1 OFFSET (cnt / 2 - 1))
+                            ELSE
+                                (SELECT val
+                                FROM sorted
+                                LIMIT 1 OFFSET (cnt / 2))
+                        END as p50,
+                        (SELECT val FROM sorted LIMIT 1 OFFSET (cnt * 90 / 100 - 1)) as p90,
+                        (SELECT val FROM sorted LIMIT 1 OFFSET (cnt * 99 / 100 - 1)) as p99
+                    FROM count_cte
                 """)
                 p50, p90, p99 = cur.fetchone()
 
@@ -249,7 +415,6 @@ class StatsHandler(BaseDBHandler):
                 """)
 
     def analyze_arenas_activity(self, table_names: List[str] = None, timestamp: str = None) -> List[dict]:
-        """Analyze arena activity statistics"""
         with self._get_cursor() as cur:
             required_columns = {
                 'metadata_id': True,
@@ -264,6 +429,9 @@ class StatsHandler(BaseDBHandler):
             def validate_table(table):
                 cur.execute(f'PRAGMA table_info("{table}")')
                 columns = {row[1] for row in cur.fetchall()}
+                # Print for debugging
+                print(f"Table {table} columns: {columns}")
+                print(f"Required columns: {required_columns.keys()}")
                 return all(col in columns for col in required_columns)
 
             # Get and validate tables
@@ -461,3 +629,59 @@ class StatsHandler(BaseDBHandler):
             if grouped_rows:
                 print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
                 self.formatter.print_table(headers, grouped_rows)
+
+    def analyze_bins(self, table_name: str = "bins_v1") -> Dict[str, Any]:
+        """Perform extensive analysis on bins data"""
+        with self._get_cursor() as cur:
+            cur.execute(f"SELECT * FROM {table_name}")
+            columns = [description[0] for description in cur.description]
+            data = cur.fetchall()
+
+            df = pd.DataFrame(data, columns=columns)
+            
+            analysis = {
+                "total_bins": int(len(df["bins_0"].unique())),
+                "total_allocated": int(df["allocated_3"].sum()),
+                "total_nmalloc": int(df["nmalloc_4"].sum()),
+                "total_ndalloc": int(df["ndalloc_6"].sum()),
+                "overall_utilization": float(df["util_16"].mean()),
+                "bins_by_size": self._analyze_bins_by_size(df),
+                "allocation_hotspots": self._identify_allocation_hotspots(df),
+                "fragmentation_analysis": self._analyze_fragmentation(df),
+                "lock_contention": self._analyze_lock_contention(df),
+                "size_efficiency": self._analyze_size_efficiency(df),
+            }
+            
+            return analysis
+
+    def _analyze_bins_by_size(self, df: pd.DataFrame) -> Dict[str, Any]:
+        size_groups = df.groupby("size_1")
+        return {
+            "count": size_groups.size().to_dict(),
+            "total_allocated": size_groups["allocated_3"].sum().to_dict(),
+            "avg_utilization": size_groups["util_16"].mean().to_dict(),
+        }
+
+    def _identify_allocation_hotspots(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
+        hotspots = df.nlargest(5, "nmalloc_4")
+        return hotspots[["bins_0", "size_1", "nmalloc_4", "ndalloc_6", "util_16"]].to_dict("records")
+
+    def _analyze_fragmentation(self, df: pd.DataFrame) -> Dict[str, Any]:
+        return {
+            "avg_utilization": df["util_16"].mean(),
+            "low_util_bins": df[df["util_16"] < 0.5]["bins_0"].tolist(),
+            "nonfull_slabs_ratio": (df["nonfull_slabs_13"].sum() / df["curslabs_12"].sum()),
+        }
+
+    def _analyze_lock_contention(self, df: pd.DataFrame) -> Dict[str, Any]:
+        return {
+            "total_lock_ops": df["n_lock_ops_24"].sum(),
+            "total_wait_time": df["total_wait_ns_32"].sum(),
+            "max_wait_time": df["max_wait_ns_34"].max(),
+            "max_threads_contention": df["max_n_thds_35"].max(),
+        }
+
+    def _analyze_size_efficiency(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
+        df["wasted_space"] = df["size_1"] - df["allocated_3"] / df["curregs_11"]
+        inefficient_sizes = df.nlargest(5, "wasted_space")
+        return inefficient_sizes[["bins_0", "size_1", "wasted_space"]].to_dict("records")
