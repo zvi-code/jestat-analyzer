@@ -4,7 +4,34 @@ from .base_handler import BaseDBHandler
 
 class DisplayHandler(BaseDBHandler):
     """Handles data display and formatting"""
-    
+    def display_raw_data(self, table_pattern: str = None, limit: int = 10):
+        with self._get_cursor() as cursor:
+            
+            # Get all table names
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+            all_tables = [row[0] for row in cursor.fetchall()]
+            print("Available tables:")
+            for table in all_tables:
+                print(f"- {table}")
+            
+            if table_pattern:
+                matching_tables = [table for table in all_tables if table_pattern in table]
+                if not matching_tables:
+                    print(f"No tables found matching pattern: {table_pattern}")
+                    return
+                
+                for table in matching_tables:
+                    print(f"\nDisplaying data for table: {table}")
+                    cursor.execute(f"SELECT * FROM {table} LIMIT {limit}")
+                    columns = [description[0] for description in cursor.description]
+                    rows = cursor.fetchall()
+                    
+                    print("Columns:", columns)
+                    for row in rows:
+                        print(row)
+            else:
+                print("Please specify a table pattern to display data.")    
+
     def print_table_data(self, table_name: str, limit: int = 10) -> None:
         """Print data from a table in tabular format"""
         schema = self.get_table_schema(table_name)

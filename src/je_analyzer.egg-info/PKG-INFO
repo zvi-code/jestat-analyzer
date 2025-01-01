@@ -1,7 +1,0 @@
-Metadata-Version: 2.1
-Name: je-analyzer
-Version: 1.0.0
-Provides-Extra: test
-Requires-Dist: pytest>=6.0; extra == "test"
-Requires-Dist: pytest-cov>=2.0; extra == "test"
-Requires-Dist: pytest-mock>=3.0; extra == "test"

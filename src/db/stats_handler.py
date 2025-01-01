@@ -630,7 +630,7 @@ class StatsHandler(BaseDBHandler):
                 print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
                 self.formatter.print_table(headers, grouped_rows)
 
-    def analyze_bins(self, table_name: str = "bins_v1") -> Dict[str, Any]:
+    def analyze_bins(self, table_name: str = "merged_arena_stats.bins_v1") -> Dict[str, Any]:
         """Perform extensive analysis on bins data"""
         with self._get_cursor() as cur:
             cur.execute(f"SELECT * FROM {table_name}")

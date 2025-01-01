@@ -1,0 +1,76 @@
+{
+    "merged_arena_stats.bins_v1": {
+      "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "REAL"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+    "merged_arena_stats.overall": {
+      "columns": [
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"}
+      ],
+      "primary_key": ["metadata_id", "timestamp", "primary_0"]
+    },
+    "arenas_*.bins_v1": {
+      "columns": [
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "bins_0", "type": "INTEGER"},
+        {"name": "size_1", "type": "INTEGER"},
+        {"name": "ind_2", "type": "INTEGER"},
+        {"name": "allocated_3", "type": "INTEGER"},
+        {"name": "nmalloc_4", "type": "INTEGER"},
+        {"name": "rps_5", "type": "INTEGER"},
+        {"name": "ndalloc_6", "type": "INTEGER"},
+        {"name": "rps_7", "type": "INTEGER"},
+        {"name": "nrequests_8", "type": "INTEGER"},
+        {"name": "rps_9", "type": "INTEGER"},
+        {"name": "nshards_10", "type": "INTEGER"},
+        {"name": "curregs_11", "type": "INTEGER"},
+        {"name": "curslabs_12", "type": "INTEGER"},
+        {"name": "nonfull_slabs_13", "type": "INTEGER"},
+        {"name": "regs_14", "type": "INTEGER"},
+        {"name": "pgs_15", "type": "INTEGER"},
+        {"name": "util_16", "type": "REAL"}
+      ],
+      "primary_key": ["timestamp", "metadata_id", "bins_0"]
+    },
+    "arenas_*.overall": {
+      "columns": [
+        {"name": "metadata_id", "type": "INTEGER"},
+        {"name": "timestamp", "type": "INTEGER"},
+        {"name": "primary_0", "type": "TEXT"},
+        {"name": "allocated_0", "type": "INTEGER"},
+        {"name": "nmalloc_1", "type": "INTEGER"},
+        {"name": "ndalloc_3", "type": "INTEGER"},
+        {"name": "rps_2", "type": "INTEGER"},
+        {"name": "rps_4", "type": "INTEGER"}
+      ],
+      "primary_key": ["metadata_id", "timestamp", "primary_0"]
+    }
+  }

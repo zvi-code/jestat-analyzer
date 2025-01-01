@@ -1,0 +1,32 @@
+{
+    "schema_path": "config/table_schemas.json",
+    "analyses": {
+      "bins_analysis": {
+        "table": "merged*stats.bins_v1",
+        "metrics": [
+          {"name": "total_allocated", "column": "allocated_3", "operation": "sum"},
+          {"name": "avg_utilization", "column": "util_16", "operation": "avg"},
+          {"name": "total_slabs", "column": "curslabs_12", "operation": "sum"}
+        ],
+        "groupby": ["bins_0", "size_1"]
+      },
+      "bins_total": {
+        "table": "merged*stats.bins_v1",
+        "metrics": [
+          {"name": "total_allocated", "column": "allocated_3", "operation": "sum"},
+          {"name": "avg_utilization", "column": "util_16", "operation": "avg"},
+          {"name": "total_slabs", "column": "curslabs_12", "operation": "sum"}
+        ],
+        "groupby": ["timestamp"]
+      },
+      "arena_efficiency": {
+        "table": "*overall",
+        "metrics": [
+          {"name": "allocation_rate", "column": "nmalloc_1", "operation": "sum"},
+          {"name": "deallocation_rate", "column": "ndalloc_3", "operation": "sum"},
+          {"name": "net_allocation", "operation": "custom", "formula": "SUM(nmalloc_1) - SUM(ndalloc_3)"}
+        ],
+        "groupby": ["timestamp"]
+      }
+    }
+  }
