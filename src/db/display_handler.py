@@ -33,13 +33,16 @@ class DisplayHandler(BaseDBHandler):
             else:
                 print("Please specify a table pattern to display data.")    
 
-    def print_table_data(self, table_name: str, limit: int = 10) -> None:
+    def print_table_data(self, table_name: str, timestamp = None, limit: int = 10) -> None:
         """Print data from a table in tabular format"""
         schema = self.get_table_schema(table_name)
         headers = [col[0] for col in schema]
         
         with self._get_cursor() as cur:
-            cur.execute(f'SELECT * FROM "{table_name}" LIMIT {limit}')
+            if timestamp:
+                cur.execute(f'SELECT * FROM "{table_name}" WHERE timestamp = "{timestamp}" LIMIT {limit}')
+            else:
+                cur.execute(f'SELECT * FROM "{table_name}" LIMIT {limit}')
             rows = cur.fetchall()
             # print table name with capital letters
             

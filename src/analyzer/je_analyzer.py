@@ -46,9 +46,9 @@ class JeAnalyzer:
                 elif mode == 'meta':
                     self.display_metadata()
                 elif mode == 'table':
-                    self.print_table(table_pattern, limit)
+                    self.print_table(table_pattern, timestamp, limit)
                 elif mode in self.config['analyses']:
-                    result = self.generic_analyzer.analyze(mode)
+                    result = self.generic_analyzer.analyze(mode, timestamp)
                     self._print_formatted_result(result)
                 else:
                     print(f"Unknown mode: {mode} {self.config['analyses']}")
@@ -56,7 +56,7 @@ class JeAnalyzer:
                 print(f"An unexpected error occurred: {str(e)} {self.config['analyses']}")
             print("Done analysing in mode {mode}\n-------------------\n")
 
-    def print_table(self, table_name: str, limit: int = 10):
+    def print_table(self, table_name: str, timestamp = None, limit: int = 10):
         if not table_name:
             raise ValueError("Table name must be provided for 'table' mode")
         
@@ -65,7 +65,7 @@ class JeAnalyzer:
                 matching_tables = self.generic_analyzer._get_matching_tables(table_name)
                 for table in matching_tables:
                     try:
-                        self.display_handler.print_table_data(table, limit)
+                        self.display_handler.print_table_data(table, timestamp, limit)
                     except Exception as e:
                         print(f"Error print_table_data table '{table}': {str(e)}")
             except Exception as e:

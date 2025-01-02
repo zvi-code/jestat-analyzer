@@ -12,7 +12,7 @@ class GenericAnalyzer(BaseTableHandler):
         self.analyzer_config = config['analyses']
         self.current_analysis = None  # Add this line
 
-    def analyze(self, analysis_name: str) -> Dict[str, Any]:
+    def analyze(self, analysis_name: str, timestamp=None) -> Dict[str, Any]:
         self.current_analysis = analysis_name  # Set current analysis name
         config = self.analyzer_config.get(analysis_name)
         if not config:
@@ -36,7 +36,7 @@ class GenericAnalyzer(BaseTableHandler):
 
         table = matching_tables[0]
         schema = self._get_schema_for_table(table)
-        query = self._build_query(table, config['metrics'], config.get('groupby', []), schema)
+        query = self._build_query(table, config['metrics'], config.get('groupby', []), schema, timestamp)
         with self._get_cursor() as cursor:
             cursor.execute(query)
             columns = [description[0] for description in cursor.description]
@@ -47,7 +47,7 @@ class GenericAnalyzer(BaseTableHandler):
             'data': rows
         }
 
-    def _build_query(self, table: str, metrics: List[Dict[str, str]], groupby: List[str], schema: Dict[str, Any]) -> str:
+    def _build_query(self, table: str, metrics: List[Dict[str, str]], groupby: List[str], schema: Dict[str, Any], timestamp = None) -> str:
         select_clauses = []
         where_clauses = []
         having_clauses = []
@@ -60,7 +60,6 @@ class GenericAnalyzer(BaseTableHandler):
                 
                 if 'filter' in formula:
                     where_clauses.append(formula['filter'])
-                    
                 if 'having' in formula:
                     having_clauses.append(f"{metric['name']} {formula['having']}")
                     
@@ -70,7 +69,9 @@ class GenericAnalyzer(BaseTableHandler):
                 if column not in [col['name'] for col in schema['columns']]:
                     raise ValueError(f"Column '{column}' not found in schema for table '{table}'")
                 select_clauses.append(f"{metric['operation']}({column}) as {metric['name']}")
-
+        if timestamp:
+            print(f"Timestamp: {timestamp}")
+            where_clauses.append(f"m.timestamp = '{timestamp}'")
         query = f'SELECT {", ".join(groupby)}, {", ".join(select_clauses)} FROM "{table}"'
         
         if where_clauses:
