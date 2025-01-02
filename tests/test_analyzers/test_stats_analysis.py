@@ -3,12 +3,13 @@ import pytest
 from src.analyzer.je_analyzer import JeAnalyzer
 from src.db.stats_handler import StatsHandler
 import json
+from constants import *
 
 class TestStatsAnalysis:
     def test_percentile_calculations(self, sample_db):
         """Test percentile calculations"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.calculate_table_stats("arenas_0_overall")
+        stats = stats_handler.calculate_table_stats(f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall")
         
         # Update expected values to match our test data
         assert stats['allocated_0']['p50'] == 1000.0  # Median of [1000, 2000]
@@ -21,12 +22,12 @@ class TestStatsAnalysis:
         
         # Use the handler's cursor to modify data
         with stats_handler._get_cursor() as cur:
-            cur.execute("""
-                INSERT INTO arenas_0_overall 
+            cur.execute(f"""
+                INSERT INTO arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall 
                 VALUES (1, '123456789', '2', NULL, NULL, NULL, NULL, NULL)
             """)
         
-        stats = stats_handler.calculate_table_stats("arenas_0_overall")
+        stats = stats_handler.calculate_table_stats(f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall")
         
         # Verify NULL values are handled correctly
         assert stats['allocated_0']['count'] == 2  # Should only count non-NULL values
@@ -35,7 +36,7 @@ class TestStatsAnalysis:
     def test_basic_stats_calculation(self, sample_db):
         """Test basic statistical calculations"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.calculate_table_stats("arenas_0_overall")
+        stats = stats_handler.calculate_table_stats(f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall")
         
         assert stats['allocated_0']['avg'] is not None
         assert stats['allocated_0']['sum'] == 7000.0  # Updated sum
@@ -44,7 +45,7 @@ class TestStatsAnalysis:
     def test_percentile_calculations(self, sample_db):
         """Test percentile calculations"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.calculate_table_stats("arenas_0_overall")
+        stats = stats_handler.calculate_table_stats(f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall")
         
         print("\nFull stats for allocated_0:")
         print(json.dumps(stats['allocated_0'], indent=2))
@@ -56,7 +57,7 @@ class TestStatsAnalysis:
     def test_percentile_calculations_extended(self, sample_db):
         """Test percentile calculations"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.calculate_table_stats("arenas_0_overall")
+        stats = stats_handler.calculate_table_stats(f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall")
         
         print("\nFull stats for allocated_0:")
         print(json.dumps(stats['allocated_0'], indent=2))
@@ -79,7 +80,7 @@ class TestStatsAnalysis:
     def test_column_statistics(self, sample_db, column, expected_stats):
         """Test statistics for specific columns"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.calculate_table_stats("arenas_0_overall")
+        stats = stats_handler.calculate_table_stats(f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall")
         
         assert stats[column]['min'] == expected_stats['min']
         assert stats[column]['max'] == expected_stats['max']
@@ -91,12 +92,12 @@ class TestStatsAnalysis:
         
         # Add a row with NULL values
         with stats_handler._get_cursor() as cur:
-            cur.execute("""
-                INSERT INTO arenas_0_overall 
+            cur.execute(f"""
+                INSERT INTO arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall 
                 VALUES (2, '123456791', '2', NULL, NULL, NULL, NULL, NULL)
             """)
         
-        stats = stats_handler.calculate_table_stats("arenas_0_overall")
+        stats = stats_handler.calculate_table_stats(f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall")
         
         # Verify NULL values are handled correctly
         assert stats['allocated_0']['count'] == 4  # Should count non-NULL values

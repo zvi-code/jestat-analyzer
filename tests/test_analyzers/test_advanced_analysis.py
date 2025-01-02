@@ -1,6 +1,7 @@
 # tests/test_analyzers/test_advanced_analysis.py
 import pytest
 from src.db.stats_handler import StatsHandler
+from constants import *
 
 class TestAdvancedAnalysis:
     def test_memory_trends(self, sample_db):

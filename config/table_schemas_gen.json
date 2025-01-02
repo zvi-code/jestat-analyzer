@@ -52,7 +52,7 @@
       ],
       "primary_key": []
     },
-  "overall_stats.key-value": {
+  "overall_stats__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -61,7 +61,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_overall_stats.key-value": {
+  "stats-overall_stats__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -70,7 +70,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "overall_stats.bg_and_prof": {
+  "overall_stats__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -90,7 +90,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_overall_stats.bg_and_prof": {
+  "stats-overall_stats__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -110,7 +110,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "merged_arena_stats.key-value": {
+  "merged_arena_stats__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -119,7 +119,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_merged_arena_stats.key-value": {
+  "stats-merged_arena_stats__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -128,7 +128,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "merged_arena_stats.decaying": {
+  "merged_arena_stats__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -141,7 +141,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_merged_arena_stats.decaying": {
+  "stats-merged_arena_stats__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -154,7 +154,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "merged_arena_stats.overall": {
+  "merged_arena_stats__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -173,7 +173,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_merged_arena_stats.overall": {
+  "stats-merged_arena_stats__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -192,7 +192,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "merged_arena_stats.bg_and_prof": {
+  "merged_arena_stats__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -212,7 +212,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_merged_arena_stats.bg_and_prof": {
+  "stats-merged_arena_stats__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -232,7 +232,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "merged_arena_stats.bins_v1": {
+  "merged_arena_stats__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -275,7 +275,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_merged_arena_stats.bins_v1": {
+  "stats-merged_arena_stats__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -318,7 +318,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "merged_arena_stats.large": {
+  "merged_arena_stats__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -336,7 +336,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_merged_arena_stats.large": {
+  "stats-merged_arena_stats__large": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -354,7 +354,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_0.key-value": {
+  "arenas-0__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -363,7 +363,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_0.key-value": {
+  "stats-arenas-0__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -372,7 +372,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_0.decaying": {
+  "arenas-0__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -385,7 +385,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_0.decaying": {
+  "stats-arenas-0__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -398,7 +398,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_0.overall": {
+  "arenas-0__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -417,7 +417,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_0.overall": {
+  "stats-arenas-0__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -436,7 +436,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_0.bg_and_prof": {
+  "arenas-0__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -456,7 +456,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_0.bg_and_prof": {
+  "stats-arenas-0__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -476,7 +476,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_0.bins_v1": {
+  "arenas-0__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -519,7 +519,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_0.bins_v1": {
+  "stats-arenas-0__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -562,7 +562,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_0.large": {
+  "arenas-0__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -580,7 +580,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_0.large": {
+  "stats-arenas-0__large": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -598,7 +598,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_0.extents": {
+  "arenas-0__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -616,7 +616,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_0.extents": {
+  "stats-arenas-0__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -634,7 +634,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_1.key-value": {
+  "arenas-1__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -643,7 +643,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_1.key-value": {
+  "stats-arenas-1__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -652,7 +652,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_1.decaying": {
+  "arenas-1__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -665,7 +665,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_1.decaying": {
+  "stats-arenas-1__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -678,7 +678,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_1.overall": {
+  "arenas-1__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -697,7 +697,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_1.overall": {
+  "stats-arenas-1__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -716,7 +716,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_1.bg_and_prof": {
+  "arenas-1__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -736,7 +736,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_1.bg_and_prof": {
+  "stats-arenas-1__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -756,7 +756,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_1.bins_v1": {
+  "arenas-1__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -799,7 +799,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_1.bins_v1": {
+  "stats-arenas-1__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -842,7 +842,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_1.large": {
+  "arenas-1__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -860,7 +860,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_1.large": {
+  "stats-arenas-1__large": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -878,7 +878,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_1.extents": {
+  "arenas-1__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -896,7 +896,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_1.extents": {
+  "stats-arenas-1__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -914,7 +914,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_1.nonfull_slabs": {
+  "arenas-1__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -930,7 +930,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_1.nonfull_slabs": {
+  "stats-arenas-1__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -946,7 +946,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_2.key-value": {
+  "arenas-2__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -955,7 +955,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_2.key-value": {
+  "stats-arenas-2__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -964,7 +964,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_2.decaying": {
+  "arenas-2__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -977,7 +977,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_2.decaying": {
+  "stats-arenas-2__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -990,7 +990,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_2.overall": {
+  "arenas-2__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1009,7 +1009,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_2.overall": {
+  "stats-arenas-2__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1028,7 +1028,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_2.bg_and_prof": {
+  "arenas-2__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1048,7 +1048,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_2.bg_and_prof": {
+  "stats-arenas-2__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1068,7 +1068,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_2.bins_v1": {
+  "arenas-2__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1111,7 +1111,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_2.bins_v1": {
+  "stats-arenas-2__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1154,7 +1154,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_2.large": {
+  "arenas-2__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1172,7 +1172,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_2.large": {
+  "stats-arenas-2__large": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1190,7 +1190,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_2.extents": {
+  "arenas-2__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1208,7 +1208,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_2.extents": {
+  "stats-arenas-2__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1226,7 +1226,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_2.nonfull_slabs": {
+  "arenas-2__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1242,7 +1242,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_2.nonfull_slabs": {
+  "stats-arenas-2__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1258,7 +1258,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_3.key-value": {
+  "arenas-3__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1267,7 +1267,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_3.key-value": {
+  "stats-arenas-3__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1276,7 +1276,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_3.decaying": {
+  "arenas-3__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1289,7 +1289,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_3.decaying": {
+  "stats-arenas-3__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1302,7 +1302,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_3.overall": {
+  "arenas-3__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1321,7 +1321,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_3.overall": {
+  "stats-arenas-3__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1340,7 +1340,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_3.bg_and_prof": {
+  "arenas-3__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1360,7 +1360,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_3.bg_and_prof": {
+  "stats-arenas-3__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1380,7 +1380,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_3.bins_v1": {
+  "arenas-3__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1423,7 +1423,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_3.bins_v1": {
+  "stats-arenas-3__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1466,7 +1466,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_3.large": {
+  "arenas-3__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1484,7 +1484,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_3.large": {
+  "stats-arenas-3__large": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1502,7 +1502,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_3.extents": {
+  "arenas-3__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1520,7 +1520,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_3.extents": {
+  "stats-arenas-3__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1538,7 +1538,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_4.key-value": {
+  "arenas-4__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1547,7 +1547,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_4.key-value": {
+  "stats-arenas-4__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1556,7 +1556,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_4.decaying": {
+  "arenas-4__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1569,7 +1569,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_4.decaying": {
+  "stats-arenas-4__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1582,7 +1582,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_4.overall": {
+  "arenas-4__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1601,7 +1601,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_4.overall": {
+  "stats-arenas-4__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1620,7 +1620,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_4.bg_and_prof": {
+  "arenas-4__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1640,7 +1640,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_4.bg_and_prof": {
+  "stats-arenas-4__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1660,7 +1660,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_4.bins_v1": {
+  "arenas-4__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1703,7 +1703,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_4.bins_v1": {
+  "stats-arenas-4__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1746,7 +1746,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_4.large": {
+  "arenas-4__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1764,7 +1764,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_4.large": {
+  "stats-arenas-4__large": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1782,7 +1782,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_4.extents": {
+  "arenas-4__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1800,7 +1800,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_4.extents": {
+  "stats-arenas-4__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1818,7 +1818,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_4.nonfull_slabs": {
+  "arenas-4__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1834,7 +1834,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_4.nonfull_slabs": {
+  "stats-arenas-4__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1850,7 +1850,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_5.key-value": {
+  "arenas-5__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1859,7 +1859,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_5.key-value": {
+  "stats-arenas-5__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1868,7 +1868,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_5.decaying": {
+  "arenas-5__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1881,7 +1881,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_5.decaying": {
+  "stats-arenas-5__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1894,7 +1894,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_5.overall": {
+  "arenas-5__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1913,7 +1913,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_5.overall": {
+  "stats-arenas-5__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1932,7 +1932,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_5.bg_and_prof": {
+  "arenas-5__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1952,7 +1952,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_5.bg_and_prof": {
+  "stats-arenas-5__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -1972,7 +1972,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_5.bins_v1": {
+  "arenas-5__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2015,7 +2015,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_5.bins_v1": {
+  "stats-arenas-5__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2058,7 +2058,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_5.large": {
+  "arenas-5__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2076,7 +2076,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_5.large": {
+  "stats-arenas-5__large": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2094,7 +2094,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_5.extents": {
+  "arenas-5__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2112,7 +2112,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_5.extents": {
+  "stats-arenas-5__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2130,7 +2130,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_5.nonfull_slabs": {
+  "arenas-5__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2146,7 +2146,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_5.nonfull_slabs": {
+  "stats-arenas-5__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2162,7 +2162,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_6.key-value": {
+  "arenas-6__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2171,7 +2171,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_6.key-value": {
+  "stats-arenas-6__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2180,7 +2180,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_6.decaying": {
+  "arenas-6__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2193,7 +2193,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_6.decaying": {
+  "stats-arenas-6__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2206,7 +2206,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_6.overall": {
+  "arenas-6__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2225,7 +2225,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_6.overall": {
+  "stats-arenas-6__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2244,7 +2244,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_6.bg_and_prof": {
+  "arenas-6__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2264,7 +2264,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_6.bg_and_prof": {
+  "stats-arenas-6__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2284,7 +2284,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_6.bins_v1": {
+  "arenas-6__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2327,7 +2327,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_6.bins_v1": {
+  "stats-arenas-6__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2370,7 +2370,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_6.large": {
+  "arenas-6__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2388,7 +2388,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_6.large": {
+  "stats-arenas-6__large": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2406,7 +2406,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_6.extents": {
+  "arenas-6__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2424,7 +2424,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_6.extents": {
+  "stats-arenas-6__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2442,7 +2442,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_6.nonfull_slabs": {
+  "arenas-6__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2458,7 +2458,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_6.nonfull_slabs": {
+  "stats-arenas-6__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2474,7 +2474,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_7.key-value": {
+  "arenas-7__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2483,7 +2483,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_7.key-value": {
+  "stats-arenas-7__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2492,7 +2492,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_7.decaying": {
+  "arenas-7__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2505,7 +2505,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_7.decaying": {
+  "stats-arenas-7__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2518,7 +2518,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_7.overall": {
+  "arenas-7__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2537,7 +2537,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_7.overall": {
+  "stats-arenas-7__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2556,7 +2556,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_7.bg_and_prof": {
+  "arenas-7__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2576,7 +2576,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_7.bg_and_prof": {
+  "stats-arenas-7__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2596,7 +2596,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_7.bins_v1": {
+  "arenas-7__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2639,7 +2639,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_7.bins_v1": {
+  "stats-arenas-7__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2682,7 +2682,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_7.large": {
+  "arenas-7__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2700,7 +2700,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_7.large": {
+  "stats-arenas-7__large": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2718,7 +2718,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_7.extents": {
+  "arenas-7__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2736,7 +2736,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_7.extents": {
+  "stats-arenas-7__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2754,7 +2754,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_7.nonfull_slabs": {
+  "arenas-7__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2770,7 +2770,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_7.nonfull_slabs": {
+  "stats-arenas-7__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2786,7 +2786,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_8.key-value": {
+  "arenas-8__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2795,7 +2795,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_8.key-value": {
+  "stats-arenas-8__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2804,7 +2804,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_8.decaying": {
+  "arenas-8__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2817,7 +2817,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_8.decaying": {
+  "stats-arenas-8__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2830,7 +2830,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_8.overall": {
+  "arenas-8__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2849,7 +2849,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_8.overall": {
+  "stats-arenas-8__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2868,7 +2868,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_8.bg_and_prof": {
+  "arenas-8__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2888,7 +2888,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_8.bg_and_prof": {
+  "stats-arenas-8__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2908,7 +2908,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_8.bins_v1": {
+  "arenas-8__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2951,7 +2951,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_8.bins_v1": {
+  "stats-arenas-8__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -2994,7 +2994,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_8.large": {
+  "arenas-8__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3012,7 +3012,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_8.large": {
+  "stats-arenas-8__large": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3030,7 +3030,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_8.extents": {
+  "arenas-8__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3048,7 +3048,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_8.extents": {
+  "stats-arenas-8__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3066,7 +3066,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_8.nonfull_slabs": {
+  "arenas-8__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3082,7 +3082,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_8.nonfull_slabs": {
+  "stats-arenas-8__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3098,7 +3098,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_9.key-value": {
+  "arenas-9__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3107,7 +3107,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_9.key-value": {
+  "stats-arenas-9__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3116,7 +3116,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_9.decaying": {
+  "arenas-9__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3129,7 +3129,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_9.decaying": {
+  "stats-arenas-9__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3142,7 +3142,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_9.overall": {
+  "arenas-9__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3161,7 +3161,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_9.overall": {
+  "stats-arenas-9__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3180,7 +3180,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_9.bg_and_prof": {
+  "arenas-9__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3200,7 +3200,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_9.bg_and_prof": {
+  "stats-arenas-9__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3220,7 +3220,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_9.bins_v1": {
+  "arenas-9__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3263,7 +3263,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_9.bins_v1": {
+  "stats-arenas-9__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3306,7 +3306,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_9.large": {
+  "arenas-9__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3324,7 +3324,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_9.large": {
+  "stats-arenas-9__large": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3342,7 +3342,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_9.extents": {
+  "arenas-9__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3360,7 +3360,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_9.extents": {
+  "stats-arenas-9__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3378,7 +3378,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_9.nonfull_slabs": {
+  "arenas-9__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3394,7 +3394,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_9.nonfull_slabs": {
+  "stats-arenas-9__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3410,7 +3410,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_10.key-value": {
+  "arenas-10__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3419,7 +3419,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_10.key-value": {
+  "stats-arenas-10__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3428,7 +3428,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_10.decaying": {
+  "arenas-10__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3441,7 +3441,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_10.decaying": {
+  "stats-arenas-10__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3454,7 +3454,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_10.overall": {
+  "arenas-10__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3473,7 +3473,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_10.overall": {
+  "stats-arenas-10__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3492,7 +3492,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_10.bg_and_prof": {
+  "arenas-10__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3512,7 +3512,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_10.bg_and_prof": {
+  "stats-arenas-10__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3532,7 +3532,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_10.bins_v1": {
+  "arenas-10__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3575,7 +3575,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_10.bins_v1": {
+  "stats-arenas-10__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3618,7 +3618,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_10.large": {
+  "arenas-10__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3636,7 +3636,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_10.large": {
+  "stats-arenas-10__large": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3654,7 +3654,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_10.extents": {
+  "arenas-10__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3672,7 +3672,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_10.extents": {
+  "stats-arenas-10__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3690,7 +3690,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_10.nonfull_slabs": {
+  "arenas-10__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3706,7 +3706,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_10.nonfull_slabs": {
+  "stats-arenas-10__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3722,7 +3722,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_11.key-value": {
+  "arenas-11__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3731,7 +3731,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_11.key-value": {
+  "stats-arenas-11__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3740,7 +3740,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_11.decaying": {
+  "arenas-11__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3753,7 +3753,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_11.decaying": {
+  "stats-arenas-11__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3766,7 +3766,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_11.overall": {
+  "arenas-11__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3785,7 +3785,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_11.overall": {
+  "stats-arenas-11__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3804,7 +3804,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_11.bg_and_prof": {
+  "arenas-11__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3824,7 +3824,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_11.bg_and_prof": {
+  "stats-arenas-11__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3844,7 +3844,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_11.bins_v1": {
+  "arenas-11__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3887,7 +3887,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_11.bins_v1": {
+  "stats-arenas-11__bins_v1": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3930,7 +3930,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_11.large": {
+  "arenas-11__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3948,7 +3948,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_11.large": {
+  "stats-arenas-11__large": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3966,7 +3966,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_11.extents": {
+  "arenas-11__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -3984,7 +3984,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_11.extents": {
+  "stats-arenas-11__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4002,7 +4002,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_11.nonfull_slabs": {
+  "arenas-11__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4018,7 +4018,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_11.nonfull_slabs": {
+  "stats-arenas-11__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4034,7 +4034,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_192.key-value": {
+  "arenas-192__key-value": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4043,7 +4043,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "Key"]
     },
-  "stats_arenas_192.key-value": {
+  "stats-arenas-192__key-value": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4052,7 +4052,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "Key"]
     },
-  "arenas_192.decaying": {
+  "arenas-192__decaying": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4065,7 +4065,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_192.decaying": {
+  "stats-arenas-192__decaying": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4078,7 +4078,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_192.overall": {
+  "arenas-192__overall": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4097,7 +4097,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_192.overall": {
+  "stats-arenas-192__overall": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4116,7 +4116,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_192.bg_and_prof": {
+  "arenas-192__bg_and_prof": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4136,7 +4136,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "primary_0"]
     },
-  "stats_arenas_192.bg_and_prof": {
+  "stats-arenas-192__bg_and_prof": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4156,7 +4156,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "primary_0"]
     },
-  "arenas_192.bins_v1": {
+  "arenas-192__bins_v1": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4199,7 +4199,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-  "stats_arenas_192.bins_v1": {
+  "stats-arenas-192__bins_v1": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4242,7 +4242,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "bins_0"]
     },
-  "arenas_192.large": {
+  "arenas-192__large": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4260,7 +4260,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "large_0"]
     },
-  "stats_arenas_192.large": {
+  "stats-arenas-192__large": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4278,7 +4278,7 @@
       ],
       "primary_key": ["metric", "metadata_id", "large_0"]
     },
-  "arenas_192.extents": {
+  "arenas-192__extents": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4296,7 +4296,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_192.extents": {
+  "stats-arenas-192__extents": {
     "columns": [
         {"name": "metric", "type": "TEXT"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4314,7 +4314,7 @@
       ],
       "primary_key": ["metric", "metadata_id"]
     },
-  "arenas_192.nonfull_slabs": {
+  "arenas-192__nonfull_slabs": {
     "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -4330,7 +4330,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id"]
     },
-  "stats_arenas_192.nonfull_slabs": {
+  "stats-arenas-192__nonfull_slabs": {
     "columns": [
         {"name": "metric", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},

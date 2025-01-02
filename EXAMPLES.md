@@ -29,20 +29,20 @@ je-analyze stats3.db --list-tables --prefix arenas
 
 ```bash
 je-analyze ../stats3.db --mode bins_analysis
-je-analyze ../stats3.db --mode table --table merged_arena_stats.bins_v1 --limit 20
-je-analyze ../stats3.db --table merged_arena_stats.bins_v1 --limit 20
+je-analyze ../stats3.db --mode table --table stats-merged_arena_stats__bins_v1 --limit 20
+je-analyze ../stats3.db --table stats-merged_arena_stats__bins_v1 --limit 20
 ```
 
 Example output:
 ```bash
 $ je-analyze stats3.db --list-tables
 Available tables in database:
-- arenas_0.bins_v1
+- arenas_0__bins_v1
 - arenas_0.overall
-- arenas_1.bins_v1
+- arenas_1__bins_v1
 - arenas_1.overall
 - je_metadata
-- merged_arena_stats.bins_v1
+- stats-merged_arena_stats__bins_v1
 - merged_arena_stats.overall
 ```
 
@@ -50,7 +50,7 @@ Available tables in database:
 $ je-analyze stats3.db --list-tables --prefix merged
 Available tables in database:
 (filtered by prefix: 'merged')
-- merged_arena_stats.bins_v1
+- stats-merged_arena_stats__bins_v1
 - merged_arena_stats.overall
 ```
 
@@ -58,9 +58,9 @@ Available tables in database:
 $ je-analyze stats3.db --list-tables --prefix arenas
 Available tables in database:
 (filtered by prefix: 'arenas')
-- arenas_0.bins_v1
+- arenas_0__bins_v1
 - arenas_0.overall
-- arenas_1.bins_v1
+- arenas_1__bins_v1
 - arenas_1.overall
 ```
 
@@ -302,9 +302,9 @@ Done analysing in mode {mode}
 
 
 ```bash
-newJParser [mainline] $ je-analyze ../stats3.db --table merged_arena_stats.bins_v1                                                                                 
+newJParser [mainline] $ je-analyze ../stats3.db --table stats-merged_arena_stats__bins_v1                                                                                 
 
-Data from table 'merged_arena_stats.bins_v1' (first 10 rows):
+Data from table 'stats-merged_arena_stats__bins_v1' (first 10 rows):
 +-----------+-------------+--------+--------+-------+-------------+-----------+--------+-----------+--------+-------------+--------+------------+------------+-------------+------------------+---------+--------+---------+-----------+--------+-------------+--------+-----------+-------------+--------+---------------+--------+--------------+--------+---------------+--------+-------------------+--------+------------------+--------+----------------+---------------+
 | timestamp | metadata_id | bins_0 | size_1 | ind_2 | allocated_3 | nmalloc_4 | rps_5  | ndalloc_6 | rps_7  | nrequests_8 | rps_9  | nshards_10 | curregs_11 | curslabs_12 | nonfull_slabs_13 | regs_14 | pgs_15 | util_16 | nfills_17 | rps_18 | nflushes_19 | rps_20 | nslabs_21 | nreslabs_22 | rps_23 | n_lock_ops_24 | rps_25 | n_waiting_26 | rps_27 | n_spin_acq_28 | rps_29 | n_owner_switch_30 | rps_31 | total_wait_ns_32 | rps_33 | max_wait_ns_34 | max_n_thds_35 |
 +-----------+-------------+--------+--------+-------+-------------+-----------+--------+-----------+--------+-------------+--------+------------+------------+-------------+------------------+---------+--------+---------+-----------+--------+-------------+--------+-----------+-------------+--------+---------------+--------+--------------+--------+---------------+--------+-------------------+--------+------------------+--------+----------------+---------------+

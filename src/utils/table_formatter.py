@@ -1,6 +1,6 @@
 # src/utils/table_formatter.py
 from typing import List, Any
-
+from constants import *
 class TableFormatter:
     """Handles all table formatting and display logic"""
     

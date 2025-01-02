@@ -2,6 +2,7 @@
 import json
 from typing import Dict, Any, List
 from src.db.base_handler import BaseDBHandler
+from constants import *
 
 class BaseTableHandler(BaseDBHandler):
     def __init__(self, db_path: str, schema_path: str):

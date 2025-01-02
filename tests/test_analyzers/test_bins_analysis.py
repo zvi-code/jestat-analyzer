@@ -3,6 +3,7 @@ import pytest
 from src.db.stats_handler import StatsHandler
 import pandas as pd
 import numpy as np
+from constants import *
 
 class TestBinsAnalysis:
     def test_analyze_bins_structure(self, sample_db):

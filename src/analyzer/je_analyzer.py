@@ -5,10 +5,15 @@ from src.db.display_handler import DisplayHandler
 from src.analyzer.generic_analyzer import GenericAnalyzer
 from src.utils.table_formatter import TableFormatter
 import re
-
+from constants import *
+def load_config(config_path):
+    with open(config_path, 'r') as f:
+        return json.load(f)
 class JeAnalyzer:
-    def __init__(self, db_path: str, config: dict):
+    def __init__(self, db_path: str, config=None):
         self.db_path = db_path
+        if not config:
+            config = load_config('config/analyzer_config.json')
         self.config = config
         self.stats_handler = StatsHandler(db_path)
         self.display_handler = DisplayHandler(db_path)

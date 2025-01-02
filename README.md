@@ -29,7 +29,7 @@ $ python ./config/schemas_generator.py ../stats3.db ./config/table_schemas_gen.j
     "schema_path": "config/table_schemas_gen.json",
     "analyses": {
       "bins_analysis": {
-        "table": "merged*stats.bins_v1",
+        "table": "merged*stats__bins_v1",
         "metrics": [
           {"name": "total_allocated", "column": "allocated_3", "operation": "sum"},
           {"name": "avg_utilization", "column": "util_16", "operation": "avg"},
@@ -50,7 +50,7 @@ View raw data from any table in the database.
 
 ```bash
 # View first 10 rows of a specific table
-$ je-analyze stats.db --table merged_arena_stats.bins_v1 --limit 10
+$ je-analyze stats.db --table stats-merged_arena_stats__bins_v1 --limit 10
 
 # View all tables in the database
 $ je-analyze stats.db --list-tables
@@ -141,7 +141,7 @@ You can define custom analyses in the configuration file. Example configuration:
 ```json
 {
     "custom_analysis": {
-        "table": "merged_arena_stats.bins_v1",
+        "table": "stats-merged_arena_stats__bins_v1",
         "metrics": [
             {
                 "name": "total_allocated",

@@ -2,12 +2,13 @@
 import pytest
 from src.analyzer.je_analyzer import JeAnalyzer
 from src.db.stats_handler import StatsHandler
+from constants import *
 
 class TestArenaAnalysis:
     def test_basic_arena_stats(self, sample_db):
         """Test basic arena statistics calculation"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.analyze_arenas_activity(["arenas_0_overall"])
+        stats = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
         
         assert stats is not None
         assert len(stats) == 2  # Two timestamps
@@ -19,7 +20,7 @@ class TestArenaAnalysis:
     def test_arena_memory_percentages(self, sample_db):
         """Test memory percentage calculations"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.analyze_arenas_activity(["arenas_0_overall"])
+        stats = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
         
         assert float(stats[0]['memory_percent']) == 100.0
         assert float(stats[0]['small_percent']) + float(stats[0]['large_percent']) == 100.0
@@ -29,7 +30,7 @@ class TestArenaAnalysis:
         analyzer = JeAnalyzer(sample_db)
         stats_handler = StatsHandler(sample_db)
         
-        stats = stats_handler.analyze_arenas_activity(["arenas_0_overall"])
+        stats = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
         
         # Verify allocation rates
         assert float(stats[0]['alloc_rps']) == 150  # Sum of both rows
@@ -45,7 +46,7 @@ class TestArenaAnalysis:
         stats_handler = StatsHandler(sample_db)
         
         stats = stats_handler.analyze_arenas_activity(
-            ["arenas_0_overall"], 
+            [f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"], 
             timestamp=timestamp
         )
         
@@ -64,8 +65,8 @@ class TestArenaAnalysis:
         stats_handler = StatsHandler(sample_db)
         
         # Run analysis multiple times
-        stats1 = stats_handler.analyze_arenas_activity(["arenas_0_overall"])
-        stats2 = stats_handler.analyze_arenas_activity(["arenas_0_overall"])
+        stats1 = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
+        stats2 = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
         
         # Results should be identical
         assert stats1 == stats2

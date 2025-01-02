@@ -1,3 +1,4 @@
+README.md
 setup.py
 je_analyzer.egg-info/PKG-INFO
 je_analyzer.egg-info/SOURCES.txt
@@ -8,9 +9,11 @@ je_analyzer.egg-info/top_level.txt
 src/__init__.py
 src/cli.py
 src/analyzer/__init__.py
+src/analyzer/generic_analyzer.py
 src/analyzer/je_analyzer.py
 src/db/__init__.py
 src/db/base_handler.py
+src/db/base_table_handler.py
 src/db/display_handler.py
 src/db/stats_handler.py
 src/scripts/__init__.py

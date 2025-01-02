@@ -1,5 +1,5 @@
 {
-    "merged_arena_stats.bins_v1": {
+    "stats-merged_arena_stats__bins_v1": {
       "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -42,7 +42,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-    "merged_arena_stats.overall": {
+    "merged_arena_stats__overall": {
       "columns": [
         {"name": "metadata_id", "type": "INTEGER"},
         {"name": "timestamp", "type": "INTEGER"},
@@ -61,7 +61,7 @@
       ],
       "primary_key": ["metadata_id", "timestamp", "primary_0"]
     },
-    "arenas_*.bins_v1": {
+    "arenas_*__bins_v1": {
       "columns": [
         {"name": "timestamp", "type": "INTEGER"},
         {"name": "metadata_id", "type": "INTEGER"},
@@ -104,7 +104,7 @@
       ],
       "primary_key": ["timestamp", "metadata_id", "bins_0"]
     },
-    "arenas_*.overall": {
+    "arenas_*__overall": {
       "columns": [
         {"name": "metadata_id", "type": "INTEGER"},
         {"name": "timestamp", "type": "INTEGER"},

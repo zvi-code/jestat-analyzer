@@ -3,6 +3,7 @@ from typing import List, Dict, Any, Optional
 from .base_handler import BaseDBHandler
 import pandas as pd
 import numpy as np
+from constants import *
 
 class StatsHandler(BaseDBHandler):
     def generate_comprehensive_report(self, window_size: int = 5, 
@@ -31,14 +32,14 @@ class StatsHandler(BaseDBHandler):
     def analyze_memory_trends(self, table_names: List[str] = None, window_size: int = 5) -> Dict:
         """Analyze memory allocation trends over time"""
         with self._get_cursor() as cur:
-            query = """
+            query = f"""
             WITH arena_data AS (
                 SELECT 
                     timestamp,
                     SUM(CAST(allocated_0 AS FLOAT)) as total_allocated,
                     SUM(CAST(nmalloc_1 AS FLOAT)) as total_allocs,
                     SUM(CAST(ndalloc_3 AS FLOAT)) as total_deallocs
-                FROM arenas_0_overall
+                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
                 GROUP BY timestamp
             ),
             trend_data AS (
@@ -94,19 +95,19 @@ class StatsHandler(BaseDBHandler):
     def analyze_arena_efficiency(self) -> Dict:
         """Analyze efficiency metrics for each arena"""
         with self._get_cursor() as cur:
-            query = """
+            query = f"""
             WITH arena_metrics AS (
                 SELECT 
                     metadata_id,
                     timestamp,
-                    primary_0 as arena_id,  -- Use primary_0 as arena_id
+                    {COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX} as arena_id,  -- Use primary_0 as arena_id
                     SUM(CAST(allocated_0 AS FLOAT)) as allocated,
                     SUM(CAST(nmalloc_1 AS FLOAT)) as allocations,
                     SUM(CAST(ndalloc_3 AS FLOAT)) as deallocations,
                     SUM(CAST(rps_2 AS FLOAT)) as alloc_rate,
                     SUM(CAST(rps_4 AS FLOAT)) as dealloc_rate
-                FROM arenas_0_overall
-                GROUP BY metadata_id, timestamp, primary_0
+                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
+                GROUP BY metadata_id, timestamp, {COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX}
             )
             SELECT 
                 timestamp,
@@ -128,7 +129,7 @@ class StatsHandler(BaseDBHandler):
     def analyze_arena_efficiency33(self) -> Dict:
         """Analyze efficiency metrics for each arena"""
         with self._get_cursor() as cur:
-            query = """
+            query = f"""
             WITH arena_metrics AS (
                 SELECT 
                     metadata_id,
@@ -139,7 +140,7 @@ class StatsHandler(BaseDBHandler):
                     SUM(CAST(ndalloc_3 AS FLOAT)) as deallocations,
                     SUM(CAST(rps_2 AS FLOAT)) as alloc_rate,
                     SUM(CAST(rps_4 AS FLOAT)) as dealloc_rate
-                FROM arenas_0_overall
+                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
                 GROUP BY metadata_id, timestamp, row_name
             )
             SELECT 
@@ -162,7 +163,7 @@ class StatsHandler(BaseDBHandler):
     def analyze_arena_efficiency2(self) -> Dict:
         """Analyze efficiency metrics for each arena"""
         with self._get_cursor() as cur:
-            query = """
+            query = f"""
             WITH arena_metrics AS (
                 SELECT 
                     metadata_id,
@@ -173,7 +174,7 @@ class StatsHandler(BaseDBHandler):
                     SUM(CAST(ndalloc_3 AS FLOAT)) as deallocations,
                     SUM(CAST(rps_2 AS FLOAT)) as alloc_rate,
                     SUM(CAST(rps_4 AS FLOAT)) as dealloc_rate
-                FROM arenas_0_overall
+                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
                 GROUP BY metadata_id, timestamp, arena_id
             )
             SELECT 
@@ -196,7 +197,7 @@ class StatsHandler(BaseDBHandler):
     def detect_potential_leaks(self, threshold_percent: float = 10.0) -> Dict:
         """Detect potential memory leaks based on allocation patterns"""
         with self._get_cursor() as cur:
-            query = """
+            query = f"""
             WITH allocation_patterns AS (
                 SELECT 
                     timestamp,
@@ -204,7 +205,7 @@ class StatsHandler(BaseDBHandler):
                     SUM(CAST(allocated_0 AS FLOAT)) as total_allocated,
                     SUM(CAST(nmalloc_1 AS FLOAT)) - SUM(CAST(ndalloc_3 AS FLOAT)) as net_allocations,
                     LAG(SUM(CAST(allocated_0 AS FLOAT))) OVER (ORDER BY timestamp) as prev_allocated
-                FROM arenas_0_overall
+                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
                 GROUP BY timestamp, metadata_id
             )
             SELECT 
@@ -418,7 +419,7 @@ class StatsHandler(BaseDBHandler):
         with self._get_cursor() as cur:
             required_columns = {
                 'metadata_id': True,
-                'primary_0': True, 
+                f'{COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX}': True, 
                 'allocated_0': True,
                 'nmalloc_1': True,
                 'ndalloc_3': True,
@@ -454,7 +455,7 @@ class StatsHandler(BaseDBHandler):
                     m.timestamp,
                     t.metadata_id,
                     '{table}' as table_name,
-                    t.primary_0 as row_name, 
+                    t.{COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX} as row_name, 
                     t.allocated_0 as allocated,
                     t.nmalloc_1 as nmalloc,
                     t.ndalloc_3 as ndalloc,
@@ -522,7 +523,7 @@ class StatsHandler(BaseDBHandler):
         with self._get_cursor() as cur:
             required_columns = {
                 'metadata_id': True,
-                'primary_0': True, 
+                f'{COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX}': True, 
                 'allocated_0': True,
                 'nmalloc_1': True,
                 'ndalloc_3': True,
@@ -555,7 +556,7 @@ class StatsHandler(BaseDBHandler):
                     m.timestamp,
                     t.metadata_id,
                     '{table}' as table_name,
-                    t.primary_0 as row_name, 
+                    t.{COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX} as row_name, 
                     t.allocated_0 as allocated,
                     t.nmalloc_1 as nmalloc,
                     t.ndalloc_3 as ndalloc,
@@ -574,10 +575,10 @@ class StatsHandler(BaseDBHandler):
                     timestamp,
                     metadata_id,
                     CAST(SUBSTR(table_name, 8, 
-                        INSTR(SUBSTR(table_name, 8), '_') - 1) AS INTEGER) as table_type,
+                        INSTR(SUBSTR(table_name, 8), '{SECTION_TABLE_CON}') - 1) AS INTEGER) as table_type,
                     CAST(SUBSTR(table_name, 
-                        8 + INSTR(SUBSTR(table_name, 8), '_'), 
-                        INSTR(table_name, '.') - (8 + INSTR(SUBSTR(table_name, 8), '_'))) 
+                        8 + INSTR(SUBSTR(table_name, 8), '{SECTION_TABLE_CON}'), 
+                        INSTR(table_name, '{SECTION_TABLE_CON}') - (8 + INSTR(SUBSTR(table_name, 8), '{SECTION_TABLE_CON}'))) 
                         AS INTEGER) as arena_id,
                     SUM(allocated) as total_allocated,
                     SUM(CASE WHEN row_name = 0 THEN allocated ELSE 0 END) as small_allocated,
@@ -630,7 +631,7 @@ class StatsHandler(BaseDBHandler):
                 print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
                 self.formatter.print_table(headers, grouped_rows)
 
-    def analyze_bins(self, table_name: str = "merged_arena_stats.bins_v1") -> Dict[str, Any]:
+    def analyze_bins(self, table_name: str = "stats-merged_arena_stats__bins_v1") -> Dict[str, Any]:
         """Perform extensive analysis on bins data"""
         with self._get_cursor() as cur:
             cur.execute(f"SELECT * FROM {table_name}")

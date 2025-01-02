@@ -3,7 +3,9 @@ from typing import Dict, Any, List
 from src.db.base_table_handler import BaseTableHandler
 import json
 import re
+from constants import *
 
+SECTION_NAME_CON = '-'
 class GenericAnalyzer(BaseTableHandler):
     def __init__(self, db_path: str, schema_path: str, config: dict):
         super().__init__(db_path, schema_path)
@@ -125,7 +127,7 @@ class GenericAnalyzer(BaseTableHandler):
     def _analyze_arena_comparison(self, config: Dict) -> Dict[str, Any]:
         """Special handler for arena comparison analysis"""
         # Get all arena overall tables
-        arena_tables = self._get_matching_tables("arenas_*.overall")
+        arena_tables = self._get_matching_tables(f"arenas_*{SECTION_TABLE_CON}overall")
         
         if not arena_tables:
             raise ValueError("No arena tables found")
@@ -146,7 +148,7 @@ class GenericAnalyzer(BaseTableHandler):
     def _build_arena_comparison_query(self, arena_tables: List[str], metrics: List[Dict]) -> str:
         """Builds a UNION ALL query for arena comparison"""
         import re
-        arena_pattern = re.compile(r'arenas_(\d+)\.overall')
+        arena_pattern = re.compile(r'arenas_(\d+)%soverall' % SECTION_TABLE_CON)
         
         # First, create a CTE (Common Table Expression) to calculate total allocation
         cte_queries = []
@@ -192,11 +194,11 @@ class GenericAnalyzer(BaseTableHandler):
         return combined_query
     def _build_arena_comparison_que3ry(self, metrics: List[Dict[str, str]], groupby: List[str]) -> str:
         # Get all arena overall tables
-        arena_tables = self._get_matching_tables("arenas_*.overall")
+        arena_tables = self._get_matching_tables(f"arenas_*{SECTION_TABLE_CON}overall")
         
         # Extract arena IDs using regex
         import re
-        arena_pattern = re.compile(r'arenas_(\d+)\.overall')
+        arena_pattern = re.compile(r'arenas_(\d+)%soverall' % SECTION_TABLE_CON)
         
         # Build individual queries for each arena
         queries = []

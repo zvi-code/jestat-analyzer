@@ -1,6 +1,7 @@
 # src/db/display_handler.py
 from typing import List, Optional
 from .base_handler import BaseDBHandler
+from constants import *
 
 class DisplayHandler(BaseDBHandler):
     """Handles data display and formatting"""
