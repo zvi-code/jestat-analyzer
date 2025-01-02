@@ -2,7 +2,7 @@
     "schema_path": "config/table_schemas_gen.json",
     "analyses": {
       "bins_analysis": {
-        "table": "merged*stats__bins_v1",
+        "table": "^merged.*stats__bins_v1$",
         "metrics": [
           {"name": "total_allocated", "column": "allocated", "operation": "sum"},
           {"name": "avg_utilization", "column": "util", "operation": "avg"},
@@ -11,7 +11,7 @@
         "groupby": ["bins", "size"]
       },
       "bins_total": {
-        "table": "merged*stats__bins_v1",
+        "table": "^merged.*stats__bins_v1$",
         "metrics": [
           {"name": "total_allocated", "column": "allocated", "operation": "sum"},
           {"name": "avg_utilization", "column": "util", "operation": "avg"},
@@ -21,7 +21,7 @@
         "groupby": ["timestamp"]
       },
       "arena_efficiency": {
-        "table": "*overall",
+        "table": "^.*overall$",
         "metrics": [
           {"name": "allocation_rate", "column": "nmalloc", "operation": "sum"},
           {"name": "deallocation_rate", "column": "ndalloc", "operation": "sum"},
@@ -30,7 +30,7 @@
         "groupby": ["timestamp"]
       },
       "fragmentation_analysis": {
-        "table": "stats-merged_arena_stats__bins_v1",
+        "table": "merged_arena_stats__bins_v1",
         "metrics": [
           {
             "name": "fragmentation_score",
@@ -59,7 +59,7 @@
         "groupby": ["bins", "size"]
       },
       "bin_pages_analysis": {
-            "table": "stats-merged_arena_stats__bins_v1",
+            "table": "merged_arena_stats__bins_v1",
             "metrics": [
                 {
                     "name": "bin_size",
@@ -103,7 +103,7 @@
             "special": "memory_pages"
     },
     "bin_activity_analysis": {
-            "table": "stats-merged_arena_stats__bins_v1",
+            "table": "merged_arena_stats__bins_v1",
             "metrics": [
                 {
                     "name": "bin_size",
@@ -173,7 +173,7 @@
             "special": "activity"
         },
         "bin_activity_analysis_new": {
-                "table": "stats-merged_arena_stats__bins_v1",
+                "table": "merged_arena_stats__bins_v1",
                 "metrics": [
                     {
                         "name": "bin_size",
@@ -294,7 +294,7 @@
             },
         
     "high_contention_bins": {
-        "table": "stats-merged_arena_stats__bins_v1",
+        "table": "merged_arena_stats__bins_v1",
         "metrics": [
           {
             "name": "allocation_rate",
@@ -382,7 +382,7 @@
             "special": "arena_pattern"
         },
         "slab_efficiency_analysis": {
-                "table": "stats-merged_arena_stats__bins_v1",
+                "table": "merged_arena_stats__bins_v1",
                 "metrics": [
                     {
                         "name": "bin_size",

@@ -24,7 +24,6 @@ class GenericAnalyzer(BaseTableHandler):
 
         table_pattern = config['table']
         matching_tables = self._get_matching_tables(table_pattern)
-        
         if not matching_tables:
             available_tables = self.list_available_tables()
             error_msg = f"No tables found matching the pattern '{table_pattern}'\n"
@@ -37,9 +36,7 @@ class GenericAnalyzer(BaseTableHandler):
 
         table = matching_tables[0]
         schema = self._get_schema_for_table(table)
-        
         query = self._build_query(table, config['metrics'], config.get('groupby', []), schema)
-        
         with self._get_cursor() as cursor:
             cursor.execute(query)
             columns = [description[0] for description in cursor.description]
@@ -110,17 +107,17 @@ class GenericAnalyzer(BaseTableHandler):
 
     def _get_matching_tables(self, table_pattern: str) -> List[str]:
         available_tables = self.list_available_tables()
-        
+        # print(f"Available tables: {table_pattern}{available_tables}")
         # Convert the pattern to a regex
-        regex_pattern = '^' + table_pattern.replace('*', '.*') + '$'
-        pattern = re.compile(regex_pattern)
+        # regex_pattern = '^' + table_pattern.replace('*', '.*') + '$'
+        pattern = re.compile(table_pattern)
         
         matching_tables = [t for t in available_tables if pattern.match(t)]
         return matching_tables
 
     def _get_schema_for_table(self, table_name: str) -> Dict[str, Any]:
         for schema_pattern, schema in self.schemas.items():
-            if re.match('^' + schema_pattern.replace('*', '.*') + '$', table_name):
+            if re.match('^' + schema_pattern + '$', table_name):
                 return schema
         raise ValueError(f"No schema found for table: {table_name}")
         
