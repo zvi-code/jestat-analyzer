@@ -31,11 +31,11 @@ $ python ./config/schemas_generator.py ../stats3.db ./config/table_schemas_gen.j
       "bins_analysis": {
         "table": "merged*stats__bins_v1",
         "metrics": [
-          {"name": "total_allocated", "column": "allocated_3", "operation": "sum"},
-          {"name": "avg_utilization", "column": "util_16", "operation": "avg"},
-          {"name": "total_slabs", "column": "curslabs_12", "operation": "sum"}
+          {"name": "total_allocated", "column": "allocated", "operation": "sum"},
+          {"name": "avg_utilization", "column": "util", "operation": "avg"},
+          {"name": "total_slabs", "column": "curslabs", "operation": "sum"}
         ],
-        "groupby": ["bins_0", "size_1"]
+        "groupby": ["bins", "size"]
       },
     // rest of the json file
 }
@@ -146,20 +146,20 @@ You can define custom analyses in the configuration file. Example configuration:
             {
                 "name": "total_allocated",
                 "operation": "sum",
-                "column": "allocated_3"
+                "column": "allocated"
             },
             {
                 "name": "efficiency",
                 "operation": "expression",
                 "formula": {
-                    "row_operation": "util_16",
+                    "row_operation": "util",
                     "aggregation": "avg",
-                    "filter": "allocated_3 > 1000",
+                    "filter": "allocated > 1000",
                     "having": "< 0.5"
                 }
             }
         ],
-        "groupby": ["bins_0"],
+        "groupby": ["bins"],
         "sort": {
             "by": "total_allocated",
             "order": "desc"
@@ -176,7 +176,7 @@ You can define custom analyses in the configuration file. Example configuration:
 {
     "name": "total_allocated",
     "operation": "sum",
-    "column": "allocated_3"
+    "column": "allocated"
 }
 ```
 
@@ -187,9 +187,9 @@ You can define custom analyses in the configuration file. Example configuration:
     "name": "efficiency",
     "operation": "expression",
     "formula": {
-        "row_operation": "CAST(nonfull_slabs_13 AS FLOAT) / NULLIF(curslabs_12, 0)",
+        "row_operation": "CAST(nonfull_slabs AS FLOAT) / NULLIF(curslabs, 0)",
         "aggregation": "avg",
-        "filter": "curslabs_12 >= 5",
+        "filter": "curslabs >= 5",
         "having": "> 0.3"
     }
 }

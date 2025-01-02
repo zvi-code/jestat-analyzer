@@ -4,28 +4,28 @@
       "bins_analysis": {
         "table": "merged*stats__bins_v1",
         "metrics": [
-          {"name": "total_allocated", "column": "allocated_3", "operation": "sum"},
-          {"name": "avg_utilization", "column": "util_16", "operation": "avg"},
-          {"name": "total_slabs", "column": "curslabs_12", "operation": "sum"}
+          {"name": "total_allocated", "column": "allocated", "operation": "sum"},
+          {"name": "avg_utilization", "column": "util", "operation": "avg"},
+          {"name": "total_slabs", "column": "curslabs", "operation": "sum"}
         ],
-        "groupby": ["bins_0", "size_1"]
+        "groupby": ["bins", "size"]
       },
       "bins_total": {
         "table": "merged*stats__bins_v1",
         "metrics": [
-          {"name": "total_allocated", "column": "allocated_3", "operation": "sum"},
-          {"name": "avg_utilization", "column": "util_16", "operation": "avg"},
-          {"name": "total_slabs", "column": "curslabs_12", "operation": "sum"},
-          {"name": "total_non_full_slabs", "column": "nonfull_slabs_13", "operation": "sum"}
+          {"name": "total_allocated", "column": "allocated", "operation": "sum"},
+          {"name": "avg_utilization", "column": "util", "operation": "avg"},
+          {"name": "total_slabs", "column": "curslabs", "operation": "sum"},
+          {"name": "total_non_full_slabs", "column": "nonfull_slabs", "operation": "sum"}
         ],
         "groupby": ["timestamp"]
       },
       "arena_efficiency": {
         "table": "*overall",
         "metrics": [
-          {"name": "allocation_rate", "column": "nmalloc_1", "operation": "sum"},
-          {"name": "deallocation_rate", "column": "ndalloc_3", "operation": "sum"},
-          {"name": "net_allocation", "operation": "custom", "formula": "SUM(nmalloc_1) - SUM(ndalloc_3)"}
+          {"name": "allocation_rate", "column": "nmalloc", "operation": "sum"},
+          {"name": "deallocation_rate", "column": "ndalloc", "operation": "sum"},
+          {"name": "net_allocation", "operation": "custom", "formula": "SUM(nmalloc) - SUM(ndalloc)"}
         ],
         "groupby": ["timestamp"]
       },
@@ -36,27 +36,27 @@
             "name": "fragmentation_score",
             "operation": "expression",
             "formula": {
-              "row_operation": "CAST(nonfull_slabs_13 AS FLOAT) / NULLIF(curslabs_12, 0)",
+              "row_operation": "CAST(nonfull_slabs AS FLOAT) / NULLIF(curslabs, 0)",
               "aggregation": "avg",
-              "filter": "curslabs_12 >= 5", 
+              "filter": "curslabs >= 5", 
               "having": "> 0.3" 
             }
           },
           {
             "name": "wasted_slabs",
             "operation": "sum",
-            "column": "nonfull_slabs_13"
+            "column": "nonfull_slabs"
           },
           {
             "name": "total_memory_waste",
             "operation": "expression",
             "formula": {
-              "row_operation": "size_1 * regs_14 * nonfull_slabs_13 * (1 - util_16)",
+              "row_operation": "size * regs * nonfull_slabs * (1 - util)",
               "aggregation": "sum"
             }
           }
         ],
-        "groupby": ["bins_0", "size_1"]
+        "groupby": ["bins", "size"]
       },
       "bin_pages_analysis": {
             "table": "stats-merged_arena_stats__bins_v1",
@@ -64,38 +64,38 @@
                 {
                     "name": "bin_size",
                     "operation": "max",
-                    "column": "size_1"
+                    "column": "size"
                 },
                 {
                     "name": "total_pages",
                     "operation": "expression",
                     "formula": {
-                        "row_operation": "pgs_15 * curslabs_12",
+                        "row_operation": "pgs * curslabs",
                         "aggregation": "sum"
                     }
                 },
                 {
                     "name": "total_slabs",
                     "operation": "sum",
-                    "column": "curslabs_12"
+                    "column": "curslabs"
                 },
                 {
                     "name": "pages_per_slab",
                     "operation": "max",
-                    "column": "pgs_15"
+                    "column": "pgs"
                 },
                 {
                     "name": "utilization",
                     "operation": "avg",
-                    "column": "util_16"
+                    "column": "util"
                 },
                 {
                     "name": "total_allocated",
                     "operation": "sum",
-                    "column": "allocated_3"
+                    "column": "allocated"
                 }
             ],
-            "groupby": ["bins_0"],
+            "groupby": ["bins"],
             "sort": {
                 "by": "total_pages",  
                 "order": "desc"         
@@ -108,64 +108,64 @@
                 {
                     "name": "bin_size",
                     "operation": "max",
-                    "column": "size_1"
+                    "column": "size"
                 },
                 {
                     "name": "total_requests",
                     "operation": "sum",
-                    "column": "nrequests_8"
+                    "column": "nrequests"
                 },
                 {
                     "name": "alloc_ops",
                     "operation": "sum",
-                    "column": "nmalloc_4"
+                    "column": "nmalloc"
                 },
                 {
                     "name": "dealloc_ops",
                     "operation": "sum",
-                    "column": "ndalloc_6"
+                    "column": "ndalloc"
                 },
                 {
                     "name": "fills",
                     "operation": "sum",
-                    "column": "nfills_17"
+                    "column": "nfills"
                 },
                 {
                     "name": "flushes",
                     "operation": "sum",
-                    "column": "nflushes_19"
+                    "column": "nflushes"
                 },
                 {
                     "name": "lock_ops",
                     "operation": "sum",
-                    "column": "n_lock_ops_24"
+                    "column": "n_lock_ops"
                 },
                 {
                     "name": "owner_switches",
                     "operation": "sum",
-                    "column": "n_owner_switch_30"
+                    "column": "n_owner_switch"
                 },
                 {
                     "name": "total_pages",
                     "operation": "expression",
                     "formula": {
-                        "row_operation": "pgs_15 * curslabs_12",
+                        "row_operation": "pgs * curslabs",
                         "aggregation": "sum"
                     }
                 },
                 {
                     "name": "total_allocated",
                     "operation": "sum",
-                    "column": "allocated_3"
+                    "column": "allocated"
                 },
                 {
                     "name": "utilization",
                     "operation": "avg",
-                    "column": "util_16"
+                    "column": "util"
                 }
 
             ],
-            "groupby": ["bins_0"],
+            "groupby": ["bins"],
             "sort": {
                 "by": "total_requests",  
                 "order": "desc"         
@@ -178,38 +178,38 @@
                     {
                         "name": "bin_size",
                         "operation": "max",
-                        "column": "size_1"
+                        "column": "size"
                     },
                     {
                         "name": "total_requests",
                         "operation": "sum",
-                        "column": "nrequests_8"
+                        "column": "nrequests"
                     },
                     {
                         "name": "alloc_ops",
                         "operation": "sum",
-                        "column": "nmalloc_4"
+                        "column": "nmalloc"
                     },
                     {
                         "name": "dealloc_ops",
                         "operation": "sum",
-                        "column": "ndalloc_6"
+                        "column": "ndalloc"
                     },
                     {
                         "name": "fills",
                         "operation": "sum",
-                        "column": "nfills_17"
+                        "column": "nfills"
                     },
                     {
                         "name": "flushes",
                         "operation": "sum",
-                        "column": "nflushes_19"
+                        "column": "nflushes"
                     },
                     {
                         "name": "tcache_batch_cost",
                         "operation": "expression",
                         "formula": {
-                            "row_operation": "CAST((nfills_17 + nflushes_19) AS FLOAT) / NULLIF(nrequests_8, 0) * 100.0",
+                            "row_operation": "CAST((nfills + nflushes) AS FLOAT) / NULLIF(nrequests, 0) * 100.0",
                             "aggregation": "avg"
                         }
                     },
@@ -217,7 +217,7 @@
                         "name": "tcache_alloc_amort",
                         "operation": "expression",
                         "formula": {
-                            "row_operation": "CAST((nfills_17) AS FLOAT) / NULLIF(nmalloc_4, 0) * 100.0",
+                            "row_operation": "CAST((nfills) AS FLOAT) / NULLIF(nmalloc, 0) * 100.0",
                             "aggregation": "avg"
                         }
                     },                    
@@ -225,60 +225,60 @@
                         "name": "tcache_dealloc_amort",
                         "operation": "expression",
                         "formula": {
-                            "row_operation": "CAST((nflushes_19) AS FLOAT) / NULLIF(ndalloc_6, 0) * 100.0",
+                            "row_operation": "CAST((nflushes) AS FLOAT) / NULLIF(ndalloc, 0) * 100.0",
                             "aggregation": "avg"
                         }
                     },
                     {
                         "name": "lock_ops",
                         "operation": "sum",
-                        "column": "n_lock_ops_24"
+                        "column": "n_lock_ops"
                     },
                     {
                         "name": "owner_switches",
                         "operation": "sum",
-                        "column": "n_owner_switch_30"
+                        "column": "n_owner_switch"
                     },
                     {
                         "name": "alloc_rate",
                         "operation": "max",
-                        "column": "rps_5"
+                        "column": "rps_nmalloc"
                     },
                     {
                         "name": "dealloc_rate",
                         "operation": "max",
-                        "column": "rps_7"
+                        "column": "rps_ndalloc"
                     },
                     {
                         "name": "fill_rate",
                         "operation": "max",
-                        "column": "rps_18"
+                        "column": "rps_nfills"
                     },
                     {
                         "name": "flush_rate",
                         "operation": "max",
-                        "column": "rps_20"
+                        "column": "rps_nflushes"
                     },
                     {
                         "name": "total_pages",
                         "operation": "expression",
                         "formula": {
-                            "row_operation": "pgs_15 * curslabs_12",
+                            "row_operation": "pgs * curslabs",
                             "aggregation": "sum"
                         }
                     },
                     {
                         "name": "total_allocated",
                         "operation": "sum",
-                        "column": "allocated_3"
+                        "column": "allocated"
                     },
                     {
                         "name": "utilization",
                         "operation": "avg",
-                        "column": "util_16"
+                        "column": "util"
                     }
                 ],
-                "groupby": ["bins_0"],
+                "groupby": ["bins"],
                 "sort": [{
                     "by": "tcache_batch_cost",  
                     "order": "desc"
@@ -300,16 +300,16 @@
             "name": "allocation_rate",
             "operation": "expression",
             "formula": {
-              "row_operation": "nmalloc_4",
+              "row_operation": "nmalloc",
               "aggregation": "sum",
-              "filter": "n_lock_ops_24 > 1000"  
+              "filter": "n_lock_ops > 1000"  
             }
           },
           {
             "name": "lock_contention",
             "operation": "expression",
             "formula": {
-              "row_operation": "CAST(n_waiting_26 AS FLOAT) / NULLIF(n_lock_ops_24, 0)",
+              "row_operation": "CAST(n_waiting AS FLOAT) / NULLIF(n_lock_ops, 0)",
               "aggregation": "avg",
               "having": "> 0.1"  
             }
@@ -317,10 +317,10 @@
           {
             "name": "total_wait_time",
             "operation": "sum",
-            "column": "total_wait_ns_32"
+            "column": "total_wait_ns"
           }
         ],
-        "groupby": ["bins_0", "size_1"]
+        "groupby": ["bins", "size"]
       },
       "inefficient_bins": {
         "table": "stats-merged_arena_stats__bins_v1",
@@ -328,15 +328,15 @@
           {
             "name": "total_allocated",
             "operation": "sum",
-            "column": "allocated_3"
+            "column": "allocated"
           },
           {
             "name": "avg_utilization",
             "operation": "expression",
             "formula": {
-              "row_operation": "util_16",
+              "row_operation": "util",
               "aggregation": "avg",
-              "filter": "allocated_3 > 1000",  
+              "filter": "allocated > 1000",  
               "having": "< 0.5"  
             }
           },
@@ -344,12 +344,12 @@
             "name": "wasted_memory",
             "operation": "expression",
             "formula": {
-              "row_operation": "allocated_3 * (1 - util_16)",
+              "row_operation": "allocated * (1 - util)",
               "aggregation": "sum"
             }
           }
         ],
-        "groupby": ["bins_0", "size_1"]
+        "groupby": ["bins", "size"]
       },
         "arena_comparison": {
             "table": "arenas_*__overall", 
@@ -357,23 +357,23 @@
                 {
                     "name": "total_allocated",
                     "operation": "sum",
-                    "column": "allocated_0"
+                    "column": "allocated"
                 },
                 {
                     "name": "allocation_rate",
                     "operation": "sum",
-                    "column": "nmalloc_1"
+                    "column": "nmalloc"
                 },
                 {
                     "name": "deallocation_rate",
                     "operation": "sum",
-                    "column": "ndalloc_3"
+                    "column": "ndalloc"
                 },
                 {
                     "name": "memory_percent",
                     "operation": "expression",
                     "formula": {
-                        "row_operation": "CAST(allocated_0 AS FLOAT) * 100.0 / SUM(allocated_0) OVER ()",
+                        "row_operation": "CAST(allocated AS FLOAT) * 100.0 / SUM(allocated) OVER ()",
                         "aggregation": "avg"
                     }
                 }
@@ -387,18 +387,18 @@
                     {
                         "name": "bin_size",
                         "operation": "max",
-                        "column": "size_1"
+                        "column": "size"
                     },
                     {
                         "name": "total_requests",
                         "operation": "sum",
-                        "column": "nrequests_8"
+                        "column": "nrequests"
                     },
                     {
                         "name": "total_slab_ops",
                         "operation": "expression",
                         "formula": {
-                            "row_operation": "nfills_17 + nflushes_19",
+                            "row_operation": "nfills + nflushes",
                             "aggregation": "sum"
                         }
                     },
@@ -406,27 +406,27 @@
                         "name": "slab_ops_ratio",
                         "operation": "expression",
                         "formula": {
-                            "row_operation": "CAST((nfills_17 + nflushes_19) AS FLOAT) / NULLIF(nrequests_8, 0) * 100.0",
+                            "row_operation": "CAST((nfills + nflushes) AS FLOAT) / NULLIF(nrequests, 0) * 100.0",
                             "aggregation": "avg"
                         }
                     },
                     {
                         "name": "fills",
                         "operation": "sum",
-                        "column": "nfills_17"
+                        "column": "nfills"
                     },
                     {
                         "name": "flushes",
                         "operation": "sum",
-                        "column": "nflushes_19"
+                        "column": "nflushes"
                     },
                     {
                         "name": "utilization",
                         "operation": "avg",
-                        "column": "util_16"
+                        "column": "util"
                     }
                 ],
-                "groupby": ["bins_0"],
+                "groupby": ["bins"],
                 "sort": [
                     {
                         "by": "total_requests",

@@ -97,7 +97,7 @@ class JeAnalyzer:
         # Most active bins by requests
         print("\nTop 5 Most Active Bins (by total requests):")
         for row in by_requests[:5]:
-            bin_id = row[columns.index('bins_0')]
+            bin_id = row[columns.index('bins')]
             bin_size = row[columns.index('bin_size')]
             requests = row[columns.index('total_requests')]
             allocs = row[columns.index('alloc_ops')]
@@ -114,7 +114,7 @@ class JeAnalyzer:
         # Bins with highest operation rates
         print("\nTop 5 Bins with Highest Operation Rates:")
         for row in by_rates[:5]:
-            bin_id = row[columns.index('bins_0')]
+            bin_id = row[columns.index('bins')]
             bin_size = row[columns.index('bin_size')]
             alloc_rate = row[columns.index('alloc_rate')]
             dealloc_rate = row[columns.index('dealloc_rate')]
@@ -130,7 +130,7 @@ class JeAnalyzer:
         # Bins with high slab churn
         print("\nTop 5 Bins with Highest Slab Activity:")
         for row in by_churn[:5]:
-            bin_id = row[columns.index('bins_0')]
+            bin_id = row[columns.index('bins')]
             bin_size = row[columns.index('bin_size')]
             fills = row[columns.index('fills')]
             flushes = row[columns.index('flushes')]
@@ -202,7 +202,7 @@ class JeAnalyzer:
         
         print("\nTop 10 Bins by Page Usage:")
         for row in sorted_by_pages[:10]:
-            bin_id = row[columns.index('bins_0')]
+            bin_id = row[columns.index('bins')]
             bin_size = row[columns.index('bin_size')]
             pages = row[columns.index('total_pages')]
             util = row[columns.index('utilization')]

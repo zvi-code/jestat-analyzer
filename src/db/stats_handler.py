@@ -36,10 +36,10 @@ class StatsHandler(BaseDBHandler):
             WITH arena_data AS (
                 SELECT 
                     timestamp,
-                    SUM(CAST(allocated_0 AS FLOAT)) as total_allocated,
-                    SUM(CAST(nmalloc_1 AS FLOAT)) as total_allocs,
-                    SUM(CAST(ndalloc_3 AS FLOAT)) as total_deallocs
-                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
+                    SUM(CAST(allocated AS FLOAT)) as total_allocated,
+                    SUM(CAST(nmalloc AS FLOAT)) as total_allocs,
+                    SUM(CAST(ndalloc AS FLOAT)) as total_deallocs
+                FROM merged_arena_stats{SECTION_TABLE_CON}overall
                 GROUP BY timestamp
             ),
             trend_data AS (
@@ -100,14 +100,14 @@ class StatsHandler(BaseDBHandler):
                 SELECT 
                     metadata_id,
                     timestamp,
-                    {COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX} as arena_id,  -- Use primary_0 as arena_id
-                    SUM(CAST(allocated_0 AS FLOAT)) as allocated,
-                    SUM(CAST(nmalloc_1 AS FLOAT)) as allocations,
-                    SUM(CAST(ndalloc_3 AS FLOAT)) as deallocations,
-                    SUM(CAST(rps_2 AS FLOAT)) as alloc_rate,
-                    SUM(CAST(rps_4 AS FLOAT)) as dealloc_rate
-                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
-                GROUP BY metadata_id, timestamp, {COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX}
+                    {COL_HEADER_FILLER} as arena_id,  -- Use primary_0 as arena_id
+                    SUM(CAST(allocated AS FLOAT)) as allocated,
+                    SUM(CAST(nmalloc AS FLOAT)) as allocations,
+                    SUM(CAST(ndalloc AS FLOAT)) as deallocations,
+                    SUM(CAST(rps_nmalloc as FLOAT)) as alloc_rate,
+                    SUM(CAST(rps_ndalloc as FLOAT)) as dealloc_rate
+                FROM merged_arena_stats{SECTION_TABLE_CON}overall
+                GROUP BY metadata_id, timestamp, {COL_HEADER_FILLER}
             )
             SELECT 
                 timestamp,
@@ -135,12 +135,12 @@ class StatsHandler(BaseDBHandler):
                     metadata_id,
                     timestamp,
                     row_name,  -- Changed from arena_id (using SQL comment style)
-                    SUM(CAST(allocated_0 AS FLOAT)) as allocated,
-                    SUM(CAST(nmalloc_1 AS FLOAT)) as allocations,
-                    SUM(CAST(ndalloc_3 AS FLOAT)) as deallocations,
-                    SUM(CAST(rps_2 AS FLOAT)) as alloc_rate,
-                    SUM(CAST(rps_4 AS FLOAT)) as dealloc_rate
-                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
+                    SUM(CAST(allocated AS FLOAT)) as allocated,
+                    SUM(CAST(nmalloc AS FLOAT)) as allocations,
+                    SUM(CAST(ndalloc AS FLOAT)) as deallocations,
+                    SUM(CAST(rps_nmalloc as FLOAT)) as alloc_rate,
+                    SUM(CAST(rps_ndalloc as FLOAT)) as dealloc_rate
+                FROM merged_arena_stats{SECTION_TABLE_CON}overall
                 GROUP BY metadata_id, timestamp, row_name
             )
             SELECT 
@@ -169,12 +169,12 @@ class StatsHandler(BaseDBHandler):
                     metadata_id,
                     timestamp,
                     arena_id,
-                    SUM(CAST(allocated_0 AS FLOAT)) as allocated,
-                    SUM(CAST(nmalloc_1 AS FLOAT)) as allocations,
-                    SUM(CAST(ndalloc_3 AS FLOAT)) as deallocations,
-                    SUM(CAST(rps_2 AS FLOAT)) as alloc_rate,
-                    SUM(CAST(rps_4 AS FLOAT)) as dealloc_rate
-                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
+                    SUM(CAST(allocated AS FLOAT)) as allocated,
+                    SUM(CAST(nmalloc AS FLOAT)) as allocations,
+                    SUM(CAST(ndalloc AS FLOAT)) as deallocations,
+                    SUM(CAST(rps_nmalloc as FLOAT)) as alloc_rate,
+                    SUM(CAST(rps_ndalloc as FLOAT)) as dealloc_rate
+                FROM merged_arena_stats{SECTION_TABLE_CON}overall
                 GROUP BY metadata_id, timestamp, arena_id
             )
             SELECT 
@@ -202,10 +202,10 @@ class StatsHandler(BaseDBHandler):
                 SELECT 
                     timestamp,
                     metadata_id,
-                    SUM(CAST(allocated_0 AS FLOAT)) as total_allocated,
-                    SUM(CAST(nmalloc_1 AS FLOAT)) - SUM(CAST(ndalloc_3 AS FLOAT)) as net_allocations,
-                    LAG(SUM(CAST(allocated_0 AS FLOAT))) OVER (ORDER BY timestamp) as prev_allocated
-                FROM arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall
+                    SUM(CAST(allocated AS FLOAT)) as total_allocated,
+                    SUM(CAST(nmalloc AS FLOAT)) - SUM(CAST(ndalloc AS FLOAT)) as net_allocations,
+                    LAG(SUM(CAST(allocated AS FLOAT))) OVER (ORDER BY timestamp) as prev_allocated
+                FROM merged_arena_stats{SECTION_TABLE_CON}overall
                 GROUP BY timestamp, metadata_id
             )
             SELECT 
@@ -419,12 +419,12 @@ class StatsHandler(BaseDBHandler):
         with self._get_cursor() as cur:
             required_columns = {
                 'metadata_id': True,
-                f'{COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX}': True, 
-                'allocated_0': True,
-                'nmalloc_1': True,
-                'ndalloc_3': True,
-                'rps_2': True,
-                'rps_4': True
+                f'{COL_HEADER_FILLER}': True, 
+                'allocated': True,
+                'nmalloc': True,
+                'ndalloc': True,
+                'rps_nmalloc': True,
+                'rps_ndalloc': True
             }
 
             def validate_table(table):
@@ -439,7 +439,7 @@ class StatsHandler(BaseDBHandler):
             if table_names:
                 arena_tables = [(t,) for t in table_names if validate_table(t)]
             else:
-                cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'arenas_%.overall'")
+                cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'arenas{SECTION_NAME_CON}%{SECTION_TABLE_CON}overall'")
                 all_tables = cur.fetchall()
                 arena_tables = [(t[0],) for t in all_tables if validate_table(t[0])]
 
@@ -455,12 +455,12 @@ class StatsHandler(BaseDBHandler):
                     m.timestamp,
                     t.metadata_id,
                     '{table}' as table_name,
-                    t.{COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX} as row_name, 
-                    t.allocated_0 as allocated,
-                    t.nmalloc_1 as nmalloc,
-                    t.ndalloc_3 as ndalloc,
-                    t.rps_2 as alloc_rps,
-                    t.rps_4 as dealloc_rps
+                    t.{COL_HEADER_FILLER} as row_name, 
+                    t.allocated as allocated,
+                    t.nmalloc as nmalloc,
+                    t.ndalloc as ndalloc,
+                    t.rps_nmalloc alloc_rps,
+                    t.rps_ndalloc as dealloc_rps
                 FROM '{table}' t
                 JOIN je_metadata m ON t.metadata_id = m.id
                 {f"WHERE m.timestamp = '{timestamp}'" if timestamp else ""}
@@ -523,12 +523,12 @@ class StatsHandler(BaseDBHandler):
         with self._get_cursor() as cur:
             required_columns = {
                 'metadata_id': True,
-                f'{COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX}': True, 
-                'allocated_0': True,
-                'nmalloc_1': True,
-                'ndalloc_3': True,
-                'rps_2': True,
-                'rps_4': True
+                f'{COL_HEADER_FILLER}': True, 
+                'allocated': True,
+                'nmalloc': True,
+                'ndalloc': True,
+                'rps_nmalloc': True,
+                'rps_ndalloc': True
             }
 
             def validate_table(table):
@@ -540,7 +540,7 @@ class StatsHandler(BaseDBHandler):
             if table_names:
                 arena_tables = [(t,) for t in table_names if validate_table(t)]
             else:
-                cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'arenas_%.overall'")
+                cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'arenas{SECTION_NAME_CON}%{SECTION_TABLE_CON}overall'")
                 all_tables = cur.fetchall()
                 arena_tables = [(t[0],) for t in all_tables if validate_table(t[0])]
 
@@ -556,12 +556,12 @@ class StatsHandler(BaseDBHandler):
                     m.timestamp,
                     t.metadata_id,
                     '{table}' as table_name,
-                    t.{COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX} as row_name, 
-                    t.allocated_0 as allocated,
-                    t.nmalloc_1 as nmalloc,
-                    t.ndalloc_3 as ndalloc,
-                    t.rps_2 as alloc_rps,
-                    t.rps_4 as dealloc_rps
+                    t.{COL_HEADER_FILLER} as row_name, 
+                    t.allocated as allocated,
+                    t.nmalloc as nmalloc,
+                    t.ndalloc as ndalloc,
+                    t.rps_nmalloc alloc_rps,
+                    t.rps_ndalloc as dealloc_rps
                 FROM '{table}' t
                 JOIN je_metadata m ON t.metadata_id = m.id
                 {f"WHERE m.timestamp = '{timestamp}'" if timestamp else ""}
@@ -634,18 +634,23 @@ class StatsHandler(BaseDBHandler):
     def analyze_bins(self, table_name: str = "stats-merged_arena_stats__bins_v1") -> Dict[str, Any]:
         """Perform extensive analysis on bins data"""
         with self._get_cursor() as cur:
-            cur.execute(f"SELECT * FROM {table_name}")
+            try:
+                cur.execute(f"SELECT * FROM '{table_name}'")
+            except Exception as e:
+                print(f"Error: {e} at ({f"SELECT * FROM '{table_name}'"}")
+                return {}
+            cur.execute(f"SELECT * FROM '{table_name}'")
             columns = [description[0] for description in cur.description]
             data = cur.fetchall()
 
             df = pd.DataFrame(data, columns=columns)
             
             analysis = {
-                "total_bins": int(len(df["bins_0"].unique())),
-                "total_allocated": int(df["allocated_3"].sum()),
-                "total_nmalloc": int(df["nmalloc_4"].sum()),
-                "total_ndalloc": int(df["ndalloc_6"].sum()),
-                "overall_utilization": float(df["util_16"].mean()),
+                "total_bins": int(len(df["bins"].unique())),
+                "total_allocated": int(df["allocated"].sum()),
+                "total_nmalloc": int(df["nmalloc"].sum()),
+                "total_ndalloc": int(df["ndalloc"].sum()),
+                "overall_utilization": float(df["util"].mean()),
                 "bins_by_size": self._analyze_bins_by_size(df),
                 "allocation_hotspots": self._identify_allocation_hotspots(df),
                 "fragmentation_analysis": self._analyze_fragmentation(df),
@@ -656,33 +661,33 @@ class StatsHandler(BaseDBHandler):
             return analysis
 
     def _analyze_bins_by_size(self, df: pd.DataFrame) -> Dict[str, Any]:
-        size_groups = df.groupby("size_1")
+        size_groups = df.groupby("size")
         return {
             "count": size_groups.size().to_dict(),
-            "total_allocated": size_groups["allocated_3"].sum().to_dict(),
-            "avg_utilization": size_groups["util_16"].mean().to_dict(),
+            "total_allocated": size_groups["allocated"].sum().to_dict(),
+            "avg_utilization": size_groups["util"].mean().to_dict(),
         }
 
     def _identify_allocation_hotspots(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        hotspots = df.nlargest(5, "nmalloc_4")
-        return hotspots[["bins_0", "size_1", "nmalloc_4", "ndalloc_6", "util_16"]].to_dict("records")
+        hotspots = df.nlargest(5, "nmalloc")
+        return hotspots[["bins", "size", "nmalloc", "ndalloc", "util"]].to_dict("records")
 
     def _analyze_fragmentation(self, df: pd.DataFrame) -> Dict[str, Any]:
         return {
-            "avg_utilization": df["util_16"].mean(),
-            "low_util_bins": df[df["util_16"] < 0.5]["bins_0"].tolist(),
-            "nonfull_slabs_ratio": (df["nonfull_slabs_13"].sum() / df["curslabs_12"].sum()),
+            "avg_utilization": df["util"].mean(),
+            "low_util_bins": df[df["util"] < 0.5]["bins"].tolist(),
+            "nonfull_slabs_ratio": (df["nonfull_slabs"].sum() / df["curslabs"].sum()),
         }
 
     def _analyze_lock_contention(self, df: pd.DataFrame) -> Dict[str, Any]:
         return {
-            "total_lock_ops": df["n_lock_ops_24"].sum(),
-            "total_wait_time": df["total_wait_ns_32"].sum(),
-            "max_wait_time": df["max_wait_ns_34"].max(),
-            "max_threads_contention": df["max_n_thds_35"].max(),
+            "total_lock_ops": df["n_lock_ops"].sum(),
+            "total_wait_time": df["total_wait_ns"].sum(),
+            "max_wait_time": df["max_wait_ns"].max(),
+            "max_threads_contention": df["max_n_thds"].max(),
         }
 
     def _analyze_size_efficiency(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        df["wasted_space"] = df["size_1"] - df["allocated_3"] / df["curregs_11"]
+        df["wasted_space"] = df["size"] - df["allocated"] / df["curregs"]
         inefficient_sizes = df.nlargest(5, "wasted_space")
-        return inefficient_sizes[["bins_0", "size_1", "wasted_space"]].to_dict("records")
+        return inefficient_sizes[["bins", "size", "wasted_space"]].to_dict("records")

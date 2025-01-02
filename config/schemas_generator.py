@@ -48,7 +48,7 @@ def get_primary_key_columns(columns: list) -> list:
     """
     Determines primary key columns based on predefined rules.
     """
-    always_primary = ["metric", "timestamp", "metadata_id", f"{COL_HEADER_FILLER}{COL_IX_CON}0", f"bins{COL_IX_CON}0", "Key", f"large{COL_IX_CON}0"]
+    always_primary = ["metric", "timestamp", "metadata_id", f"{COL_HEADER_FILLER}", f"bins", "Key", f"large"]
     return [col["name"] for col in columns if col["name"] in always_primary]
 def generate_db_schema(db_path: str, output_file: str) -> None:
     """

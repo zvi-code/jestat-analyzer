@@ -28,15 +28,15 @@ def sample_db(test_db_path):
     """)
     
     cur.execute(f"""
-        CREATE TABLE arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall (
+        CREATE TABLE merged_arena_stats{SECTION_TABLE_CON}overall (
             metadata_id INTEGER,
             timestamp TEXT,
-            {COL_HEADER_FILLER}{COL_IX_CON}{COL_HEADER_FILL_IX} TEXT,
-            allocated_0 TEXT,
-            nmalloc_1 TEXT,
-            ndalloc_3 TEXT,
-            rps_2 TEXT,
-            rps_4 TEXT
+            {COL_HEADER_FILLER} TEXT,
+            allocated TEXT,
+            nmalloc TEXT,
+            ndalloc TEXT,
+            rps_nmalloc TEXT,
+            rps_ndalloc TEXT
         )
     """)
 
@@ -55,48 +55,48 @@ def sample_db(test_db_path):
         CREATE TABLE 'stats-merged_arena_stats__bins_v1' (
             timestamp INTEGER,
             metadata_id INTEGER,
-            bins_0 INTEGER,
-            size_1 INTEGER,
-            ind_2 INTEGER,
-            allocated_3 INTEGER,
-            nmalloc_4 INTEGER,
-            rps_5 INTEGER,
-            ndalloc_6 INTEGER,
-            rps_7 INTEGER,
-            nrequests_8 INTEGER,
-            rps_9 INTEGER,
-            nshards_10 INTEGER,
-            curregs_11 INTEGER,
-            curslabs_12 INTEGER,
-            nonfull_slabs_13 INTEGER,
-            regs_14 INTEGER,
-            pgs_15 INTEGER,
-            util_16 REAL,
-            nfills_17 INTEGER,
-            rps_18 INTEGER,
-            nflushes_19 INTEGER,
-            rps_20 INTEGER,
-            nslabs_21 INTEGER,
-            nreslabs_22 INTEGER,
-            rps_23 INTEGER,
-            n_lock_ops_24 INTEGER,
-            rps_25 INTEGER,
-            n_waiting_26 INTEGER,
-            rps_27 INTEGER,
-            n_spin_acq_28 INTEGER,
-            rps_29 INTEGER,
-            n_owner_switch_30 INTEGER,
-            rps_31 INTEGER,
-            total_wait_ns_32 INTEGER,
-            rps_33 INTEGER,
-            max_wait_ns_34 INTEGER,
-            max_n_thds_35 INTEGER
+            bins INTEGER,
+            size INTEGER,
+            ind INTEGER,
+            allocated INTEGER,
+            nmalloc INTEGER,
+            rps_nmalloc INTEGER,
+            ndalloc INTEGER,
+            rps_ndalloc INTEGER,
+            nrequests INTEGER,
+            rps_nrequests INTEGER,
+            nshards INTEGER,
+            curregs INTEGER,
+            curslabs INTEGER,
+            nonfull_slabs INTEGER,
+            regs INTEGER,
+            pgs INTEGER,
+            util REAL,
+            nfills INTEGER,
+            rps_nfills INTEGER,
+            nflushes INTEGER,
+            rps_nflushes INTEGER,
+            nslabs INTEGER,
+            nreslabs INTEGER,
+            rps_nreslabs INTEGER,
+            n_lock_ops INTEGER,
+            rps_n_lock_ops INTEGER,
+            n_waiting INTEGER,
+            rps_n_waiting INTEGER,
+            n_spin_acq INTEGER,
+            rps_n_spin_acq INTEGER,
+            n_owner_switch INTEGER,
+            rps_n_owner_switch INTEGER,
+            total_wait_ns INTEGER,
+            rps_total_wait_ns INTEGER,
+            max_wait_ns INTEGER,
+            max_n_thds INTEGER
         )
     """)
     # Insert sample data
-    cur.execute(f"INSERT INTO je_metadata VALUES (1, '123456789', 'arena', 'arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall')")
+    cur.execute(f"INSERT INTO je_metadata VALUES (1, '123456789', 'arena', 'merged_arena_stats{SECTION_TABLE_CON}overall')")
     cur.execute("INSERT INTO je_metadata VALUES (2, '123456790', 'bins', 'stats-merged_arena_stats__bins_v1')")
-    cur.execute(f"INSERT INTO je_metadata VALUES (3, '123456790', 'arena', 'arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall')")
+    cur.execute(f"INSERT INTO je_metadata VALUES (3, '123456790', 'arena', 'merged_arena_stats{SECTION_TABLE_CON}overall')")
     cur.execute("INSERT INTO je_metadata VALUES (4, '123456789', 'bins', 'bins')")
     cur.execute("INSERT INTO je_metadata VALUES (5, '123456790', 'bins', 'bins')")
     cur.execute("INSERT INTO je_metadata VALUES (6, '123456789', 'bins', 'bins_v1')")
@@ -105,7 +105,7 @@ def sample_db(test_db_path):
     cur.execute("INSERT INTO je_metadata VALUES (9, '123456790', 'bins', 'stats-merged_arena_stats__bins_v1')")
     # Insert arena data with multiple timestamps
     cur.execute(f"""
-        INSERT INTO arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall VALUES 
+        INSERT INTO merged_arena_stats{SECTION_TABLE_CON}overall VALUES 
         (1, '123456789', '0', '1000', '500', '300', '50', '30'),
         (1, '123456789', '1', '2000', '1000', '600', '100', '60'),
         (3, '123456790', '0', '1500', '600', '400', '60', '40'),
@@ -125,42 +125,42 @@ def sample_db(test_db_path):
         CREATE TABLE bins_v1 (
             timestamp INTEGER,
             metadata_id INTEGER,
-            bins_0 INTEGER,
-            size_1 INTEGER,
-            ind_2 INTEGER,
-            allocated_3 INTEGER,
-            nmalloc_4 INTEGER,
-            rps_5 INTEGER,
-            ndalloc_6 INTEGER,
-            rps_7 INTEGER,
-            nrequests_8 INTEGER,
+            bins INTEGER,
+            size INTEGER,
+            ind INTEGER,
+            allocated INTEGER,
+            nmalloc INTEGER,
+            rps_nmalloc INTEGER,
+            ndalloc INTEGER,
+            rps_ndalloc INTEGER,
+            nrequests INTEGER,
             rps_9 INTEGER,
-            nshards_10 INTEGER,
-            curregs_11 INTEGER,
-            curslabs_12 INTEGER,
-            nonfull_slabs_13 INTEGER,
-            regs_14 INTEGER,
-            pgs_15 INTEGER,
-            util_16 REAL,
-            nfills_17 INTEGER,
-            rps_18 INTEGER,
-            nflushes_19 INTEGER,
-            rps_20 INTEGER,
-            nslabs_21 INTEGER,
-            nreslabs_22 INTEGER,
-            rps_23 INTEGER,
-            n_lock_ops_24 INTEGER,
-            rps_25 INTEGER,
-            n_waiting_26 INTEGER,
-            rps_27 INTEGER,
-            n_spin_acq_28 INTEGER,
-            rps_29 INTEGER,
-            n_owner_switch_30 INTEGER,
-            rps_31 INTEGER,
-            total_wait_ns_32 INTEGER,
-            rps_33 INTEGER,
-            max_wait_ns_34 INTEGER,
-            max_n_thds_35 INTEGER
+            nshards INTEGER,
+            curregs INTEGER,
+            curslabs INTEGER,
+            nonfull_slabs INTEGER,
+            regs INTEGER,
+            pgs INTEGER,
+            util REAL,
+            nfills INTEGER,
+            rps_nfills INTEGER,
+            nflushes INTEGER,
+            rps_nflushes INTEGER,
+            nslabs INTEGER,
+            nreslabs INTEGER,
+            rps_nreslabs INTEGER,
+            n_lock_ops INTEGER,
+            rps_n_lock_ops INTEGER,
+            n_waiting INTEGER,
+            rps_n_waiting INTEGER,
+            n_spin_acq INTEGER,
+            rps_n_spin_acq INTEGER,
+            n_owner_switch INTEGER,
+            rps_n_owner_switch INTEGER,
+            total_wait_ns INTEGER,
+            rps_total_wait_ns INTEGER,
+            max_wait_ns INTEGER,
+            max_n_thds INTEGER
         )
     """)
 

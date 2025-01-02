@@ -38,11 +38,11 @@ class TestBinsAnalysis:
         assert isinstance(analysis["allocation_hotspots"], list)
         assert len(analysis["allocation_hotspots"]) <= 5
         for hotspot in analysis["allocation_hotspots"]:
-            assert "bins_0" in hotspot
-            assert "size_1" in hotspot
-            assert "nmalloc_4" in hotspot
-            assert "ndalloc_6" in hotspot
-            assert "util_16" in hotspot
+            assert "bins" in hotspot
+            assert "size" in hotspot
+            assert "nmalloc" in hotspot
+            assert "ndalloc" in hotspot
+            assert "util" in hotspot
 
     def test_fragmentation_analysis(self, sample_db):
         stats_handler = StatsHandler(sample_db)
@@ -70,8 +70,8 @@ class TestBinsAnalysis:
         assert isinstance(analysis["size_efficiency"], list)
         assert len(analysis["size_efficiency"]) <= 5
         for size in analysis["size_efficiency"]:
-            assert "bins_0" in size
-            assert "size_1" in size
+            assert "bins" in size
+            assert "size" in size
             assert "wasted_space" in size
 
     @pytest.mark.parametrize("metric", [

@@ -8,7 +8,7 @@ class TestArenaAnalysis:
     def test_basic_arena_stats(self, sample_db):
         """Test basic arena statistics calculation"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
+        stats = stats_handler.analyze_arenas_activity([f"merged_arena_stats{SECTION_TABLE_CON}overall"])
         
         assert stats is not None
         assert len(stats) == 2  # Two timestamps
@@ -20,17 +20,17 @@ class TestArenaAnalysis:
     def test_arena_memory_percentages(self, sample_db):
         """Test memory percentage calculations"""
         stats_handler = StatsHandler(sample_db)
-        stats = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
+        stats = stats_handler.analyze_arenas_activity([f"merged_arena_stats{SECTION_TABLE_CON}overall"])
         
         assert float(stats[0]['memory_percent']) == 100.0
         assert float(stats[0]['small_percent']) + float(stats[0]['large_percent']) == 100.0
         
     def test_arena_allocation_rates(self, sample_db):
         """Test allocation rate calculations"""
-        analyzer = JeAnalyzer(sample_db)
+        # analyzer = JeAnalyzer(sample_db)
         stats_handler = StatsHandler(sample_db)
         
-        stats = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
+        stats = stats_handler.analyze_arenas_activity([f"merged_arena_stats{SECTION_TABLE_CON}overall"])
         
         # Verify allocation rates
         assert float(stats[0]['alloc_rps']) == 150  # Sum of both rows
@@ -46,14 +46,14 @@ class TestArenaAnalysis:
         stats_handler = StatsHandler(sample_db)
         
         stats = stats_handler.analyze_arenas_activity(
-            [f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"], 
+            [f"merged_arena_stats{SECTION_TABLE_CON}overall"], 
             timestamp=timestamp
         )
         
         assert len(stats) == expected_count
     def test_invalid_arena_table(self, sample_db):
         """Test handling of invalid arena table"""
-        analyzer = JeAnalyzer(sample_db)
+        # analyzer = JeAnalyzer(sample_db)
         stats_handler = StatsHandler(sample_db)
         
         with pytest.raises(Exception):
@@ -61,12 +61,12 @@ class TestArenaAnalysis:
 
     def test_arena_data_consistency(self, sample_db):
         """Test consistency of arena data across multiple analyses"""
-        analyzer = JeAnalyzer(sample_db)
+        # analyzer = JeAnalyzer(sample_db)
         stats_handler = StatsHandler(sample_db)
         
         # Run analysis multiple times
-        stats1 = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
-        stats2 = stats_handler.analyze_arenas_activity([f"arenas{SECTION_NAME_CON}0{SECTION_TABLE_CON}overall"])
+        stats1 = stats_handler.analyze_arenas_activity([f"merged_arena_stats{SECTION_TABLE_CON}overall"])
+        stats2 = stats_handler.analyze_arenas_activity([f"merged_arena_stats{SECTION_TABLE_CON}overall"])
         
         # Results should be identical
         assert stats1 == stats2

@@ -127,7 +127,7 @@ class GenericAnalyzer(BaseTableHandler):
     def _analyze_arena_comparison(self, config: Dict) -> Dict[str, Any]:
         """Special handler for arena comparison analysis"""
         # Get all arena overall tables
-        arena_tables = self._get_matching_tables(f"arenas_*{SECTION_TABLE_CON}overall")
+        arena_tables = self._get_matching_tables(f"arenas{SECTION_NAME_CON}*{SECTION_TABLE_CON}overall")
         
         if not arena_tables:
             raise ValueError("No arena tables found")
@@ -194,7 +194,7 @@ class GenericAnalyzer(BaseTableHandler):
         return combined_query
     def _build_arena_comparison_que3ry(self, metrics: List[Dict[str, str]], groupby: List[str]) -> str:
         # Get all arena overall tables
-        arena_tables = self._get_matching_tables(f"arenas_*{SECTION_TABLE_CON}overall")
+        arena_tables = self._get_matching_tables(f"arenas{SECTION_NAME_CON}*{SECTION_TABLE_CON}overall")
         
         # Extract arena IDs using regex
         import re

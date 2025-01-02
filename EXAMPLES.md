@@ -69,7 +69,7 @@ $ je-analyze ../stats3.db --mode "bin_activity_analysis.*"                      
 
 Analyzing in mode: bin_activity_analysis match = bin_activity_analysis.*
 +--------+----------+----------------+-----------+-------------+--------+---------+----------+----------------+-------------+-----------------+-------------+
-| bins_0 | bin_size | total_requests | alloc_ops | dealloc_ops | fills  | flushes | lock_ops | owner_switches | total_pages | total_allocated | utilization |
+| bins | bin_size | total_requests | alloc_ops | dealloc_ops | fills  | flushes | lock_ops | owner_switches | total_pages | total_allocated | utilization |
 +--------+----------+----------------+-----------+-------------+--------+---------+----------+----------------+-------------+-----------------+-------------+
 | 5      | 48       | 16075645       | 6739560   | 6738137     | 94333  | 79657   | 243881   | 38660          | 54          | 68304           | 0.308       |
 | 2      | 24       | 8050874        | 4479925   | 4476781     | 117750 | 56821   | 182194   | 4867           | 36          | 75456           | 0.511       |
@@ -185,7 +185,7 @@ Done analysing in mode {mode}
 
 Analyzing in mode: bin_activity_analysis_new match = bin_activity_analysis.*
 +--------+----------+----------------+-----------+-------------+--------+---------+---------------------+--------------------+----------------------+----------+----------------+------------+--------------+-----------+------------+-------------+-----------------+-------------+
-| bins_0 | bin_size | total_requests | alloc_ops | dealloc_ops | fills  | flushes | tcache_batch_cost   | tcache_alloc_amort | tcache_dealloc_amort | lock_ops | owner_switches | alloc_rate | dealloc_rate | fill_rate | flush_rate | total_pages | total_allocated | utilization |
+| bins | bin_size | total_requests | alloc_ops | dealloc_ops | fills  | flushes | tcache_batch_cost   | tcache_alloc_amort | tcache_dealloc_amort | lock_ops | owner_switches | alloc_rate | dealloc_rate | fill_rate | flush_rate | total_pages | total_allocated | utilization |
 +--------+----------+----------------+-----------+-------------+--------+---------+---------------------+--------------------+----------------------+----------+----------------+------------+--------------+-----------+------------+-------------+-----------------+-------------+
 | 30     | 3584     | 1              | 12        | 9           | 2      | 2       | 400.0               | 16.666666666666664 | 22.22222222222222    | 7605     | 13             | 0          | 0            | 0         | 0          | 7           | 10752           | 0.375       |
 | 35     | 12288    | 1              | 12        | 9           | 2      | 2       | 400.0               | 16.666666666666664 | 22.22222222222222    | 7615     | 13             | 0          | 0            | 0         | 0          | 9           | 36864           | 1.0         |
@@ -306,7 +306,7 @@ newJParser [mainline] $ je-analyze ../stats3.db --table stats-merged_arena_stats
 
 Data from table 'stats-merged_arena_stats__bins_v1' (first 10 rows):
 +-----------+-------------+--------+--------+-------+-------------+-----------+--------+-----------+--------+-------------+--------+------------+------------+-------------+------------------+---------+--------+---------+-----------+--------+-------------+--------+-----------+-------------+--------+---------------+--------+--------------+--------+---------------+--------+-------------------+--------+------------------+--------+----------------+---------------+
-| timestamp | metadata_id | bins_0 | size_1 | ind_2 | allocated_3 | nmalloc_4 | rps_5  | ndalloc_6 | rps_7  | nrequests_8 | rps_9  | nshards_10 | curregs_11 | curslabs_12 | nonfull_slabs_13 | regs_14 | pgs_15 | util_16 | nfills_17 | rps_18 | nflushes_19 | rps_20 | nslabs_21 | nreslabs_22 | rps_23 | n_lock_ops_24 | rps_25 | n_waiting_26 | rps_27 | n_spin_acq_28 | rps_29 | n_owner_switch_30 | rps_31 | total_wait_ns_32 | rps_33 | max_wait_ns_34 | max_n_thds_35 |
+| timestamp | metadata_id | bins | size | ind | allocated | nmalloc | rps_nmalloc  | ndalloc | rps_ndalloc  | nrequests | rps_9  | nshards | curregs | curslabs | nonfull_slabs | regs | pgs | util | nfills | rps_nfills | nflushes | rps_nflushes | nslabs | nreslabs | rps_nreslabs | n_lock_ops | rps_n_lock_ops | n_waiting | rps_n_waiting | n_spin_acq | rps_n_spin_acq | n_owner_switch | rps_n_owner_switch | total_wait_ns | rps_total_wait_ns | max_wait_ns | max_n_thds |
 +-----------+-------------+--------+--------+-------+-------------+-----------+--------+-----------+--------+-------------+--------+------------+------------+-------------+------------------+---------+--------+---------+-----------+--------+-------------+--------+-----------+-------------+--------+---------------+--------+--------------+--------+---------------+--------+-------------------+--------+------------------+--------+----------------+---------------+
 | 0         | 7           | 0      | 8      | 0     | 9144        | 3212      | 50     | 2069      | 32     | 12866       | 204    | 1          | 1143       | 9           | 2                | 512     | 1      | 0.248   | 34        | 0      | 37          | 0      | 11        | 2           | 0      | 7693          | 122    | 0            | 0      | 0             | 0      | 91                | 1      | 0                | 0      | 0              | 0             |
 | 0         | 7           | 1      | 16     | 1     | 194336      | 15690     | 249    | 3544      | 56     | 19194       | 304    | 1          | 12146      | 54          | 7                | 256     | 1      | 0.878   | 170       | 2      | 63          | 1      | 70        | 10          | 0      | 7920          | 125    | 0            | 0      | 0             | 0      | 156               | 2      | 0                | 0      | 0              | 0             |
@@ -324,7 +324,7 @@ Data from table 'stats-merged_arena_stats__bins_v1' (first 10 rows):
 ```bash
 [mainline] $ je-analyze ../stats3.db --mode bins_analysis                                                                                               
 +--------+--------+-----------------+-----------------+-------------+
-| bins_0 | size_1 | total_allocated | avg_utilization | total_slabs |
+| bins | size | total_allocated | avg_utilization | total_slabs |
 +--------+--------+-----------------+-----------------+-------------+
 | 0      | 8      | 9144            | 0.248           | 9           |
 | 1      | 16     | 194336          | 0.878           | 54          |
@@ -391,7 +391,7 @@ zvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ../st
 
 === ARENAS_0.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+--------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1 | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+--------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 15          | 0         | 4096   | 0     | 6        | 24576   | 0        | 0       | 9           | 36864      | 15       | 61440    |
 | 0         | 15          | 1         | 8192   | 1     | 1        | 8192    | 0        | 0       | 6           | 49152      | 7        | 57344    |
@@ -400,7 +400,7 @@ zvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ../st
 
 === ARENAS_1.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 22          | 0         | 4096    | 0     | 0        | 0       | 0        | 0       | 1           | 4096       | 1        | 4096     |
 | 0         | 22          | 1         | 8192    | 1     | 0        | 0       | 0        | 0       | 1           | 8192       | 1        | 8192     |
@@ -411,35 +411,35 @@ zvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ../st
 
 === ARENAS_10.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 93          | 0         | 1835008 | 30    | 0        | 0       | 0        | 0       | 1           | 2084864    | 1        | 2084864  |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 
 === ARENAS_11.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 101         | 0         | 1835008 | 30    | 0        | 0       | 0        | 0       | 1           | 2084864    | 1        | 2084864  |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 
 === ARENAS_192.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 109         | 0         | 8388608 | 39    | 0        | 0       | 0        | 0       | 1           | 8388608    | 1        | 8388608  |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 
 === ARENAS_2.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 30          | 0         | 1835008 | 30    | 0        | 0       | 0        | 0       | 1           | 2035712    | 1        | 2035712  |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 
 === ARENAS_3.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+--------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1 | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+--------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 38          | 0         | 4096   | 0     | 7        | 28672   | 0        | 0       | 1           | 4096       | 8        | 32768    |
 | 0         | 38          | 1         | 8192   | 1     | 1        | 8192    | 0        | 0       | 3           | 24576      | 4        | 32768    |
@@ -455,7 +455,7 @@ zvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ../st
 
 === ARENAS_4.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 45          | 0         | 4096    | 0     | 4        | 16384   | 0        | 0       | 2           | 8192       | 6        | 24576    |
 | 0         | 45          | 1         | 12288   | 2     | 1        | 12288   | 0        | 0       | 1           | 12288      | 2        | 24576    |
@@ -467,7 +467,7 @@ zvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ../st
 
 === ARENAS_5.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 53          | 0         | 4096    | 0     | 4        | 16384   | 0        | 0       | 2           | 8192       | 6        | 24576    |
 | 0         | 53          | 1         | 8192    | 1     | 1        | 8192    | 0        | 0       | 0           | 0          | 1        | 8192     |
@@ -480,7 +480,7 @@ zvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ../st
 
 === ARENAS_6.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 61          | 0         | 4096    | 0     | 4        | 16384   | 0        | 0       | 2           | 8192       | 6        | 24576    |
 | 0         | 61          | 1         | 8192    | 1     | 1        | 8192    | 0        | 0       | 0           | 0          | 1        | 8192     |
@@ -493,21 +493,21 @@ zvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ../st
 
 === ARENAS_7.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 69          | 0         | 1835008 | 30    | 0        | 0       | 0        | 0       | 1           | 2084864    | 1        | 2084864  |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 
 === ARENAS_8.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 77          | 0         | 1835008 | 30    | 0        | 0       | 0        | 0       | 1           | 2084864    | 1        | 2084864  |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 
 === ARENAS_9.EXTENTS (Showing first 10 rows):
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
-| timestamp | metadata_id | extents_0 | size_1  | ind_2 | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
+| timestamp | metadata_id | extents_0 | size  | ind | ndirty_3 | dirty_4 | nmuzzy_5 | muzzy_6 | nretained_7 | retained_8 | ntotal_9 | total_10 |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
 | 0         | 85          | 0         | 1835008 | 30    | 0        | 0       | 0        | 0       | 1           | 2084864    | 1        | 2084864  |
 +-----------+-------------+-----------+---------+-------+----------+---------+----------+---------+-------------+------------+----------+----------+
@@ -519,7 +519,7 @@ ezvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $
 ezvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ../stats3.db --mode bin_pages_analysis                                                                                                                                                                                                                                                                                                                                                               ezvisch@f4d4888e385f
 
 +--------+----------+-------------+-------------+----------------+-------------+-----------------+
-| bins_0 | bin_size | total_pages | total_slabs | pages_per_slab | utilization | total_allocated |
+| bins | bin_size | total_pages | total_slabs | pages_per_slab | utilization | total_allocated |
 +--------+----------+-------------+-------------+----------------+-------------+-----------------+
 | 19     | 512      | 130         | 130         | 1              | 0.98        | 522240          |
 | 36     | 14336    | 84          | 12          | 7              | 0.666       | 229376          |
