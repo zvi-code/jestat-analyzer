@@ -189,44 +189,4 @@ class GenericAnalyzer(BaseTableHandler):
         ORDER BY total_allocated DESC
         """
         
-        return combined_query
-    def _build_arena_comparison_que3ry(self, metrics: List[Dict[str, str]], groupby: List[str]) -> str:
-        # Get all arena overall tables
-        arena_tables = self._get_matching_tables(f"arenas{SECTION_NAME_CON}*{SECTION_TABLE_CON}overall")
-        
-        # Extract arena IDs using regex
-        import re
-        arena_pattern = re.compile(r'arenas_(\d+)%soverall' % SECTION_TABLE_CON)
-        
-        # Build individual queries for each arena
-        queries = []
-        for table in arena_tables:
-            arena_id = arena_pattern.match(table).group(1)
-            select_clauses = []
-            
-            # Add arena_id as a constant
-            select_clauses.append(f"'{arena_id}' as arena_id")
-            
-            for metric in metrics:
-                if metric['operation'] == 'expression':
-                    formula = metric['formula']
-                    row_op = formula['row_operation']
-                    agg = formula['aggregation']
-                    select_clauses.append(f"{agg}({row_op}) as {metric['name']}")
-                else:
-                    column = metric['column']
-                    select_clauses.append(f"{metric['operation']}({column}) as {metric['name']}")
-            
-            query = f"""
-                SELECT {', '.join(select_clauses)}
-                FROM "{table}"
-            """
-            queries.append(query)
-        
-        # Combine all queries with UNION ALL
-        final_query = " UNION ALL ".join(queries)
-        
-        # Add ordering by allocated memory
-        final_query += " ORDER BY total_allocated DESC"
-        
-        return final_query
+        return combined_query    

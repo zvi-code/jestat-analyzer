@@ -21,7 +21,7 @@ def main():
                         default='table', help='Analysis mode')
     parser.add_argument('--table', help='Table name or pattern to analyze')
     parser.add_argument('--timestamp', help='Filter by timestamp')
-    parser.add_argument('--limit', type=int, default=10, help='Limit number of rows in display (default: 10)')
+    parser.add_argument('--limit', type=int, default=100, help='Limit number of rows in display (default: 10)')
     parser.add_argument('--list-tables', action='store_true', help='List all tables in the database')
     # Add this new argument
     parser.add_argument('--prefix', help='Filter tables by prefix (e.g., "merged" or "arenas")')

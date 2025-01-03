@@ -37,7 +37,7 @@ class DisplayHandler(BaseDBHandler):
         """Print data from a table in tabular format"""
         schema = self.get_table_schema(table_name)
         headers = [col[0] for col in schema]
-        
+        print(f"\n=== {table_name} (Showing first {limit} rows):headers={headers}")
         with self._get_cursor() as cur:
             if timestamp:
                 cur.execute(f'SELECT * FROM "{table_name}" WHERE timestamp = "{timestamp}" LIMIT {limit}')

@@ -20,7 +20,7 @@ class JeAnalyzer:
         self.generic_analyzer = GenericAnalyzer(db_path, config['schema_path'], config)
         self.table_formatter = TableFormatter()
 
-    def analyze(self, mode_pattern: str, table_pattern: str = None, timestamp: str = None, limit: int = 10):
+    def analyze(self, mode_pattern: str, table_pattern: str = None, timestamp: str = None, limit: int = 100):
         """Analyze the database based on the specified mode"""
         modes = ['raw', 'stats', 'arena', 'meta', 'bins', 'table']
         modes.extend(self.config['analyses'])
@@ -56,7 +56,7 @@ class JeAnalyzer:
                 print(f"An unexpected error occurred: {str(e)} {self.config['analyses']}")
             print("Done analysing in mode {mode}\n-------------------\n")
 
-    def print_table(self, table_name: str, timestamp = None, limit: int = 10):
+    def print_table(self, table_name: str, timestamp = None, limit: int = 100):
         if not table_name:
             raise ValueError("Table name must be provided for 'table' mode")
         
