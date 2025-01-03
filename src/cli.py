@@ -19,9 +19,9 @@ def main():
     parser.add_argument('--config', default='config/analyzer_config.json', help='Path to analyzer configuration file')
     parser.add_argument('--mode',  
                         default='table', help='Analysis mode')
-    parser.add_argument('--table', help='Table name or pattern to analyze')
+    parser.add_argument('--table', default='.*', help='Table name or pattern to analyze')
     parser.add_argument('--timestamp', help='Filter by timestamp')
-    parser.add_argument('--limit', type=int, default=100, help='Limit number of rows in display (default: 10)')
+    parser.add_argument('--limit', default="20, 15", help='Limit number of rows and colmns in display (default: [20, 15])')
     parser.add_argument('--list-tables', action='store_true', help='List all tables in the database')
     # Add this new argument
     parser.add_argument('--prefix', help='Filter tables by prefix (e.g., "merged" or "arenas")')
@@ -48,7 +48,7 @@ def main():
             for table in sorted(tables):  # Sort tables for better readability
                 print(f"- {table}")
             return
-        analyzer.analyze(args.mode, args.table, args.timestamp, args.limit)
+        analyzer.analyze(args.mode, args.table, args.timestamp, [int(l) for l in args.limit.split(',')])  # Split limit argument into list
     except Exception as e:
         print(f"Error: {str(e)}")
         sys.exit(1)

@@ -20,7 +20,7 @@ class JeAnalyzer:
         self.generic_analyzer = GenericAnalyzer(db_path, config['schema_path'], config)
         self.table_formatter = TableFormatter()
 
-    def analyze(self, mode_pattern: str, table_pattern: str = None, timestamp: str = None, limit: int = 100):
+    def analyze(self, mode_pattern: str, table_pattern: str = None, timestamp: str = None, limit=[20, 15]):
         """Analyze the database based on the specified mode"""
         modes = ['raw', 'stats', 'arena', 'meta', 'bins', 'table']
         modes.extend(self.config['analyses'])
@@ -56,7 +56,7 @@ class JeAnalyzer:
                 print(f"An unexpected error occurred: {str(e)} {self.config['analyses']}")
             print("Done analysing in mode {mode}\n-------------------\n")
 
-    def print_table(self, table_name: str, timestamp = None, limit: int = 100):
+    def print_table(self, table_name: str, timestamp = None, limit=(20, 15)):
         if not table_name:
             raise ValueError("Table name must be provided for 'table' mode")
         
@@ -224,11 +224,18 @@ class JeAnalyzer:
         analysis = self.stats_handler.analyze_bins(table_name)
         print(json.dumps(analysis, indent=2))
 
-    def analyze_table_stats(self, table_name: str) -> None:
+    def analyze_table_stats(self, table_pattern: str) -> None:
         """Calculate and display statistics for a table"""
-        print(f"\nAnalyzing statistics for {table_name}...")
-        self.stats_handler.calculate_table_stats(table_name)
-        self.display_handler.print_table_stats(table_name)
+        
+        tables = [t for t in self.generic_analyzer.list_available_tables() if re.search(table_pattern, t)]
+        print(f"Tables: {tables} pattern: {table_pattern}")
+        for table_name in tables:
+            print(f"\nAnalyzing statistics for {table_name}...")
+            self.stats_handler.print_table_stats(table_name)
+            # self.display_handler.print_table_stats(table_name)
+        # print(f"\nAnalyzing statistics for {table_name}...")
+        # self.stats_handler.calculate_table_stats(table_name)
+        # self.display_handler.print_table_stats(table_name)
 
     def display_metadata(self) -> None:
         """Display metadata information"""

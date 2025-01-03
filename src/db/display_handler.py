@@ -33,21 +33,21 @@ class DisplayHandler(BaseDBHandler):
             else:
                 print("Please specify a table pattern to display data.")    
 
-    def print_table_data(self, table_name: str, timestamp = None, limit: int = 10) -> None:
+    def print_table_data(self, table_name: str, timestamp = None, limit=[20, 15]) -> None:
         """Print data from a table in tabular format"""
         schema = self.get_table_schema(table_name)
         headers = [col[0] for col in schema]
-        print(f"\n=== {table_name} (Showing first {limit} rows):headers={headers}")
+        print(f"\n=== {table_name} (Showing first {limit[0]} rows and first {limit[1]} columns):headers={headers}")
         with self._get_cursor() as cur:
             if timestamp:
-                cur.execute(f'SELECT * FROM "{table_name}" WHERE timestamp = "{timestamp}" LIMIT {limit}')
+                cur.execute(f'SELECT * FROM "{table_name}" WHERE timestamp = "{timestamp}" LIMIT {limit[0]}')
             else:
-                cur.execute(f'SELECT * FROM "{table_name}" LIMIT {limit}')
+                cur.execute(f'SELECT * FROM "{table_name}" LIMIT {limit[0]}')
             rows = cur.fetchall()
             # print table name with capital letters
             
-            print(f"\n=== {table_name.upper()} (Showing first {limit} rows):")
-            self.formatter.print_table(headers, rows)
+            print(f"\n=== {table_name.upper()} (Showing first {limit[0]} rows and first {limit[1]} columns):")
+            self.formatter.print_table(headers, rows, limit[1])
 
     def print_metadata_summary(self) -> None:
         """Print summary of metadata table with related data counts"""

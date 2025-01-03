@@ -783,3 +783,61 @@ Done analysing in mode {mode}
 
 ezvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $    
 ```
+
+
+```batch
+ezvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ./stats.db --table "^merged_arena_stats__bins_v1$" --limit "10,20"                                                                                                                                                                                                                                                                                                                                                                                                               ezvisch@f4d4888e385f
+Analyzing in mode: table match = table
+
+=== merged_arena_stats__bins_v1 (Showing first 10 rows and first 20 columns):headers=['timestamp', 'metadata_id', 'bins', 'size', 'ind', 'allocated', 'nmalloc', 'rps_nmalloc', 'ndalloc', 'rps_ndalloc', 'nrequests', 'rps_nrequests', 'nshards', 'curregs', 'curslabs', 'nonfull_slabs', 'regs', 'pgs', 'util', 'nfills', 'rps_nfills', 'nflushes', 'rps_nflushes', 'nslabs', 'nreslabs', 'rps_nreslabs', 'n_lock_ops', 'rps_n_lock_ops', 'n_waiting', 'rps_n_waiting', 'n_spin_acq', 'rps_n_spin_acq', 'n_owner_switch', 'rps_n_owner_switch', 'total_wait_ns', 'rps_total_wait_ns', 'max_wait_ns', 'max_n_thds']
+
+=== MERGED_ARENA_STATS__BINS_V1 (Showing first 10 rows and first 20 columns):
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+-----------+---------------+---------+---------+----------+---------------+------+-----+------+--------+
+| timestamp      | metadata_id | bins | size | ind | allocated | nmalloc | rps_nmalloc | ndalloc | rps_ndalloc | nrequests | rps_nrequests | nshards | curregs | curslabs | nonfull_slabs | regs | pgs | util | nfills |
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+-----------+---------------+---------+---------+----------+---------------+------+-----+------+--------+
+| 0              | 6           | 0    | 24   | 2   | 0         | 0       | 0           | 0       | 0           | 0         | 0             | 0       | 0       | 0        | 0             | 512  | 3   | 1    | 0      |
+| 10,000,000,000 | 9           | 0    | 24   | 2   | 24,000    | 1,000   | 10          | 0       | 0           | 1,000     | 0             | 0       | 0       | 6        | 0             | 512  | 3   | 1    | 2      |
+| 20,000,000,000 | 12          | 0    | 24   | 2   | 0         | 1,000   | 0           | 1,000   | 0           | 2,000     | 0             | 0       | 0       | 0        | 0             | 512  | 3   | 1    | 2      |
+| 30,000,000,000 | 15          | 0    | 24   | 2   | 24,000    | 2,000   | 10          | 1,000   | 0           | 3,000     | 0             | 0       | 0       | 6        | 0             | 512  | 3   | 1    | 3      |
+| 40,000,000,000 | 18          | 0    | 24   | 2   | 0         | 2,000   | 10          | 2,000   | 0           | 4,000     | 0             | 0       | 0       | 0        | 0             | 512  | 3   | 1    | 3      |
+| 50,000,000,000 | 21          | 0    | 24   | 2   | 24,000    | 3,000   | 10          | 2,000   | 0           | 4,000     | 0             | 0       | 0       | 6        | 0             | 512  | 3   | 1    | 4      |
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+-----------+---------------+---------+---------+----------+---------------+------+-----+------+--------+
+Done analysing in mode {mode}
+-------------------
+
+ezvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ./stats.db --table "^merged_arena_stats__bins_v1$" --limit "10,10"                                                                                                                                                                                                                                                                                                                                                                                                               ezvisch@f4d4888e385f
+Analyzing in mode: table match = table
+
+=== merged_arena_stats__bins_v1 (Showing first 10 rows and first 10 columns):headers=['timestamp', 'metadata_id', 'bins', 'size', 'ind', 'allocated', 'nmalloc', 'rps_nmalloc', 'ndalloc', 'rps_ndalloc', 'nrequests', 'rps_nrequests', 'nshards', 'curregs', 'curslabs', 'nonfull_slabs', 'regs', 'pgs', 'util', 'nfills', 'rps_nfills', 'nflushes', 'rps_nflushes', 'nslabs', 'nreslabs', 'rps_nreslabs', 'n_lock_ops', 'rps_n_lock_ops', 'n_waiting', 'rps_n_waiting', 'n_spin_acq', 'rps_n_spin_acq', 'n_owner_switch', 'rps_n_owner_switch', 'total_wait_ns', 'rps_total_wait_ns', 'max_wait_ns', 'max_n_thds']
+
+=== MERGED_ARENA_STATS__BINS_V1 (Showing first 10 rows and first 10 columns):
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+
+| timestamp      | metadata_id | bins | size | ind | allocated | nmalloc | rps_nmalloc | ndalloc | rps_ndalloc |
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+
+| 0              | 6           | 0    | 24   | 2   | 0         | 0       | 0           | 0       | 0           |
+| 10,000,000,000 | 9           | 0    | 24   | 2   | 24,000    | 1,000   | 10          | 0       | 0           |
+| 20,000,000,000 | 12          | 0    | 24   | 2   | 0         | 1,000   | 0           | 1,000   | 0           |
+| 30,000,000,000 | 15          | 0    | 24   | 2   | 24,000    | 2,000   | 10          | 1,000   | 0           |
+| 40,000,000,000 | 18          | 0    | 24   | 2   | 0         | 2,000   | 10          | 2,000   | 0           |
+| 50,000,000,000 | 21          | 0    | 24   | 2   | 24,000    | 3,000   | 10          | 2,000   | 0           |
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+
+Done analysing in mode {mode}
+-------------------
+
+ezvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $ je-analyze ./stats.db --table "^merged_arena_stats__bins_v1$" --limit "2,10"                                                                                                                                                                                                                                                                                                                                                                                                                ezvisch@f4d4888e385f
+Analyzing in mode: table match = table
+
+=== merged_arena_stats__bins_v1 (Showing first 2 rows and first 10 columns):headers=['timestamp', 'metadata_id', 'bins', 'size', 'ind', 'allocated', 'nmalloc', 'rps_nmalloc', 'ndalloc', 'rps_ndalloc', 'nrequests', 'rps_nrequests', 'nshards', 'curregs', 'curslabs', 'nonfull_slabs', 'regs', 'pgs', 'util', 'nfills', 'rps_nfills', 'nflushes', 'rps_nflushes', 'nslabs', 'nreslabs', 'rps_nreslabs', 'n_lock_ops', 'rps_n_lock_ops', 'n_waiting', 'rps_n_waiting', 'n_spin_acq', 'rps_n_spin_acq', 'n_owner_switch', 'rps_n_owner_switch', 'total_wait_ns', 'rps_total_wait_ns', 'max_wait_ns', 'max_n_thds']
+
+=== MERGED_ARENA_STATS__BINS_V1 (Showing first 2 rows and first 10 columns):
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+
+| timestamp      | metadata_id | bins | size | ind | allocated | nmalloc | rps_nmalloc | ndalloc | rps_ndalloc |
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+
+| 0              | 6           | 0    | 24   | 2   | 0         | 0       | 0           | 0       | 0           |
+| 10,000,000,000 | 9           | 0    | 24   | 2   | 24,000    | 1,000   | 10          | 0       | 0           |
++----------------+-------------+------+------+-----+-----------+---------+-------------+---------+-------------+
+Done analysing in mode {mode}
+-------------------
+
+ezvisch /Volumes/workplace/jemalloc-perf/newJParser [mainline] $    
+```

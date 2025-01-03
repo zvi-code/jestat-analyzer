@@ -41,12 +41,11 @@ class TableFormatter:
         print(line)
 
     @staticmethod
-    def print_table(headers: List[str], rows: List[List[Any]]) -> None:
+    def print_table(headers: List[str], rows: List[List[Any]], limit_col=15) -> None:
         """Print complete table with headers and rows"""
         # Convert all values to strings and handle None
-        str_rows = [[str(cell) if cell is not None else '' for cell in row] 
-                   for row in rows]
-        
+        str_rows = [[str(cell) if cell is not None else '' for cell in row[:limit_col]] for row in rows]
+        headers = headers[:limit_col]
         # Get column widths
         widths = TableFormatter.get_column_widths(headers, str_rows)
         

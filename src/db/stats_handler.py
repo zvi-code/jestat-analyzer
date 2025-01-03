@@ -126,74 +126,6 @@ class StatsHandler(BaseDBHandler):
             return [dict(zip([col[0] for col in cur.description], row)) 
                     for row in cur.fetchall()]
         
-    def analyze_arena_efficiency33(self) -> Dict:
-        """Analyze efficiency metrics for each arena"""
-        with self._get_cursor() as cur:
-            query = f"""
-            WITH arena_metrics AS (
-                SELECT 
-                    metadata_id,
-                    timestamp,
-                    row_name,  -- Changed from arena_id (using SQL comment style)
-                    SUM(CAST(allocated AS FLOAT)) as allocated,
-                    SUM(CAST(nmalloc AS FLOAT)) as allocations,
-                    SUM(CAST(ndalloc AS FLOAT)) as deallocations,
-                    SUM(CAST(rps_nmalloc as FLOAT)) as alloc_rate,
-                    SUM(CAST(rps_ndalloc as FLOAT)) as dealloc_rate
-                FROM merged_arena_stats{SECTION_TABLE_CON}overall
-                GROUP BY metadata_id, timestamp, row_name
-            )
-            SELECT 
-                timestamp,
-                row_name as arena_id,
-                allocated,
-                allocations,
-                deallocations,
-                alloc_rate,
-                dealloc_rate,
-                ROUND(deallocations * 100.0 / NULLIF(allocations, 0), 2) as dealloc_ratio,
-                ROUND(allocated / NULLIF(allocations, 0), 2) as avg_allocation_size
-            FROM arena_metrics
-            ORDER BY timestamp, arena_id
-            """
-            cur.execute(query)
-            return [dict(zip([col[0] for col in cur.description], row)) 
-                    for row in cur.fetchall()] 
-        
-    def analyze_arena_efficiency2(self) -> Dict:
-        """Analyze efficiency metrics for each arena"""
-        with self._get_cursor() as cur:
-            query = f"""
-            WITH arena_metrics AS (
-                SELECT 
-                    metadata_id,
-                    timestamp,
-                    arena_id,
-                    SUM(CAST(allocated AS FLOAT)) as allocated,
-                    SUM(CAST(nmalloc AS FLOAT)) as allocations,
-                    SUM(CAST(ndalloc AS FLOAT)) as deallocations,
-                    SUM(CAST(rps_nmalloc as FLOAT)) as alloc_rate,
-                    SUM(CAST(rps_ndalloc as FLOAT)) as dealloc_rate
-                FROM merged_arena_stats{SECTION_TABLE_CON}overall
-                GROUP BY metadata_id, timestamp, arena_id
-            )
-            SELECT 
-                timestamp,
-                arena_id,
-                allocated,
-                allocations,
-                deallocations,
-                alloc_rate,
-                dealloc_rate,
-                ROUND(deallocations * 100.0 / NULLIF(allocations, 0), 2) as dealloc_ratio,
-                ROUND(allocated / NULLIF(allocations, 0), 2) as avg_allocation_size
-            FROM arena_metrics
-            ORDER BY timestamp, arena_id
-            """
-            cur.execute(query)
-            return [dict(zip([col[0] for col in cur.description], row)) 
-                    for row in cur.fetchall()]
-        
     def detect_potential_leaks(self, threshold_percent: float = 10.0) -> Dict:
         """Detect potential memory leaks based on allocation patterns"""
         with self._get_cursor() as cur:
@@ -309,259 +241,156 @@ class StatsHandler(BaseDBHandler):
                 }
 
             return results
-    def calculate_table_stats3333(self, table_name: str) -> dict:
-        """Calculate comprehensive statistics for a table"""
+    def print_table_stats(self, table_name: str, limit=(20, 15)) -> None:
         with self._get_cursor() as cur:
+            cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            # for (table_name,) in cur.fetchall():
+            print(f"\n=== {table_name} ===")
             cur.execute(f"SELECT * FROM '{table_name}' LIMIT 1")
             columns = [desc[0] for desc in cur.description]
-            if not columns:
-                return None
-
-            columns2ignore = {'id', 'timestamp', 'section', 'table_name', 'metadata_id'}
-            results = {}
-
+            
+            # Pre-check numeric columns
+            # numeric_cols = {col for col in columns if self.is_numeric(table_name, col)}
+            numeric_cols = []
+            # Create results dict for each metric
+            results = {
+                'SUM': {},
+                'AVG': {},
+                'STD': {},
+                'P50': {},
+                'P90': {},
+                'P99': {}
+            }
+            columns2ignore = {'id', 'timestamp', 'section', 'table_name', 'metadata_id', 'metric', 'bins', 'size', 'large', 'extents', 'decaying', 'ind', 'Key','Value', 'id', 'name', 'regs'}
+            # Calculate stats for each column
             for col in columns:
                 if col in columns2ignore:
-                    continue
-
-                # Calculate basic statistics
-                cur.execute(f"""
-                    SELECT 
-                        MIN(CAST(TRIM({col}) AS FLOAT)),
-                        MAX(CAST(TRIM({col}) AS FLOAT)),
-                        AVG(CAST(TRIM({col}) AS FLOAT)),
-                        SUM(CAST(TRIM({col}) AS FLOAT)),
-                        COUNT(*)
-                    FROM '{table_name}'
-                    WHERE TRIM({col}) != ''
-                """)
-                min_val, max_val, avg_val, sum_val, count = cur.fetchone()
-
-                # Calculate percentiles
-                cur.execute(f"""
-                    WITH sorted AS (
-                        SELECT CAST(TRIM({col}) AS FLOAT) as val
+                    # if self.is_numeric(table_name, col):
+                    # cur.execute(f"""
+                    #     SELECT *
+                    #     FROM '{table_name}'
+                    # """)
+                    # val = cur.fetchone()
+                    cur.execute(f"""
+                        SELECT CAST({col} AS TEXT) as val
                         FROM '{table_name}'
-                        WHERE TRIM({col}) != ''
-                        ORDER BY val
-                    ),
-                    count_cte AS (
-                        SELECT COUNT(*) as cnt FROM sorted
-                    )
-                    SELECT 
-                        CASE 
-                            WHEN cnt % 2 = 0 THEN
-                                (SELECT (val + LEAD(val) OVER (ORDER BY val)) / 2
+                    """)
+                    val = cur.fetchone()
+                    # print(f"Column: {col} - {val}")
+                    for metric in ['SUM', 'AVG', 'STD', 'P50', 'P90', 'P99']:
+                        results[metric][col] = f"{val[0]}" if val else "N/A"
+                    continue
+                try:
+                    # if self.is_numeric(table_name, col):
+                    cur.execute(f"""
+                        SELECT 
+                            SUM(CAST({col} as FLOAT)) as sum,
+                            AVG(CAST({col} as FLOAT)) as avg,
+                            SQRT(AVG(CAST({col} as FLOAT) * CAST({col} as FLOAT)) - 
+                                    AVG(CAST({col} as FLOAT)) * AVG(CAST({col} as FLOAT))) as std
+                        FROM '{table_name}'
+                        WHERE CAST({col} AS TEXT) GLOB '*[0-9.]*' 
+                        AND CAST({col} AS TEXT) NOT GLOB '*[A-Za-z]*'
+                        GROUP BY timestamp
+                    """)
+                    sum_avg_std = cur.fetchone()
+                    
+                    if sum_avg_std[0] is not None:
+                        results['SUM'][col] = f"{sum_avg_std[0]:.2f}"
+                        results['AVG'][col] = f"{sum_avg_std[1]:.2f}"
+                        results['STD'][col] = f"{sum_avg_std[2]:.2f}"
+                        
+                        # Calculate percentiles
+                        for p, metric in [(50, 'P50'), (90, 'P90'), (99, 'P99')]:
+                            cur.execute(f"""
+                                WITH sorted AS (
+                                    SELECT CAST({col} as FLOAT) as val
+                                    FROM '{table_name}'
+                                    WHERE CAST({col} AS TEXT) GLOB '*[0-9.]*' 
+                                    AND CAST({col} AS TEXT) NOT GLOB '*[A-Za-z]*'
+                                    ORDER BY CAST({col} as FLOAT)
+                                )
+                                SELECT val
                                 FROM sorted
-                                LIMIT 1 OFFSET (cnt / 2 - 1))
-                            ELSE
-                                (SELECT val
-                                FROM sorted
-                                LIMIT 1 OFFSET (cnt / 2))
-                        END as p50,
-                        (SELECT val FROM sorted LIMIT 1 OFFSET (cnt * 90 / 100 - 1)) as p90,
-                        (SELECT val FROM sorted LIMIT 1 OFFSET (cnt * 99 / 100 - 1)) as p99
-                    FROM count_cte
-                """)
-                p50, p90, p99 = cur.fetchone()
-
-                results[col] = {
-                    'min': min_val,
-                    'max': max_val,
-                    'avg': avg_val,
-                    'sum': sum_val,
-                    'count': count,
-                    'p50': p50,
-                    'p90': p90,
-                    'p99': p99
-                }
-
-            return results
-        
-    def calculate_table_stats2(self, table_name: str) -> None:
-        """Calculate comprehensive statistics for a table"""
-        with self._get_cursor() as cur:
-            cur.execute(f"SELECT * FROM '{table_name}' LIMIT 1")
-            columns = [desc[0] for desc in cur.description]
-            if not columns:
+                                LIMIT 1
+                                OFFSET (SELECT COUNT(*) * {p} / 100 - 1 FROM sorted)
+                            """)
+                            pvalue = cur.fetchone()
+                            results[metric][col] = f"{pvalue[0]:.2f}" if pvalue else "N/A"
+                        numeric_cols.append(col)
+                        continue
+                    for metric in results:
+                        results[metric][col] = "N/A"
+                            
+                except:
+                    for metric in results:
+                        results[metric][col] = "N/A"
+                    continue
+            if not numeric_cols:
+                print("No numeric columns found")
                 return
-
-            # Columns to ignore in statistical calculations
-            columns2ignore = {'id', 'timestamp', 'section', 'table_name', 'metadata_id'}
+            columns = columns[:limit[1]]  # Limit columns
+            # Print table
+            col_width = max(15, max(len(col) for col in columns))
+            metric_width = 8
             
-            # Create stats table if it doesn't exist
-            cur.execute(f"""
-                CREATE TABLE IF NOT EXISTS 'stats_{table_name}' (
-                    metric TEXT,
-                    {', '.join(f'"{col}" FLOAT' for col in columns if col not in columns2ignore)}
-                )
-            """)
-
-            # Calculate statistics for each metric
-            metrics = ['sum', 'avg', 'std', 'p50', 'p90', 'p99']
-            for metric in metrics:
-                cur.execute(f"""
-                    INSERT INTO 'stats_{table_name}' (metric, {', '.join(col for col in columns if col not in columns2ignore)})
-                    SELECT '{metric}',
-                        {', '.join(f'''
-                        ROUND(CASE '{metric}'
-                            WHEN 'sum' THEN SUM(CAST(TRIM({col}) AS FLOAT))
-                            WHEN 'avg' THEN AVG(CAST(TRIM({col}) AS FLOAT))
-                            WHEN 'std' THEN SQRT(AVG(POWER(CAST(TRIM({col}) AS FLOAT), 2)) - POWER(AVG(CAST(TRIM({col}) AS FLOAT)), 2))
-                            WHEN 'p50' THEN (SELECT val FROM (SELECT CAST(TRIM({col}) AS FLOAT) as val FROM '{table_name}' ORDER BY val LIMIT 1 OFFSET (SELECT COUNT(*) * 50 / 100 - 1 FROM '{table_name}')))
-                            WHEN 'p90' THEN (SELECT val FROM (SELECT CAST(TRIM({col}) AS FLOAT) as val FROM '{table_name}' ORDER BY val LIMIT 1 OFFSET (SELECT COUNT(*) * 90 / 100 - 1 FROM '{table_name}')))
-                            WHEN 'p99' THEN (SELECT val FROM (SELECT CAST(TRIM({col}) AS FLOAT) as val FROM '{table_name}' ORDER BY val LIMIT 1 OFFSET (SELECT COUNT(*) * 99 / 100 - 1 FROM '{table_name}')))
-                        END, 2)''' for col in columns if col not in columns2ignore)}
-                    FROM '{table_name}'
-                """)
-
-    def analyze_arenas_activity(self, table_names: List[str] = None, timestamp: str = None) -> List[dict]:
+            # Header
+            print(" " * metric_width + " | " + " | ".join(f"{col:<{col_width}}" for col in columns))
+            print("-" * metric_width + "-+-" + "-+-".join("-" * col_width for _ in columns))
+            
+            # Data rows
+            for metric in ['SUM', 'AVG', 'STD', 'P50', 'P90', 'P99']:
+                row = f"{metric:<{metric_width}} | " + " | ".join(f"{results[metric].get(col, 'N/A'):<{col_width}}" for col in columns)
+                print(row)     
+    def analyze_arenas_activity(self, table_names: List[str] = None, timestamp: str = None):
         with self._get_cursor() as cur:
             required_columns = {
                 'metadata_id': True,
-                f'{COL_HEADER_FILLER}': True, 
                 'allocated': True,
                 'nmalloc': True,
                 'ndalloc': True,
                 'rps_nmalloc': True,
                 'rps_ndalloc': True
             }
-
+            primary_columns = ['bins', f'{COL_HEADER_FILLER}', 'large', 'extents','decaying']
             def validate_table(table):
                 cur.execute(f'PRAGMA table_info("{table}")')
                 columns = {row[1] for row in cur.fetchall()}
-                # Print for debugging
-                print(f"Table {table} columns: {columns}")
-                print(f"Required columns: {required_columns.keys()}")
-                return all(col in columns for col in required_columns)
+                if all(col in columns for col in required_columns):
+                    for col in primary_columns:
+                        if col in columns:
+                            return (table, col)
+                return None
 
             # Get and validate tables
             if table_names:
-                arena_tables = [(t,) for t in table_names if validate_table(t)]
+                all_tables = table_names
             else:
-                cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'arenas{SECTION_NAME_CON}%{SECTION_TABLE_CON}overall'")
+                cur.execute(f"SELECT name FROM sqlite_master WHERE type='table'")
                 all_tables = cur.fetchall()
-                arena_tables = [(t[0],) for t in all_tables if validate_table(t[0])]
-
+            arena_tables = [validate_table(t) for t in all_tables]
+            arena_tables = [t for t in arena_tables if t]
             if not arena_tables:
-                print("No valid arena tables found")
-                raise ValueError("No valid arena tables found")  # Add this line
-
+                for table in all_tables:
+                    cur.execute(f'PRAGMA table_info("{table}")')
+                    columns = {row[1] for row in cur.fetchall()}
+                    print(f"\n\nTable {table} does not have required \ncolumns={columns}\nrequired_columns={required_columns}\n\n")
+                print(f"No valid arena tables found all_tables = {all_tables} table_names={table_names}")
+                return        
             # Construct UNION query for arena data
             union_queries = []
-            for (table,) in arena_tables:
+            for (table,prim_col) in arena_tables:
                 union_queries.append(f"""
                 SELECT 
                     m.timestamp,
                     t.metadata_id,
                     '{table}' as table_name,
-                    t.{COL_HEADER_FILLER} as row_name, 
+                    t.{prim_col} as row_name, 
                     t.allocated as allocated,
                     t.nmalloc as nmalloc,
                     t.ndalloc as ndalloc,
-                    t.rps_nmalloc alloc_rps,
-                    t.rps_ndalloc as dealloc_rps
-                FROM '{table}' t
-                JOIN je_metadata m ON t.metadata_id = m.id
-                {f"WHERE m.timestamp = '{timestamp}'" if timestamp else ""}
-                """)
-
-            # Main analysis query
-            query = f"""
-                WITH arena_data AS ({' UNION ALL '.join(union_queries)})
-                SELECT 
-                    timestamp,
-                    metadata_id,
-                    0 as arena_id,  -- We're aggregating all into arena 0
-                    SUM(allocated) as total_allocated,
-                    100.0 as memory_percent,  -- Since we're aggregating all
-                    ROUND(SUM(CASE WHEN row_name = '0' THEN allocated ELSE 0 END) * 100.0 / 
-                        NULLIF(SUM(allocated), 0), 2) as small_percent,
-                    ROUND(SUM(CASE WHEN row_name = '1' THEN allocated ELSE 0 END) * 100.0 / 
-                        NULLIF(SUM(allocated), 0), 2) as large_percent,
-                    SUM(nmalloc) as total_allocs,
-                    SUM(ndalloc) as total_deallocs,
-                    SUM(alloc_rps) as alloc_rps,
-                    SUM(dealloc_rps) as dealloc_rps
-                FROM arena_data 
-                GROUP BY timestamp, metadata_id
-                ORDER BY timestamp, metadata_id, total_allocated DESC
-                """
-            # Execute the query and fetch results
-            cur.execute(query)
-            rows = cur.fetchall()
-            headers = ["timestamp", "metadata_id", "arena_id", "total_allocated", 
-                    "memory_percent", "small_percent", "large_percent",
-                    "total_allocs", "total_deallocs", "alloc_rps", "dealloc_rps"]
-            
-            # Convert rows to list of dictionaries
-            results = [dict(zip(headers, row)) for row in rows]
-        
-            # Print formatted output
-            current_ts = None
-            current_meta = None
-            grouped_rows = []
-            
-            for row in rows:
-                if current_ts != row[0] or current_meta != row[1]:
-                    if grouped_rows:
-                        print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
-                        self.formatter.print_table(headers, grouped_rows)
-                    current_ts = row[0]
-                    current_meta = row[1]
-                    grouped_rows = []
-                grouped_rows.append(row)
-                
-            if grouped_rows:
-                print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
-                self.formatter.print_table(headers, grouped_rows)
-
-            return results
-        
-    def analyze_arenas_activity2(self, table_names: List[str] = None, timestamp: str = None) -> None:
-        """Analyze arena activity statistics"""
-        with self._get_cursor() as cur:
-            required_columns = {
-                'metadata_id': True,
-                f'{COL_HEADER_FILLER}': True, 
-                'allocated': True,
-                'nmalloc': True,
-                'ndalloc': True,
-                'rps_nmalloc': True,
-                'rps_ndalloc': True
-            }
-
-            def validate_table(table):
-                cur.execute(f'PRAGMA table_info("{table}")')
-                columns = {row[1] for row in cur.fetchall()}
-                return all(col in columns for col in required_columns)
-
-            # Get and validate tables
-            if table_names:
-                arena_tables = [(t,) for t in table_names if validate_table(t)]
-            else:
-                cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'arenas{SECTION_NAME_CON}%{SECTION_TABLE_CON}overall'")
-                all_tables = cur.fetchall()
-                arena_tables = [(t[0],) for t in all_tables if validate_table(t[0])]
-
-            if not arena_tables:
-                print("No valid arena tables found")
-                return
-
-            # Construct UNION query for arena data
-            union_queries = []
-            for (table,) in arena_tables:
-                union_queries.append(f"""
-                SELECT 
-                    m.timestamp,
-                    t.metadata_id,
-                    '{table}' as table_name,
-                    t.{COL_HEADER_FILLER} as row_name, 
-                    t.allocated as allocated,
-                    t.nmalloc as nmalloc,
-                    t.ndalloc as ndalloc,
-                    t.rps_nmalloc alloc_rps,
-                    t.rps_ndalloc as dealloc_rps
+                    t.rps_nmalloc as alloc_rps,
+                    t.rps_ndalloc dealloc_rps
                 FROM '{table}' t
                 JOIN je_metadata m ON t.metadata_id = m.id
                 {f"WHERE m.timestamp = '{timestamp}'" if timestamp else ""}
@@ -606,8 +435,11 @@ class StatsHandler(BaseDBHandler):
             FROM arena_stats 
             ORDER BY timestamp, metadata_id, total_allocated DESC
             """
-            
-            cur.execute(query)
+            try:
+                cur.execute(query)
+            except Exception as e:
+                print(f"Error executing query: {e} - {query}")
+                return
             headers = ["Timestamp", "MetaID", "Arena", "Total Mem", "Mem%", "Small%", "Large%", 
                     "Allocs", "Deallocs", "Alloc RPS", "Dealloc RPS"]
             rows = cur.fetchall()
@@ -631,34 +463,108 @@ class StatsHandler(BaseDBHandler):
                 print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
                 self.formatter.print_table(headers, grouped_rows)
 
-    def analyze_bins(self, table_name: str = "stats-merged_arena_stats__bins_v1") -> Dict[str, Any]:
-        """Perform extensive analysis on bins data"""
-        with self._get_cursor() as cur:
-            try:
-                cur.execute(f"SELECT * FROM '{table_name}'")
-            except Exception as e:
-                print(f"Error: {e} at ({f"SELECT * FROM '{table_name}'"}")
-                return {}
-            cur.execute(f"SELECT * FROM '{table_name}'")
-            columns = [description[0] for description in cur.description]
-            data = cur.fetchall()
+    # def analyze_arenas_activity(self, table_names: List[str] = None, timestamp: str = None) -> List[dict]:
+    #     with self._get_cursor() as cur:
+    #         required_columns = {
+    #             'metadata_id': True,
+    #             f'{COL_HEADER_FILLER}': True, 
+    #             'allocated': True,
+    #             'nmalloc': True,
+    #             'ndalloc': True,
+    #             'rps_nmalloc': True,
+    #             'rps_ndalloc': True
+    #         }
 
-            df = pd.DataFrame(data, columns=columns)
+    #         def validate_table(table):
+    #             cur.execute(f'PRAGMA table_info("{table}")')
+    #             columns = {row[1] for row in cur.fetchall()}
+    #             # Print for debugging
+    #             print(f"Table {table} columns: {columns}")
+    #             print(f"Required columns: {required_columns.keys()}")
+    #             return all(col in columns for col in required_columns)
+
+    #         # Get and validate tables
+    #         if table_names:
+    #             arena_tables = [(t,) for t in table_names if validate_table(t)]
+    #         else:
+    #             cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'arenas{SECTION_NAME_CON}%{SECTION_TABLE_CON}overall'")
+    #             all_tables = cur.fetchall()
+    #             arena_tables = [(t[0],) for t in all_tables if validate_table(t[0])]
+
+    #         if not arena_tables:
+    #             print("No valid arena tables found")
+    #             raise ValueError("No valid arena tables found")  # Add this line
+
+    #         # Construct UNION query for arena data
+    #         union_queries = []
+    #         for (table,) in arena_tables:
+    #             union_queries.append(f"""
+    #             SELECT 
+    #                 m.timestamp,
+    #                 t.metadata_id,
+    #                 '{table}' as table_name,
+    #                 t.{COL_HEADER_FILLER} as row_name, 
+    #                 t.allocated as allocated,
+    #                 t.nmalloc as nmalloc,
+    #                 t.ndalloc as ndalloc,
+    #                 t.rps_nmalloc alloc_rps,
+    #                 t.rps_ndalloc as dealloc_rps
+    #             FROM '{table}' t
+    #             JOIN je_metadata m ON t.metadata_id = m.id
+    #             {f"WHERE m.timestamp = '{timestamp}'" if timestamp else ""}
+    #             """)
+
+    #         # Main analysis query
+    #         query = f"""
+    #             WITH arena_data AS ({' UNION ALL '.join(union_queries)})
+    #             SELECT 
+    #                 timestamp,
+    #                 metadata_id,
+    #                 0 as arena_id,  -- We're aggregating all into arena 0
+    #                 SUM(allocated) as total_allocated,
+    #                 100.0 as memory_percent,  -- Since we're aggregating all
+    #                 ROUND(SUM(CASE WHEN row_name = '0' THEN allocated ELSE 0 END) * 100.0 / 
+    #                     NULLIF(SUM(allocated), 0), 2) as small_percent,
+    #                 ROUND(SUM(CASE WHEN row_name = '1' THEN allocated ELSE 0 END) * 100.0 / 
+    #                     NULLIF(SUM(allocated), 0), 2) as large_percent,
+    #                 SUM(nmalloc) as total_allocs,
+    #                 SUM(ndalloc) as total_deallocs,
+    #                 SUM(alloc_rps) as alloc_rps,
+    #                 SUM(dealloc_rps) as dealloc_rps
+    #             FROM arena_data 
+    #             GROUP BY timestamp, metadata_id
+    #             ORDER BY timestamp, metadata_id, total_allocated DESC
+    #             """
+    #         # Execute the query and fetch results
+    #         cur.execute(query)
+    #         rows = cur.fetchall()
+    #         headers = ["timestamp", "metadata_id", "arena_id", "total_allocated", 
+    #                 "memory_percent", "small_percent", "large_percent",
+    #                 "total_allocs", "total_deallocs", "alloc_rps", "dealloc_rps"]
             
-            analysis = {
-                "total_bins": int(len(df["bins"].unique())),
-                "total_allocated": int(df["allocated"].sum()),
-                "total_nmalloc": int(df["nmalloc"].sum()),
-                "total_ndalloc": int(df["ndalloc"].sum()),
-                "overall_utilization": float(df["util"].mean()),
-                "bins_by_size": self._analyze_bins_by_size(df),
-                "allocation_hotspots": self._identify_allocation_hotspots(df),
-                "fragmentation_analysis": self._analyze_fragmentation(df),
-                "lock_contention": self._analyze_lock_contention(df),
-                "size_efficiency": self._analyze_size_efficiency(df),
-            }
+    #         # Convert rows to list of dictionaries
+    #         results = [dict(zip(headers, row)) for row in rows]
+        
+    #         # Print formatted output
+    #         current_ts = None
+    #         current_meta = None
+    #         grouped_rows = []
             
-            return analysis
+    #         for row in rows:
+    #             if current_ts != row[0] or current_meta != row[1]:
+    #                 if grouped_rows:
+    #                     print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
+    #                     self.formatter.print_table(headers, grouped_rows)
+    #                 current_ts = row[0]
+    #                 current_meta = row[1]
+    #                 grouped_rows = []
+    #             grouped_rows.append(row)
+                
+    #         if grouped_rows:
+    #             print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
+    #             self.formatter.print_table(headers, grouped_rows)
+
+    #         return results
 
     def _analyze_bins_by_size(self, df: pd.DataFrame) -> Dict[str, Any]:
         size_groups = df.groupby("size")
