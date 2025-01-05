@@ -2,6 +2,7 @@
 from typing import List, Optional
 from .base_handler import BaseDBHandler
 from constants import *
+import pandas as pd
 
 class DisplayHandler(BaseDBHandler):
     """Handles data display and formatting"""
@@ -92,3 +93,25 @@ class DisplayHandler(BaseDBHandler):
             headers = [desc[0] for desc in cur.description]
             print(f"\n=== Statistics for {table_name} ===")
             self.formatter.print_table(headers, rows)
+
+    def get_tables(self, graph_spec) -> List:
+        with self._get_cursor() as cursor:
+            table_prefix, x_column, y_column, *legend_column = graph_spec.split(',')
+            legend_column = legend_column[0] if legend_column else None
+            
+            # Get matching tables
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE ?", (f'{table_prefix}',))
+            tables = [row[0] for row in cursor.fetchall()]
+
+            if not tables:
+                print(f"No tables found matching prefix '{table_prefix}'")
+                return
+
+            # Prepare data for plotting
+            data = []
+            for table in tables:
+                query = f"SELECT {x_column}, {y_column}" + (f", {legend_column}" if legend_column else "") + f" FROM '{table}'"
+                df = pd.read_sql_query(query, self.conn)
+                df['table'] = table
+                data.append(df)
+            return data

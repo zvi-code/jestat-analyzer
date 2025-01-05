@@ -25,6 +25,9 @@ def main():
     parser.add_argument('--list-tables', action='store_true', help='List all tables in the database')
     # Add this new argument
     parser.add_argument('--prefix', help='Filter tables by prefix (e.g., "merged" or "arenas")')
+    parser.add_argument('--graph', help='Generate graph. Format: "<table-name-prefix>,<x-column>,<y-column>[,<legend-column>]"')
+
+
     args = parser.parse_args()
 
     if not os.path.exists(args.db_path):
@@ -48,7 +51,10 @@ def main():
             for table in sorted(tables):  # Sort tables for better readability
                 print(f"- {table}")
             return
-        analyzer.analyze(args.mode, args.table, args.timestamp, [int(l) for l in args.limit.split(',')])  # Split limit argument into list
+        if args.graph:
+            analyzer.plot_recall_for_configurations(args.graph)
+        else:
+            analyzer.analyze(args.mode, args.table, args.timestamp, [int(l) for l in args.limit.split(',')])  # Split limit argument into list
     except Exception as e:
         print(f"Error: {str(e)}")
         sys.exit(1)

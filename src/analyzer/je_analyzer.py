@@ -5,6 +5,11 @@ from src.db.display_handler import DisplayHandler
 from src.analyzer.generic_analyzer import GenericAnalyzer
 from src.utils.table_formatter import TableFormatter
 import re
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import numpy as np
+
 from constants import *
 def load_config(config_path):
     with open(config_path, 'r') as f:
@@ -246,3 +251,140 @@ class JeAnalyzer:
         """Clean up resources"""
         self.stats_handler.close()
         self.display_handler.close()
+
+    def plot_recall_for_configurations(self, graph_spec):
+        # self.plot_by_time(graph_spec)
+        parts = graph_spec.split(',')
+        table_regex = parts[0]
+        x_column = parts[1]
+        y_column = parts[2]
+
+        # Get matching tables
+        # tables = self.display_handler.get_tables(table_regex)
+        # Get matching tables
+        tables = self.display_handler.get_matching_tables(table_regex)    
+        if not tables:
+            print(f"No tables found matching regex '{table_regex}'")
+            return
+
+        # Define a fixed color map for tables
+        colors = plt.cm.tab10.colors  # Use Matplotlib's tab10 color palette
+        table_color_map = {table: colors[i % len(colors)] for i, table in enumerate(tables)}
+
+        plt.figure(figsize=(12, 6))
+
+        for table in tables:
+            #SUM(allocated) as total_allocated,
+            # Fetch data for each table
+            query = f"SELECT {x_column}, SUM(CAST({y_column} as FLOAT)) as total_{y_column} FROM '{table}' GROUP BY {x_column}"
+            try:
+                df = pd.read_sql_query(query, self.display_handler.conn)
+            except Exception as e:
+                print(f"Error fetching data for table '{table}': {str(e)}")
+                continue
+            try:
+                print(f"Plotting data for table '{table}'")
+                print(f"Data: {df}")
+                # Sort the data by x_column for proper line plotting
+                df = df.sort_values(by=x_column)
+                plt.plot(df[x_column], df[f'total_{y_column}'], label=table, marker='o', color=table_color_map[table])
+            except Exception as e:
+                print(f"Error plotting data for table '{table}': {str(e)}")
+                continue
+        plt.xlabel(x_column)
+        plt.ylabel(f'total_{y_column}')
+
+        # Set y-axis limits and ticks if y_column is 'recall'
+        # if y_column.lower() == 'recall':
+        #     plt.ylim(0.8, 1.0)
+        #     plt.yticks([0.8, 0.82, 0.84, 0.86, 0.88, 0.9, 0.92, 0.94, 0.96, 0.98, 1.0])
+
+        plt.title(f'{f'total_{y_column}'} vs {x_column}')
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.grid(True)
+
+        output_file = f"{table_regex}_{x_column}_vs_{f'total_{y_column}'}.png"
+        plt.savefig(output_file, bbox_inches='tight')
+        plt.close()
+        print(f"Saved Plot: {output_file}")    
+    
+    def plot_by_time(self, graph_spec):
+        parts = graph_spec.split(',')
+        table_regex = parts[0]
+        x_column = 'timestamp'
+        y_column = parts[2]
+
+        # Get matching tables
+        # tables = self.display_handler.get_tables(table_regex)
+        # Get matching tables
+        tables = self.display_handler.get_matching_tables(table_regex)    
+        if not tables:
+            print(f"No tables found matching regex '{table_regex}'")
+            return
+
+        # Define a fixed color map for tables
+        colors = plt.cm.tab10.colors  # Use Matplotlib's tab10 color palette
+        table_color_map = {table: colors[i % len(colors)] for i, table in enumerate(tables)}
+
+        plt.figure(figsize=(12, 6))
+
+        for table in tables:
+            #SUM(allocated) as total_allocated,
+            # Fetch data for each table
+            query = f"SELECT ROUND(CAST(timestamp as FLOAT)/1000000000,2) as time_sec, SUM(CAST({y_column} as FLOAT)) as total_{y_column} FROM '{table}' GROUP BY 'time_sec'"
+            try:
+                df = pd.read_sql_query(query, self.display_handler.conn)
+            except Exception as e:
+                print(f"Error fetching data for table '{table}': {str(e)}")
+                continue
+            try:
+                print(f"Plotting data for table '{table}'")
+                print(f"Data: {df}")
+                # Sort the data by x_column for proper line plotting
+                df = df.sort_values(by='time_sec')
+                plt.plot(df['time_sec'], df[f'total_{y_column}'], label=table, marker='o', color=table_color_map[table])
+            except Exception as e:
+                print(f"Error plotting data for table '{table}': {str(e)}")
+                continue
+        plt.xlabel('time_sec')
+        plt.ylabel(f'total_{y_column}')
+
+        # Set y-axis limits and ticks if y_column is 'recall'
+        # if y_column.lower() == 'recall':
+        #     plt.ylim(0.8, 1.0)
+        #     plt.yticks([0.8, 0.82, 0.84, 0.86, 0.88, 0.9, 0.92, 0.94, 0.96, 0.98, 1.0])
+
+        plt.title(f'{f'total_{y_column}'} vs {'time_sec'}')
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.grid(True)
+
+        output_file = f"t_{table_regex}_{'time_sec'}_vs_{f'total_{y_column}'}.png"
+        plt.savefig(output_file, bbox_inches='tight')
+        plt.close()
+        print(f"Saved Plot: {output_file}")            
+
+    def generate_graph(self, graph_spec):
+        table_prefix, x_column, y_column, *legend_column = graph_spec.split(',')
+        legend_column = legend_column[0] if legend_column else None
+
+        data = self.display_handler.get_tables(graph_spec)
+        # Combine all data
+        combined_data = pd.concat(data, ignore_index=True)
+
+        # Create the plot
+        plt.figure(figsize=(12, 6))
+        if legend_column:
+            sns.scatterplot(data=combined_data, x=x_column, y=y_column, hue=legend_column, style='table')
+        else:
+            sns.scatterplot(data=combined_data, x=x_column, y=y_column, style='table')
+
+        plt.title(f"{y_column} vs {x_column}")
+        plt.xlabel(x_column)
+        plt.ylabel(y_column)
+        if legend_column:
+            plt.legend(title='Legend' if legend_column else 'Table')
+        
+        # Save the plot
+        output_file = f"{table_prefix}_{x_column}_vs_{y_column}.png"
+        plt.savefig(output_file)
+        print(f"Graph saved as {output_file}")

@@ -3,7 +3,7 @@ import sqlite3
 from typing import List, Optional, Any
 from contextlib import contextmanager
 from ..utils.table_formatter import TableFormatter
-
+import re
 class BaseDBHandler:
     """Base class for database operations"""
     
@@ -41,7 +41,18 @@ class BaseDBHandler:
             prefix = pattern[:-1]
             return [t for t in tables if t.startswith(prefix)]
         return [t for t in tables if t == pattern]
+    def get_matching_tables(self, pattern: str = None) -> List[str]:
+        """Get tables matching the regex pattern"""
+        tables = self.list_tables()
+        if not pattern:
+            return tables
 
+        try:
+            regex = re.compile(pattern)
+            return [t for t in tables if regex.search(t)]
+        except re.error:
+            print(f"Invalid regex pattern: {pattern}")
+            return []
     def list_tables(self) -> List[str]:
         """Get list of all tables in database"""
         with self._get_cursor() as cur:

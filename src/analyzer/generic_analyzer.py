@@ -4,6 +4,7 @@ from src.db.base_table_handler import BaseTableHandler
 import json
 import re
 from constants import *
+import pandas as pd
 
 SECTION_NAME_CON = '-'
 class GenericAnalyzer(BaseTableHandler):
@@ -189,4 +190,5 @@ class GenericAnalyzer(BaseTableHandler):
         ORDER BY total_allocated DESC
         """
         
-        return combined_query    
+        return combined_query
+    
