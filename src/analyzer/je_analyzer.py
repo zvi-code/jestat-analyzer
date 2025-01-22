@@ -54,7 +54,10 @@ class JeAnalyzer:
                     self.print_table(table_pattern, timestamp, limit)
                 elif mode in self.config['analyses']:
                     result = self.generic_analyzer.analyze(mode, timestamp)
-                    self._print_formatted_result(result)
+                    try:
+                        self._print_formatted_result(result)
+                    except Exception as e:
+                        print(f"Error printing formatted result for mode '{mode}': {str(e)}")
                 else:
                     print(f"Unknown mode: {mode} {self.config['analyses']}")
             except Exception as e:
@@ -172,58 +175,84 @@ class JeAnalyzer:
         
         # Print the basic table
         self.table_formatter.print_table(columns, data)
-        
-        # Pages analysis specific calculations
-        total_pages = sum(row[columns.index('total_pages')] for row in data)
-        total_memory = sum(row[columns.index('total_allocated')] for row in data)
-        
-        print("\nPages Analysis Summary:")
-        print(f"Total Pages Used: {total_pages:,} ({total_pages * 4:,} KB)")
-        print(f"Total Memory Allocated: {total_memory:,} bytes ({total_memory/1024/1024:.2f} MB)")
+        try:
+            if columns.index('total_pages'):
+                # Pages analysis specific calculations
+                total_pages = sum(row[columns.index('total_pages')] for row in data)
+            if columns.index('total_allocated'):
+                total_memory = sum(row[columns.index('total_allocated')] for row in data)
+            
+            print("\nPages Analysis Summary:")
+            if columns.index('total_pages'):
+                print(f"Total Pages Used: {total_pages:,} ({total_pages * 4:,} KB)")
+            if columns.index('total_allocated'):
+                print(f"Total Memory Allocated: {total_memory:,} bytes ({total_memory/1024/1024:.2f} MB)")
+        except Exception as e:
+            print(f"Error calculating total pages: {str(e)}")
 
     def _print_formatted_result(self, result):
+        if isinstance(result, list):
+            for r in result:
+                self._print_formatted_result(r)
+        
         columns = result['columns']
         data = result['data']
         had_error = False
         # Print the table
         self.table_formatter.print_table(columns, data)
         try:
-            # Calculate total pages and memory
-            total_pages = sum(row[columns.index('total_pages')] for row in data)
-        except Exception as e:
-            print(f"Error calculating total pages: {str(e)}")
-            total_pages = 0
-            had_error = True
-        total_memory = sum(row[columns.index('total_allocated')] for row in data)
-        
-        # Sort bins by page usage
-        sorted_by_pages = sorted(data, key=lambda x: x[columns.index('total_pages')], reverse=True)
-        
-        print(f"\nPage Usage Analysis: (had_error = {had_error})")
-        if not had_error:
-            print(f"Total Pages Used: {total_pages:,} ({total_pages * 4:,} KB)")
-        print(f"Total Memory Allocated: {total_memory:,} bytes ({total_memory/1024/1024:.2f} MB)")
-        print(f"Overall Memory Efficiency: {(total_memory / (total_pages * 4096)) * 100:.2f}%")
-        
-        print("\nTop 10 Bins by Page Usage:")
-        for row in sorted_by_pages[:10]:
-            bin_id = row[columns.index('bins')]
-            bin_size = row[columns.index('bin_size')]
-            pages = row[columns.index('total_pages')]
-            util = row[columns.index('utilization')]
-            allocated = row[columns.index('total_allocated')]
+            if columns.index('total_allocated'):
+                total_memory = sum(row[columns.index('total_allocated')] for row in data)
+            # except Exception as e:
+            #     print(f"Error calculating total memory: {str(e)}")
+            #     total_memory = 0
+            #     had_error = True
+            if columns.index('total_pages'):
+                # Calculate total pages and memory
+                total_pages = sum(row[columns.index('total_pages')] for row in data)
+                # Sort bins by page usage
+                sorted_by_pages = sorted(data, key=lambda x: x[columns.index('total_pages')], reverse=True)
+            # except Exception as e:
+            #     print(f"Error calculating total pages: {str(e)}")
+            #     total_pages = 0
+            #     had_error = True
             
-            print(f"\nBin {bin_id} (size {bin_size} bytes):")
-            print(f"  Pages: {pages:,} ({pages * 4:,} KB)")
-            print(f"  Utilization: {util:.2f}%")
-            print(f"  Memory Allocated: {allocated:,} bytes")
-            print(f"  Memory Efficiency: {(allocated / (pages * 4096)) * 100:.2f}%")
-        
-        print("\nUtilization Summary:")
-        poor_util_bins = [row for row in data if row[columns.index('utilization')] < 0.5]
-        print(f"Bins with <50% utilization: {len(poor_util_bins)}")
-        wasted_pages = sum(row[columns.index('total_pages')] for row in poor_util_bins)
-        print(f"Pages in poorly utilized bins: {wasted_pages:,} ({wasted_pages * 4:,} KB)")
+
+            
+            print(f"\nPage Usage Analysis: (had_error = {had_error})")
+            if columns.index('total_pages'):
+                print(f"Total Pages Used: {total_pages:,} ({total_pages * 4:,} KB)")
+            if columns.index('total_allocated'):
+                print(f"Total Memory Allocated: {total_memory:,} bytes ({total_memory/1024/1024:.2f} MB)")
+                print(f"Overall Memory Efficiency: {(total_memory / (total_pages * 4096)) * 100:.2f}%")
+            
+            print("\nTop 10 Bins by Page Usage:")
+            for row in sorted_by_pages[:10]:
+                bin_id = row[columns.index('bins')]
+                bin_size = row[columns.index('bin_size')]
+                try:
+                    if columns.index('total_pages'):
+                        pages = row[columns.index('total_pages')]
+                    util = row[columns.index('utilization')]
+                    if columns.index('total_allocated'):
+                        allocated = row[columns.index('total_allocated')]
+                except Exception as e:
+                    print(f"Error fetching data for bin {bin_id}: {str(e)}")
+                    continue
+                print(f"\nBin {bin_id} (size {bin_size} bytes):")
+                print(f"  Pages: {pages:,} ({pages * 4:,} KB)")
+                print(f"  Utilization: {util:.2f}%")
+                print(f"  Memory Allocated: {allocated:,} bytes")
+                print(f"  Memory Efficiency: {(allocated / (pages * 4096)) * 100:.2f}%")
+            
+            print("\nUtilization Summary:")
+            poor_util_bins = [row for row in data if row[columns.index('utilization')] < 0.5]
+            print(f"Bins with <50% utilization: {len(poor_util_bins)}")
+            if columns.index('total_pages'):
+                wasted_pages = sum(row[columns.index('total_pages')] for row in poor_util_bins)
+                print(f"Pages in poorly utilized bins: {wasted_pages:,} ({wasted_pages * 4:,} KB)")
+        except Exception as e:
+            print(f"Error printing formatted result: _print_formatted_result {str(e)}\ncolumns={columns}\ndata={data}")
 
     def analyze_bins(self, table_name: str):
         analysis = self.stats_handler.analyze_bins(table_name)

@@ -13,20 +13,22 @@ class StatsHandler(BaseDBHandler):
         fragmentation = self.analyze_fragmentation()
         efficiency = self.analyze_arena_efficiency()
         leaks = self.detect_potential_leaks(threshold_percent=leak_threshold)
-        
-        report = {
-            'memory_trends': trends,
-            'fragmentation_analysis': fragmentation,
-            'arena_efficiency': efficiency,
-            'potential_leaks': leaks,
-            'summary': {
-                'avg_fragmentation': sum(f['fragmentation_ratio'] for f in fragmentation) / len(fragmentation) if fragmentation else 0,
-                'peak_memory': max(t['total_allocated'] for t in trends) if trends else 0,
-                'leak_incidents': sum(1 for l in leaks if l['status'] == 'Potential Leak'),
-                'efficiency_score': sum(e['dealloc_ratio'] for e in efficiency) / len(efficiency) if efficiency else 0
+        try:
+            report = {
+                'memory_trends': trends,
+                'fragmentation_analysis': fragmentation,
+                'arena_efficiency': efficiency,
+                'potential_leaks': leaks,
+                'summary': {
+                    'avg_fragmentation': sum(f['fragmentation_ratio'] for f in fragmentation) / len(fragmentation) if fragmentation else 0,
+                    'peak_memory': max(t['total_allocated'] for t in trends) if trends else 0,
+                    'leak_incidents': sum(1 for l in leaks if l['status'] == 'Potential Leak'),
+                    'efficiency_score': sum(e['dealloc_ratio'] for e in efficiency) / len(efficiency) if efficiency else 0
+                }
             }
-        }
-        
+        except Exception as e:
+            print(f"Error generating comprehensive report: {e}")
+            return None
         return report
 
     def analyze_memory_trends(self, table_names: List[str] = None, window_size: int = 5) -> Dict:
@@ -462,7 +464,38 @@ class StatsHandler(BaseDBHandler):
             if grouped_rows:
                 print(f"\n=== Timestamp: {current_ts}, MetaID: {current_meta} ===")
                 self.formatter.print_table(headers, grouped_rows)
+    def combine_stats(self):
+        query = """
+        SELECT d.timestamp, d.metadata_id, d.decaying, d.time, d.npages, d.sweeps, d.madvises, d.purged,
+            b.total_pages,
+            k.active, k.mapped, k.retained
+        FROM MERGED_ARENA_STATS__DECAYING d
+        LEFT JOIN (
+            SELECT timestamp, SUM(curslabs * pgs) as total_pages
+            FROM MERGED_ARENA_STATS__BINS_V1
+            GROUP BY timestamp
+        ) b ON d.timestamp = b.timestamp
+        LEFT JOIN (
+            SELECT timestamp, 
+                MAX(CASE WHEN Key = 'active' THEN Value END) as active,
+                MAX(CASE WHEN Key = 'mapped' THEN Value END) as mapped,
+                MAX(CASE WHEN Key = 'retained' THEN Value END) as retained
+            FROM MERGED_ARENA_STATS__KEY-VALUE
+            WHERE Key IN ('active', 'mapped', 'retained')
+            GROUP BY timestamp
+        ) k ON d.timestamp = k.timestamp
+        """
+        
+        result = self.execute_query(query)
+        return result
 
+    def execute_query(self, query):
+        cursor = self.conn.cursor()
+        cursor.execute(query)
+        columns = [description[0] for description in cursor.description]
+        data = cursor.fetchall()
+        cursor.close()
+        return {'columns': columns, 'data': data}
     # def analyze_arenas_activity(self, table_names: List[str] = None, timestamp: str = None) -> List[dict]:
     #     with self._get_cursor() as cur:
     #         required_columns = {

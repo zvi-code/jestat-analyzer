@@ -2,7 +2,7 @@
     "schema_path": "config/table_schemas_gen.json",
     "analyses": {
       "bins_analysis": {
-        "table": "^merged.*stats__bins_v1$",
+        "table": "^merged.*stats__bins_v\\d$",
         "metrics": [
           {"name": "total_allocated", "column": "allocated", "operation": "sum"},
           {"name": "avg_utilization", "column": "util", "operation": "avg"},
@@ -11,7 +11,7 @@
         "groupby": ["bins", "size"]
       },
       "bins_total": {
-        "table": "^merged.*stats__bins_v1$",
+        "table": "^merged.*stats__bins_v\\d$",
         "metrics": [
           {"name": "total_allocated", "column": "allocated", "operation": "sum"},
           {"name": "avg_utilization", "column": "util", "operation": "avg"},
@@ -30,7 +30,7 @@
         "groupby": ["timestamp"]
       },
       "fragmentation_analysis": {
-        "table": "merged_arena_stats__bins_v1",
+        "table": "^merged_arena_stats__bins_v\\d$",
         "metrics": [
           {
             "name": "fragmentation_score",
@@ -57,9 +57,78 @@
           }
         ],
         "groupby": ["bins", "size"]
-      },
-      "bin_pages_analysis": {
-            "table": "merged_arena_stats__bins_v1",
+      },      
+      "extents_analysis": {
+            "table": "^arenas-.*__extents$",
+            "metrics": [
+                {
+                    "name": "total_dirty_pages",
+                    "operation": "expression",
+                    "formula": {
+                        "row_operation": "(dirty/4096)",
+                        "aggregation": "sum"
+                    }
+                },
+                {
+                    "name": "dirty_bytes",
+                    "operation": "expression",
+                    "formula": {
+                        "row_operation": "dirty",
+                        "aggregation": "sum"
+                    }
+                },
+                {
+                    "name": "total_retained_pages",
+                    "operation": "expression",
+                    "formula": {
+                        "row_operation": "(retained/4096)",
+                        "aggregation": "sum"
+                    }
+                }
+            ],
+            "groupby": ["timestamp", "extents"],
+            "sort": [
+                {
+                    "by": "timestamp",  
+                    "order": "asc"         
+                },
+                {
+                "by": "size",  
+                "order": "desc"         
+            }],
+            "special": "memory_pages"
+    },
+    "large_analysis": {
+        "table": "^merged_arena_stats__large$",
+        "metrics": [
+                {
+                    "name": "total_extent_pages",
+                    "operation": "expression",
+                    "formula": {
+                        "row_operation": "(curlextents*size/4096)",
+                        "aggregation": "sum"
+                    }
+                },
+                {
+                    "name": "total_allocated_bytes",
+                    "operation": "max",
+                    "column": "allocated"
+                }
+            ],
+            "groupby": ["timestamp", "large"],
+            "sort": [
+                {
+                    "by": "timestamp",  
+                    "order": "asc"         
+                },
+                {
+                "by": "size",  
+                "order": "desc"         
+            }],
+            "special": "memory_pages"
+    },
+    "bin_pages_analysis": {
+            "table": "^merged_arena_stats__bins_v\\d$",
             "metrics": [
                 {
                     "name": "bin_size",
@@ -95,15 +164,20 @@
                     "column": "allocated"
                 }
             ],
-            "groupby": ["bins"],
-            "sort": {
+            "groupby": ["timestamp", "bins"],
+            "sort": [
+                {
+                    "by": "timestamp",  
+                    "order": "asc"         
+                },
+                {
                 "by": "total_pages",  
                 "order": "desc"         
-            },
+            }],
             "special": "memory_pages"
     },
     "bin_activity_analysis": {
-            "table": "merged_arena_stats__bins_v1",
+            "table": "merged_arena_stats__bins_v\\d",
             "metrics": [
                 {
                     "name": "bin_size",
@@ -173,7 +247,7 @@
             "special": "activity"
         },
         "bin_activity_analysis_new": {
-                "table": "merged_arena_stats__bins_v1",
+                "table": "merged_arena_stats__bins_v\\d",
                 "metrics": [
                     {
                         "name": "bin_size",
@@ -294,7 +368,7 @@
             },
         
     "high_contention_bins": {
-        "table": "merged_arena_stats__bins_v1",
+        "table": "merged_arena_stats__bins_v\\d",
         "metrics": [
           {
             "name": "allocation_rate",
@@ -323,7 +397,7 @@
         "groupby": ["bins", "size"]
       },
       "inefficient_bins": {
-        "table": "stats-merged_arena_stats__bins_v1",
+        "table": "stats-merged_arena_stats__bins_v\\d",
         "metrics": [
           {
             "name": "total_allocated",
@@ -382,7 +456,7 @@
             "special": "arena_pattern"
         },
         "slab_efficiency_analysis": {
-                "table": "merged_arena_stats__bins_v1",
+                "table": "merged_arena_stats__bins_v\\d",
                 "metrics": [
                     {
                         "name": "bin_size",

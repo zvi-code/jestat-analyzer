@@ -46,13 +46,16 @@ class TableFormatter:
         # Convert all values to strings and handle None
         str_rows = [[str(cell) if cell is not None else '' for cell in row[:limit_col]] for row in rows]
         headers = headers[:limit_col]
-        # Get column widths
-        widths = TableFormatter.get_column_widths(headers, str_rows)
-        
-        # Print table
-        TableFormatter.print_horizontal_line(widths)
-        TableFormatter.print_row(headers, widths)
-        TableFormatter.print_horizontal_line(widths)
-        for row in str_rows:
-            TableFormatter.print_row(row, widths)
-        TableFormatter.print_horizontal_line(widths)
+        try:
+            # Get column widths
+            widths = TableFormatter.get_column_widths(headers, str_rows)
+            
+            # Print table
+            TableFormatter.print_horizontal_line(widths)
+            TableFormatter.print_row(headers, widths)
+            TableFormatter.print_horizontal_line(widths)
+            for row in str_rows:
+                TableFormatter.print_row(row, widths)
+            TableFormatter.print_horizontal_line(widths)
+        except Exception as e:
+            print(f"Error printing table: {e}")
